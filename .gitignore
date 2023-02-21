@@ -133,3 +133,6 @@
  **/xcshareddata/WorkspaceSettings.xcsettings
 
  # End of https://www.toptal.com/developers/gitignore/api/xcode,swift,macos
+IAteIt/.DS_Store
+*.xcuserstate
+IAteIt/IAteIt.xcodeproj/xcuserdata/riverisrain.xcuserdatad/xcschemes/xcschememanagement.plist
