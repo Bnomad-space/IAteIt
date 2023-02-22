@@ -128,7 +128,6 @@
 			children = (
 				7EFFE28729A5228D0021B9FE /* IAteItApp.swift */,
 				7EFFE28B29A5228F0021B9FE /* Assets.xcassets */,
-				7EFFE28D29A5228F0021B9FE /* Preview Content */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -156,6 +155,7 @@
 				7E6069C629A5CA6900284CBD /* View */,
 				7E6069D629A5CAFF00284CBD /* Model */,
 				7E6069DD29A5CB9E00284CBD /* Application */,
+				7EFFE28D29A5228F0021B9FE /* Preview Content */,
 			);
 			path = IAteIt;
 			sourceTree = "<group>";
