@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct MealDetailView: View {
-
+    @State var tagLocation: String = "맥도날드"
+    @State var tagTime: String = "07:40"
+    
     let paddingLR: CGFloat = 16
     let photoCorner: CGFloat = 20
     
@@ -26,61 +28,7 @@ struct MealDetailView: View {
                     .font(.footnote)
                     .padding([.bottom], 8)
                 
-                GeometryReader { metrics in
-                    let photoWidth = metrics.size.width - paddingLR * 2
-                    
-                    ZStack {
-                        Image("Sample_McMorning")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: photoWidth, height: photoWidth)
-                            .clipped()
-                            .cornerRadius(photoCorner)
-                        
-                        VStack {
-                            HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: photoCorner)
-                                        .frame(width: 88, height: 28)
-                                        .opacity(0.6)
-                                        
-                                    HStack(alignment: .center) {
-                                        Image(systemName: "location")
-                                            .font(.footnote)
-                                        Text("맥도날드")
-                                            .font(.footnote)
-                                    }
-                                    .foregroundColor(.white)
-                                }
-                                Spacer()
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: photoCorner)
-                                        .frame(width: 80, height: 28)
-                                        .opacity(0.6)
-                                    
-                                    HStack {
-                                        Image(systemName: "clock")
-                                            .font(.footnote)
-                                        Text("07:40")
-                                            .font(.footnote)
-                                    }
-                                    .foregroundColor(.white)
-                                }
-                            }
-                            .padding()
-                            
-                            Spacer()
-                            
-                            HStack {
-                                Spacer()
-                                Image(systemName: "plus")
-                            }
-                            .padding()
-                        }
-                        
-                    }
-                    .padding([.leading, .trailing], paddingLR)
-                }
+                PhotoCardView(tagLocation: $tagLocation, tagTime: $tagTime)
             }
         }
     }

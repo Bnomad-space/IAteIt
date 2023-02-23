@@ -14,6 +14,9 @@
 		7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D429A5CAFA00284CBD /* MyProfileView.swift */; };
 		7E6069D829A5CB1000284CBD /* TempModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D729A5CB1000284CBD /* TempModel.swift */; };
 		7E6069DC29A5CB3A00284CBD /* TempExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069DB29A5CB3A00284CBD /* TempExtension.swift */; };
+		7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069DF29A7A7B400284CBD /* CommentView.swift */; };
+		7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */; };
+		7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */; };
 		7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28729A5228D0021B9FE /* IAteItApp.swift */; };
 		7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28929A5228D0021B9FE /* ContentView.swift */; };
 		7EFFE28C29A5228F0021B9FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFE28B29A5228F0021B9FE /* Assets.xcassets */; };
@@ -28,6 +31,9 @@
 		7E6069D429A5CAFA00284CBD /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		7E6069D729A5CB1000284CBD /* TempModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempModel.swift; sourceTree = "<group>"; };
 		7E6069DB29A5CB3A00284CBD /* TempExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempExtension.swift; sourceTree = "<group>"; };
+		7E6069DF29A7A7B400284CBD /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardView.swift; sourceTree = "<group>"; };
+		7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagOnPhotoView.swift; sourceTree = "<group>"; };
 		7EFFE28429A5228D0021B9FE /* IAteIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IAteIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EFFE28729A5228D0021B9FE /* IAteItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAteItApp.swift; sourceTree = "<group>"; };
 		7EFFE28929A5228D0021B9FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,6 +84,7 @@
 		7E6069C929A5CA9600284CBD /* MealDetail */ = {
 			isa = PBXGroup;
 			children = (
+				7E6069DE29A7995400284CBD /* Component */,
 				7E6069D229A5CAF300284CBD /* MealDetailView.swift */,
 			);
 			path = MealDetail;
@@ -130,6 +137,16 @@
 				7EFFE28B29A5228F0021B9FE /* Assets.xcassets */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		7E6069DE29A7995400284CBD /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				7E6069DF29A7A7B400284CBD /* CommentView.swift */,
+				7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */,
+				7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		7EFFE27B29A5228D0021B9FE = {
@@ -239,13 +256,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E6069D329A5CAF300284CBD /* MealDetailView.swift in Sources */,
+				7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */,
 				7E6069D829A5CB1000284CBD /* TempModel.swift in Sources */,
 				7E6069DC29A5CB3A00284CBD /* TempExtension.swift in Sources */,
 				7E6069D129A5CAEB00284CBD /* FeedView.swift in Sources */,
 				7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */,
 				7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */,
+				7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
+				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
 				7E6069CF29A5CAE500284CBD /* UploadView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
