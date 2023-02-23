@@ -17,18 +17,21 @@ struct PhotoCardView: View {
     let paddingLR: CGFloat = 16
     let photoCorner: CGFloat = 20
     
+    var photoWidth: CGFloat = 0
+    
     var body: some View {
-        
-        GeometryReader { metrics in
-            let photoWidth = metrics.size.width - paddingLR * 2
-            
             ZStack {
-                Image("Sample_McMorning")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: photoWidth, height: photoWidth)
-                    .clipped()
-                    .cornerRadius(photoCorner)
+                ZStack {
+                    Rectangle()
+                        .aspectRatio(1, contentMode: .fit)
+                    
+                    Image("Sample_McMorning")
+                        .resizable()
+                        .scaledToFill()
+                        .layoutPriority(-1)
+                }
+                .clipped()
+                .cornerRadius(photoCorner)
                 
                 VStack {
                     HStack {
@@ -48,7 +51,6 @@ struct PhotoCardView: View {
                 }
             }
             .padding([.leading, .trailing], paddingLR)
-        }
     }
 }
 
