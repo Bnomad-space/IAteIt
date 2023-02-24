@@ -24,7 +24,6 @@ struct PhotoCardView: View {
                 ZStack {
                     Rectangle()
                         .aspectRatio(1, contentMode: .fit)
-                    
                     Image("Sample_McMorning")
                         .resizable()
                         .scaledToFill()
@@ -45,7 +44,16 @@ struct PhotoCardView: View {
                     
                     HStack {
                         Spacer()
-                        Image(systemName: "plus")
+                        ZStack {
+                            Circle()
+                                .opacity(0.6)
+                                .frame(width: 36, height: 36)
+                            Image(systemName: "plus.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(.white)
+                        }
                     }
                     .padding()
                 }

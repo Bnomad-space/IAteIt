@@ -8,13 +8,46 @@
 import SwiftUI
 
 struct CommentView: View {
+    let profilePicSize: CGFloat = 36
+    
+    var comment: TempComment
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ZStack {
+                Rectangle()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: profilePicSize, height: profilePicSize)
+                Image(comment.profileImage)
+                    .resizable()
+                    .scaledToFill()
+                    .layoutPriority(-1)
+                    .frame(width: profilePicSize, height: profilePicSize)
+            }
+            .clipped()
+            .cornerRadius(profilePicSize/2)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .bottom, spacing: 8) {
+                    Text(comment.nickname)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Text(comment.commentTime)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+                Text(comment.comment)
+                    .font(.subheadline)
+            }
+            .padding([.leading], 12)
+            
+            Spacer()
+        }
     }
 }
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentView()
+        CommentView(comment: TempCommentData().list[0])
     }
 }
