@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    @State var tagLocation: String = "맥도날드"
-    @State var tagTime: String = "07:40"
-    
+    var tempPlateList = TempPlateData().list
     var tempCommentList = TempCommentData().list
     
     let paddingLR: CGFloat = 16
@@ -27,7 +25,13 @@ struct MealDetailView: View {
                         .font(.footnote)
                         .padding([.bottom], 8)
                     
-                    PhotoCardView(tagLocation: $tagLocation, tagTime: $tagTime)
+                    TabView {
+                        ForEach(tempPlateList, id: \.self) { plate in
+                            PhotoCardView(plate: plate)
+                        }
+                    }
+                    .frame(minHeight: 358)
+                    .tabViewStyle(.page)
                     
                     VStack(alignment: .leading, spacing: 12) {
                         ForEach(tempCommentList, id: \.self) { comment in

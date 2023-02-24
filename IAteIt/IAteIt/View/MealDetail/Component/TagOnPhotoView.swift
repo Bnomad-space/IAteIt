@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TagOnPhotoView: View {
-    @Binding var tagText: String
+    var tagText: String
     var tagImage: String
     
     var body: some View {
@@ -29,6 +29,6 @@ struct TagOnPhotoView: View {
 
 struct TagOnPhotoView_Previews: PreviewProvider {
     static var previews: some View {
-        TagOnPhotoView(tagText: .constant("맥도날드"), tagImage: "location")
+        TagOnPhotoView(tagText: "맥도날드", tagImage: "location")
     }
 }

@@ -32,7 +32,7 @@ struct CommentView: View {
                     Text(comment.nickname)
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                    Text(comment.commentTime)
+                    Text(comment.time)
                         .font(.footnote)
                         .foregroundColor(.gray)
                 }

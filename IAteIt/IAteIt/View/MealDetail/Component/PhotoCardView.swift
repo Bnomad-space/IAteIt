@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct PhotoCardView: View {
-    @Binding var tagLocation: String
-    @Binding var tagTime: String
+    var plate: TempPlate
     
     let tagImageLocation = "location"
     let tagImageTime = "clock"
@@ -17,14 +16,12 @@ struct PhotoCardView: View {
     let paddingLR: CGFloat = 16
     let photoCorner: CGFloat = 20
     
-    var photoWidth: CGFloat = 0
-    
     var body: some View {
             ZStack {
                 ZStack {
                     Rectangle()
                         .aspectRatio(1, contentMode: .fit)
-                    Image("Sample_McMorning")
+                    Image(plate.image)
                         .resizable()
                         .scaledToFill()
                         .layoutPriority(-1)
@@ -34,9 +31,9 @@ struct PhotoCardView: View {
                 
                 VStack {
                     HStack {
-                        TagOnPhotoView(tagText: $tagLocation, tagImage: tagImageLocation)
+                        TagOnPhotoView(tagText: plate.location, tagImage: tagImageLocation)
                         Spacer()
-                        TagOnPhotoView(tagText: $tagTime, tagImage: tagImageTime)
+                        TagOnPhotoView(tagText: plate.time, tagImage: tagImageTime)
                     }
                     .padding()
                     
@@ -44,16 +41,21 @@ struct PhotoCardView: View {
                     
                     HStack {
                         Spacer()
-                        ZStack {
-                            Circle()
-                                .opacity(0.6)
-                                .frame(width: 36, height: 36)
-                            Image(systemName: "plus.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(.white)
-                        }
+                        Button(action: {
+                            // TODO: 내 포스팅에만 보이기, CameraView(upload) 연결
+                        }, label: {
+                            ZStack {
+                                Circle()
+                                    .opacity(0.6)
+                                    .frame(width: 36, height: 36)
+                                    .tint(.black)
+                                Image(systemName: "plus.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(.white)
+                            }
+                        })
                     }
                     .padding()
                 }
@@ -64,6 +66,6 @@ struct PhotoCardView: View {
 
 struct PhotoCardView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotoCardView(tagLocation: .constant("맥도날드"), tagTime: .constant("07:40"))
+        PhotoCardView(plate: TempPlateData().list[0])
     }
 }
