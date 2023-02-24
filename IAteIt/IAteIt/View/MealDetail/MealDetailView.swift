@@ -42,6 +42,7 @@ struct MealDetailView: View {
                 }
             }
             AddCommentBarView()
+                .padding([.bottom], 10)
         }
     }
 }
