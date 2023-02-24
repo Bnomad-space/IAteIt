@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */; };
 		7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B1AA029A8E58900DDC65B /* TempComment.swift */; };
 		7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CC29A5CADE00284CBD /* SignUpView.swift */; };
 		7E6069CF29A5CAE500284CBD /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CE29A5CAE500284CBD /* UploadView.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
 		7E4B1AA029A8E58900DDC65B /* TempComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempComment.swift; sourceTree = "<group>"; };
 		7E6069CC29A5CADE00284CBD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		7E6069CE29A5CAE500284CBD /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				7E6069DF29A7A7B400284CBD /* CommentView.swift */,
 				7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */,
 				7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */,
+				7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
+				7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */,
 				7E6069CF29A5CAE500284CBD /* UploadView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
