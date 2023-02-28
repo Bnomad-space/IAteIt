@@ -13,7 +13,7 @@ struct CommentView: View {
     var comment: TempComment
     
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             ZStack {
                 Rectangle()
                     .aspectRatio(contentMode: .fit)
@@ -26,6 +26,7 @@ struct CommentView: View {
             }
             .clipped()
             .cornerRadius(profilePicSize/2)
+            .padding([.top], 3)
             
             VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .bottom, spacing: 8) {
