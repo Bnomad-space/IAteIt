@@ -17,8 +17,8 @@ struct User: Identifiable, Codable {
 
 extension User {
     static let users: [User] = [
-        User(id: UUID().uuidString, userId: "123", profileImageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg"),
-        User(id: UUID().uuidString, userId: "456")
+        User(id: "123", userId: "rain", profileImageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg"),
+        User(id: "456", userId: "hero")
         
     ]
 }
