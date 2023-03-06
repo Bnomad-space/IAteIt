@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		630BA6C029AF57BE00019F2E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6BF29AF57BE00019F2E /* Camera.swift */; };
 		630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6C129AF57F700019F2E /* CameraViewModel.swift */; };
+		6366BA1E29B613C1004374BE /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6366BA1D29B613C1004374BE /* CameraPreviewView.swift */; };
 		7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */; };
 		7E1F719429A90449005A7B56 /* TempPlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719329A90449005A7B56 /* TempPlate.swift */; };
 		7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B1AA029A8E58900DDC65B /* TempComment.swift */; };
 		7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CC29A5CADE00284CBD /* SignUpView.swift */; };
-		7E6069CF29A5CAE500284CBD /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CE29A5CAE500284CBD /* UploadView.swift */; };
+		7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CE29A5CAE500284CBD /* CameraView.swift */; };
 		7E6069D129A5CAEB00284CBD /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D029A5CAEB00284CBD /* FeedView.swift */; };
 		7E6069D329A5CAF300284CBD /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D229A5CAF300284CBD /* MealDetailView.swift */; };
 		7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D429A5CAFA00284CBD /* MyProfileView.swift */; };
@@ -31,11 +32,12 @@
 /* Begin PBXFileReference section */
 		630BA6BF29AF57BE00019F2E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		630BA6C129AF57F700019F2E /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		6366BA1D29B613C1004374BE /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
 		7E1F719329A90449005A7B56 /* TempPlate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPlate.swift; sourceTree = "<group>"; };
 		7E4B1AA029A8E58900DDC65B /* TempComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempComment.swift; sourceTree = "<group>"; };
 		7E6069CC29A5CADE00284CBD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		7E6069CE29A5CAE500284CBD /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
+		7E6069CE29A5CAE500284CBD /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		7E6069D029A5CAEB00284CBD /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		7E6069D229A5CAF300284CBD /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		7E6069D429A5CAFA00284CBD /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
@@ -111,9 +113,10 @@
 		7E6069CB29A5CAA700284CBD /* Upload */ = {
 			isa = PBXGroup;
 			children = (
-				7E6069CE29A5CAE500284CBD /* UploadView.swift */,
+				7E6069CE29A5CAE500284CBD /* CameraView.swift */,
 				630BA6BF29AF57BE00019F2E /* Camera.swift */,
 				630BA6C129AF57F700019F2E /* CameraViewModel.swift */,
+				6366BA1D29B613C1004374BE /* CameraPreviewView.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			files = (
 				7E6069D329A5CAF300284CBD /* MealDetailView.swift in Sources */,
 				7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */,
+				6366BA1E29B613C1004374BE /* CameraPreviewView.swift in Sources */,
 				7E6069D829A5CB1000284CBD /* TempModel.swift in Sources */,
 				7E6069DC29A5CB3A00284CBD /* TempExtension.swift in Sources */,
 				7E6069D129A5CAEB00284CBD /* FeedView.swift in Sources */,
@@ -286,7 +290,7 @@
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
 				7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */,
 				7E1F719429A90449005A7B56 /* TempPlate.swift in Sources */,
-				7E6069CF29A5CAE500284CBD /* UploadView.swift in Sources */,
+				7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +419,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IAteIt/Preview Content\"";
-				DEVELOPMENT_TEAM = NH6966C938;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 승인이 필요합니다.";
@@ -447,7 +451,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IAteIt/Preview Content\"";
-				DEVELOPMENT_TEAM = NH6966C938;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 승인이 필요합니다.";

@@ -19,22 +19,12 @@ class CameraViewModel: ObservableObject {
         cameraPreview = AnyView(CameraPreviewView(session: session))
     }
     
-    @Published var isFlashOn = false
-    
-    
     func configure() {
         model.requestAndCheckPermissions()
-    }
-    
-    func switchFlash() {
-        isFlashOn.toggle()
     }
     
     func capturePhoto() {
         print("[CameraViewModel]: Photo captured!")
     }
     
-    func changeCamera() {
-        print("[CameraViewModel]: Camera changed!")
-    }
 }
