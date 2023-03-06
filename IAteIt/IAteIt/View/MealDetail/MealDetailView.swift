@@ -8,8 +8,42 @@
 import SwiftUI
 
 struct MealDetailView: View {
+    var tempPlateList = TempPlateData().list
+    var tempCommentList = TempCommentData().list
+    
+    let paddingLR: CGFloat = 16
+    let photoCorner: CGFloat = 20
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            ScrollView {
+                VStack {
+                    Text("맥모닝")
+                        .font(.headline)
+                        .padding(EdgeInsets(top: 8, leading: paddingLR, bottom: 1, trailing: paddingLR))
+                    Text("2 hours ago")
+                        .font(.footnote)
+                        .padding([.bottom], 8)
+                    
+                    TabView {
+                        ForEach(tempPlateList, id: \.self) { plate in
+                            PhotoCardView(plate: plate)
+                        }
+                    }
+                    .frame(minHeight: 358)
+                    .tabViewStyle(.page)
+                    
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(tempCommentList, id: \.self) { comment in
+                            CommentView(comment: comment)
+                        }
+                    }
+                    .padding(EdgeInsets(top: 24, leading: paddingLR, bottom: 0, trailing: paddingLR))
+                }
+            }
+            AddCommentBarView()
+                .padding([.bottom], 10)
+        }
     }
 }
 
