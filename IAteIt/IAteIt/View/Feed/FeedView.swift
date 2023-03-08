@@ -14,6 +14,8 @@ struct FeedView: View {
     var body: some View {
         ScrollView {
             VStack{
+                AddMealView()
+                    .padding([.bottom], 24)
                 ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
                     FeedHeaderView(PostInfo: postInfo)
                         .padding([.bottom], 8)

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AddMealView: View {
-    @State var commentInput: String = ""
     
     let paddingLR: CGFloat = 16
     
@@ -17,25 +16,22 @@ struct AddMealView: View {
             Button(action: {
                 // TODO: 끼니 추가 액션
             }, label: {
+                RoundedRectangle(cornerRadius: 20)
+                    .frame(height: 50)
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.10), radius: 20, x: 4, y: 4)
+                    .padding([.leading, .trailing], paddingLR)
+            })
+            HStack(spacing: 12) {
                 Image(systemName: "camera")
                     .tint(.black)
                     .font(.body)
-            
-            RoundedRectangle(cornerRadius: 20)
-                .frame(height: 50)
-                .foregroundColor(.white)
-                .shadow(color: .black.opacity(0.10), radius: 20, x: 4, y: 4)
-                .padding([.leading, .trailing], paddingLR)
-            })
-            HStack {
-                TextField("What are you eating now?", text: $commentInput)
-                    .font(.body)
+                Text("What are you eating now?")
+                    .font(.subheadline)
                 Spacer()
-                
             }
-            .padding([.leading, .trailing], 34)
+            .padding([.leading], 34)
         }
-        
     }
 }
 
