@@ -14,6 +14,8 @@ struct FeedView: View {
     var body: some View {
         ScrollView {
             VStack{
+                FeedTitleView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
+                
                 AddMealView()
                     .padding([.bottom], 24)
                 ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in

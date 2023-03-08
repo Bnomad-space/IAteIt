@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0487509A29B83DBD006836D1 /* FeedFooterView.swift */; };
 		048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A229B8A2D4006836D1 /* AddMealView.swift */; };
+		048750A529B8ABA1006836D1 /* FeedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A429B8ABA1006836D1 /* FeedTitleView.swift */; };
 		04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1188F29B74BF40073EDB7 /* FeedView.swift */; };
 		04C1189329B74D6C0073EDB7 /* FeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */; };
 		04C1189529B74DD60073EDB7 /* TempFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		0487509A29B83DBD006836D1 /* FeedFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFooterView.swift; sourceTree = "<group>"; };
 		048750A229B8A2D4006836D1 /* AddMealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
+		048750A429B8ABA1006836D1 /* FeedTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTitleView.swift; sourceTree = "<group>"; };
 		04C1188F29B74BF40073EDB7 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeaderView.swift; sourceTree = "<group>"; };
 		04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFeedHeader.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */,
 				0487509A29B83DBD006836D1 /* FeedFooterView.swift */,
 				048750A229B8A2D4006836D1 /* AddMealView.swift */,
+				048750A429B8ABA1006836D1 /* FeedTitleView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
 				7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */,
+				048750A529B8ABA1006836D1 /* FeedTitleView.swift in Sources */,
 				7E1F719429A90449005A7B56 /* TempPlate.swift in Sources */,
 				7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */,
 			);
