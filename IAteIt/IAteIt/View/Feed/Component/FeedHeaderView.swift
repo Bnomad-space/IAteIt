@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct FeedPhotoCardView: View {
+struct FeedHeaderView: View {
     
     let profilePicSize: CGFloat = 36
-    var PostInfo: TempFeedPhotoCard
+    var PostInfo: TempFeedHeader
     var tempPlateList = TempPlateData().list
     
     var body: some View {
@@ -56,7 +56,7 @@ struct FeedPhotoCardView: View {
     }
 }
 
-struct FeedPhotoCardView_Previews: PreviewProvider {
+struct FeedHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         FeedView()
     }

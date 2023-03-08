@@ -5,4 +5,36 @@
 //  Created by Beone on 2023/03/07.
 //
 
-import Foundation
+import SwiftUI
+
+struct FeedView: View {
+    var tempFeedPhotoCardList = TempFeedPhotoCardData().list
+    var tempPlateList = TempPlateData().list
+    
+    var body: some View {
+        ScrollView {
+            VStack{
+                ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
+                    FeedHeaderView(PostInfo: postInfo)
+                        .padding([.bottom], 8)
+                    TabView {
+                        ForEach(tempPlateList, id: \.self) { plate in
+                            PhotoCardView(plate: plate)
+                        }
+                    }
+                    .frame(minHeight: 358)
+                    .tabViewStyle(.page)
+                    .padding([.bottom], 8)
+                    FeedFooterView()
+                        .padding([.bottom], 27)
+                }
+            }
+        }
+    }
+}
+
+struct FeedView_Previews: PreviewProvider {
+    static var previews: some View {
+        FeedView()
+    }
+}

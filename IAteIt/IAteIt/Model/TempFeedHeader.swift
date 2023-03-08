@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TempFeedPhotoCard: Hashable {
+struct TempFeedHeader: Hashable {
     var nickname: String
     var profileImage: String
     var time: String
@@ -16,8 +16,8 @@ struct TempFeedPhotoCard: Hashable {
 
 struct TempFeedPhotoCardData: Hashable {
     var list = [
-        TempFeedPhotoCard(nickname: "kyeol", profileImage: "Sample_Profile1", time: "Just before", place: "맥도날드"),
-        TempFeedPhotoCard(nickname: "willow", profileImage: "Sample_Profile2", time: "2hours ago", place: "우리집"),
-        TempFeedPhotoCard(nickname: "sunshiningsoo", profileImage: "Sample_Profile3", time: "4hours ago", place: "맥도날드")
+        TempFeedHeader(nickname: "kyeol", profileImage: "Sample_Profile1", time: "Just before", place: "맥도날드"),
+        TempFeedHeader(nickname: "willow", profileImage: "Sample_Profile2", time: "2hours ago", place: "우리집"),
+        TempFeedHeader(nickname: "sunshiningsoo", profileImage: "Sample_Profile3", time: "4hours ago", place: "맥도날드")
     ]
 }
