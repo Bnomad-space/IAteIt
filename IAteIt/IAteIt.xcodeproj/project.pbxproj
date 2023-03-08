@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0487509A29B83DBD006836D1 /* FeedFooterView.swift */; };
-		048750A129B85091006836D1 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A029B85091006836D1 /* AddMealView.swift */; };
 		04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1188F29B74BF40073EDB7 /* FeedView.swift */; };
 		04C1189329B74D6C0073EDB7 /* FeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */; };
 		04C1189529B74DD60073EDB7 /* TempFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */; };
@@ -35,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		0487509A29B83DBD006836D1 /* FeedFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFooterView.swift; sourceTree = "<group>"; };
-		048750A029B85091006836D1 /* AddMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
 		04C1188F29B74BF40073EDB7 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeaderView.swift; sourceTree = "<group>"; };
 		04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFeedHeader.swift; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 			children = (
 				04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */,
 				0487509A29B83DBD006836D1 /* FeedFooterView.swift */,
-				048750A029B85091006836D1 /* AddMealView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -308,7 +305,6 @@
 				04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
-				048750A129B85091006836D1 /* AddMealView.swift in Sources */,
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
