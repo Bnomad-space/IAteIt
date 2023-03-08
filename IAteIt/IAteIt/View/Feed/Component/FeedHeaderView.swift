@@ -30,29 +30,34 @@ struct FeedPhotoCardView: View {
                 .cornerRadius(profilePicSize/2)
                 .padding([.top], 3)
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading) {
                     Text(PostInfo.nickname)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                     HStack(alignment: .bottom, spacing: 8) {
+                        Text(PostInfo.place)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                        Text("·")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
                         Text(PostInfo.time)
                             .font(.footnote)
                             .foregroundColor(.gray)
-                        Text(" - ")
-                        Text(PostInfo.place)
                     }
                 }
                 .padding([.leading], 12)
+                .padding([.top], 2)
                 
                 Spacer()
             }
-            TabView {
-                ForEach(tempPlateList, id: \.self) { plate in
-                    PhotoCardView(plate: plate)
-                }
-            }
-            .frame(minHeight: 358)
-            .tabViewStyle(.page)
+            .padding([.leading], 16)
         }
+    }
+}
+
+struct FeedPhotoCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        FeedView()
     }
 }
