@@ -9,7 +9,7 @@ import Foundation
 
 struct User: Identifiable, Codable {
     let id: String
-    var userId: String
+    var userName: String
     var profileImageUrl: String?
     
     
@@ -17,8 +17,8 @@ struct User: Identifiable, Codable {
 
 extension User {
     static let users: [User] = [
-        User(id: "123", userId: "rain", profileImageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg"),
-        User(id: "456", userId: "hero")
+        User(id: "123", userName: "rain", profileImageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg"),
+        User(id: "456", userName: "hero")
         
     ]
 }
