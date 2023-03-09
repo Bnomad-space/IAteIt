@@ -12,28 +12,39 @@ struct FeedView: View {
     var tempPlateList = TempPlateData().list
     
     var body: some View {
-        ScrollView {
-            VStack{
-                FeedTitleView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
-                
-                AddMealView()
-                    .padding([.bottom], 24)
-                ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
-                    FeedHeaderView(PostInfo: postInfo)
-                        .padding([.bottom], 8)
-                    TabView {
-                        ForEach(tempPlateList, id: \.self) { plate in
-                            PhotoCardView(plate: plate)
+        NavigationView{
+            ScrollView {
+                VStack{
+                    
+                    AddMealView()
+                        .padding([.top], 24)
+                        .padding([.bottom], 24)
+                        .padding([.leading, .trailing], 17)
+                    ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
+                        FeedHeaderView(PostInfo: postInfo)
+                            .padding([.bottom], 8)
+                        TabView {
+                            ForEach(tempPlateList, id: \.self) { plate in
+                                PhotoCardView(plate: plate)
+                            }
                         }
+                        .frame(minHeight: 358)
+                        .tabViewStyle(.page)
+                        .padding([.bottom], 8)
+                        FeedFooterView()
+                            .padding([.bottom], 27)
                     }
-                    .frame(minHeight: 358)
-                    .tabViewStyle(.page)
-                    .padding([.bottom], 8)
-                    FeedFooterView()
-                        .padding([.bottom], 27)
                 }
             }
+            .navigationBarItems(leading:
+                    FeedTitleView()
+                    .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
+            )
+            .navigationBarItems(trailing:
+                                    ProfilePhotoView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
+            )
         }
+        
     }
 }
 
