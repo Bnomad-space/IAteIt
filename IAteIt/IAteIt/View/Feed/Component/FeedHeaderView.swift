@@ -15,7 +15,7 @@ struct FeedHeaderView: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .top) {
+            HStack(alignment: .center, spacing: 12) {
                 ZStack {
                     Rectangle()
                         .aspectRatio(contentMode: .fit)
@@ -35,19 +35,10 @@ struct FeedHeaderView: View {
                         .font(.subheadline)
                         .fontWeight(.semibold)
                     HStack(alignment: .bottom, spacing: 8) {
-                        Text(PostInfo.place)
+                        Text("\(PostInfo.place) • \(PostInfo.time)")
                             .font(.footnote)
-                            .foregroundColor(.gray)
-                        Text("·")
-                            .font(.footnote)
-                            .foregroundColor(.gray)
-                        Text(PostInfo.time)
-                            .font(.footnote)
-                            .foregroundColor(.gray)
                     }
                 }
-                .padding([.leading], 12)
-                .padding([.top], 2)
                 
                 Spacer()
             }
