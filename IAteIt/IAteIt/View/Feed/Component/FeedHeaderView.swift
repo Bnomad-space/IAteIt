@@ -39,8 +39,6 @@ struct FeedHeaderView: View {
                             .font(.footnote)
                     }
                 }
-                .padding([.leading], 12)
-                .padding([.top], 2)
                 
                 Spacer()
             }
