@@ -29,7 +29,7 @@ struct AddMealView: View {
                     .font(.subheadline)
                 Spacer()
             }
-            .padding([.leading], 34)
+            .padding([.leading], 22)
         }
     }
 }

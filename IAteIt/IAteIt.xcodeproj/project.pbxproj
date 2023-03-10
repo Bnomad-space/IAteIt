@@ -13,6 +13,7 @@
 		04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1188F29B74BF40073EDB7 /* FeedView.swift */; };
 		04C1189329B74D6C0073EDB7 /* FeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */; };
 		04C1189529B74DD60073EDB7 /* TempFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */; };
+		04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E9931829B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift */; };
 		630BA6C029AF57BE00019F2E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6BF29AF57BE00019F2E /* Camera.swift */; };
 		630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6C129AF57F700019F2E /* CameraViewModel.swift */; };
 		6366BA1E29B613C1004374BE /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6366BA1D29B613C1004374BE /* CameraPreviewView.swift */; };
@@ -41,6 +42,7 @@
 		04C1188F29B74BF40073EDB7 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		04C1189229B74D6C0073EDB7 /* FeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeaderView.swift; sourceTree = "<group>"; };
 		04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFeedHeader.swift; sourceTree = "<group>"; };
+		04E9931829B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoButtonView.swift; sourceTree = "<group>"; };
 		630BA6BF29AF57BE00019F2E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		630BA6C129AF57F700019F2E /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		6366BA1D29B613C1004374BE /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				0487509A29B83DBD006836D1 /* FeedFooterView.swift */,
 				048750A229B8A2D4006836D1 /* AddMealView.swift */,
 				048750A429B8ABA1006836D1 /* FeedTitleView.swift */,
+				04E9931829B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */,
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
+				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
 				7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */,

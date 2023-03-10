@@ -19,7 +19,7 @@ struct FeedView: View {
                     AddMealView()
                         .padding([.top], 24)
                         .padding([.bottom], 24)
-                        .padding([.leading, .trailing], 17)
+                        .padding([.leading, .trailing], 16)
                     ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
                         FeedHeaderView(PostInfo: postInfo)
                             .padding([.bottom], 8)
@@ -41,7 +41,7 @@ struct FeedView: View {
                     .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
             )
             .navigationBarItems(trailing:
-                                    ProfilePhotoView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
+                                    ProfilePhotoButtonView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
             )
         }
         
