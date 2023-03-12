@@ -2,14 +2,49 @@
 //  FeedView.swift
 //  IAteIt
 //
-//  Created by Eunbee Kang on 2023/02/22.
+//  Created by Beone on 2023/03/07.
 //
 
 import SwiftUI
 
 struct FeedView: View {
+    var tempFeedPhotoCardList = TempFeedPhotoCardData().list
+    var tempPlateList = TempPlateData().list
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            ScrollView {
+                VStack{
+                    
+                    AddMealView()
+                        .padding([.top], 24)
+                        .padding([.bottom], 24)
+                        .padding([.leading, .trailing], 16)
+                    ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
+                        FeedHeaderView(PostInfo: postInfo)
+                            .padding([.bottom], 8)
+                        TabView {
+                            ForEach(tempPlateList, id: \.self) { plate in
+                                PhotoCardView(plate: plate)
+                            }
+                        }
+                        .frame(minHeight: 358)
+                        .tabViewStyle(.page)
+                        .padding([.bottom], 8)
+                        FeedFooterView()
+                            .padding([.bottom], 27)
+                    }
+                }
+            }
+            .navigationBarItems(leading:
+                    FeedTitleView()
+                    .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
+            )
+            .navigationBarItems(trailing:
+                                    ProfilePhotoButtonView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
+            )
+        }
+        
     }
 }
 
