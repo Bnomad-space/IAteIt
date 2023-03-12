@@ -8,8 +8,26 @@
 import SwiftUI
 
 struct MyProfileView: View {
+    
+    let paddingLR: CGFloat = 16
+    
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Circle()
+                .frame(width: 122, height: 122)
+                .padding(20)
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                DailyMealCellView()
+
+            }
+            
+        }
+        .padding([.leading, .trailing], paddingLR)
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
