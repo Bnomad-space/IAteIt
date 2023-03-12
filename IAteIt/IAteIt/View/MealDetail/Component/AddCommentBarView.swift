@@ -10,8 +10,6 @@ import SwiftUI
 struct AddCommentBarView: View {
     @State var commentInput: String = ""
     
-    let paddingLR: CGFloat = 16
-    
     var body: some View {
         VStack {
             Spacer()
@@ -20,7 +18,7 @@ struct AddCommentBarView: View {
                     .frame(height: 43)
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.10), radius: 20, x: 4, y: 4)
-                    .padding([.leading, .trailing], paddingLR)
+                    
                 HStack {
                     TextField("Add a comment...", text: $commentInput)
                         .font(.body)
@@ -33,7 +31,7 @@ struct AddCommentBarView: View {
                             .font(.body)
                     })
                 }
-                .padding([.leading, .trailing], 34)
+                .padding([.leading, .trailing], 18)
             }
         }
     }

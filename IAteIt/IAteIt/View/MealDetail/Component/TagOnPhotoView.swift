@@ -9,16 +9,13 @@ import SwiftUI
 
 struct TagOnPhotoView: View {
     var tagText: String
-    var tagImage: String
     
     var body: some View {
         HStack(alignment: .center) {
-            Image(systemName: tagImage)
-                .font(.footnote)
             Text(tagText)
                 .font(.footnote)
         }
-        .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
+        .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
         .foregroundColor(.white)
         .background(
             RoundedRectangle(cornerRadius: 25)
@@ -29,6 +26,6 @@ struct TagOnPhotoView: View {
 
 struct TagOnPhotoView_Previews: PreviewProvider {
     static var previews: some View {
-        TagOnPhotoView(tagText: "맥도날드", tagImage: "location")
+        TagOnPhotoView(tagText: "07:40")
     }
 }

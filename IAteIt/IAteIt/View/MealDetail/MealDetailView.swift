@@ -18,12 +18,7 @@ struct MealDetailView: View {
         ZStack {
             ScrollView {
                 VStack {
-                    Text("맥모닝")
-                        .font(.headline)
-                        .padding(EdgeInsets(top: 8, leading: paddingLR, bottom: 1, trailing: paddingLR))
-                    Text("2 hours ago")
-                        .font(.footnote)
-                        .padding([.bottom], 8)
+                    MealDetailTopView()
                     
                     TabView {
                         ForEach(tempPlateList, id: \.self) { plate in
@@ -38,12 +33,13 @@ struct MealDetailView: View {
                             CommentView(comment: comment)
                         }
                     }
-                    .padding(EdgeInsets(top: 24, leading: paddingLR, bottom: 0, trailing: paddingLR))
+                    .padding([.top], 24)
                 }
             }
             AddCommentBarView()
                 .padding([.bottom], 10)
         }
+        .padding([.leading, .trailing], paddingLR)
     }
 }
 
