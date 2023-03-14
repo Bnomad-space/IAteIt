@@ -28,7 +28,14 @@ struct PhotoCardView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        TagOnPhotoView(tagText: plate.time)
+                        Text(plate.time)
+                        .font(.footnote)
+                        .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
+                        .foregroundColor(.white)
+                        .background(
+                            RoundedRectangle(cornerRadius: 25)
+                                .opacity(0.6)
+                        )
                     }
                     .padding()
                     
