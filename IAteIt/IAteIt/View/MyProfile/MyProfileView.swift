@@ -10,15 +10,22 @@ import SwiftUI
 struct MyProfileView: View {
     
     let paddingLR: CGFloat = 16
-    
+    let profileImgSize: CGFloat = 120
     
     
     var body: some View {
         VStack {
-            Circle()
-                .frame(width: 122, height: 122)
-                .padding(20)
-            
+            ZStack {
+                Circle()
+                    .frame(width: profileImgSize, height: profileImgSize)
+                Image("Sample_Profile1")
+                    .resizable()
+                    .scaledToFill()
+                    .layoutPriority(-1)
+            }
+            .clipped()
+            .cornerRadius(profileImgSize/2)
+
             ScrollView(.vertical, showsIndicators: false) {
                 DailyMealCellView()
 
