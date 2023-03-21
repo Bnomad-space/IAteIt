@@ -18,7 +18,7 @@ class CameraViewModel: ObservableObject {
         session = model.session
         
         let screenSize = UIScreen.main.bounds.size
-        let length = min(screenSize.width, screenSize.height)
+        let length: CGFloat = min(screenSize.width - 16, screenSize.height)
         cameraPreview = AnyView(CameraPreviewView(session: session)
             .frame(width: length, height: length))
     }

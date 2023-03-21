@@ -59,37 +59,45 @@ class Camera: NSObject, ObservableObject {
     }
     
     func capturePhoto() {
-           // 사진 옵션 세팅
-           let photoSettings = AVCapturePhotoSettings()
-           
-           self.output.capturePhoto(with: photoSettings, delegate: self)
-           print("[Camera]: Photo's taken")
-       }
-    
-    func savePhoto(_ imageData: Data) {
-        guard let image = UIImage(data: imageData) else { return }
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        // 사진 옵션 세팅
+        let photoSettings = AVCapturePhotoSettings()
+        photoSettings.isHighResolutionPhotoEnabled = true
+        photoSettings.photoQualityPrioritization = .quality
         
-        // 사진 저장하기
-        print("[Camera]: Photo's saved")
+        self.output.capturePhoto(with: photoSettings, delegate: self)
+        print("[Camera]: Photo's taken")
+    }
+    
+    func cropAndSavePhoto(_ imageData: Data) {
+        guard let image = UIImage(data: imageData) else { return }
+        let imageWidth = image.size.width
+        let imageHeight = image.size.height
+        let resize = imageHeight * 0.5
+        let cropRect = CGRect(x: resize - imageWidth * 0.5, y: 0, width: imageWidth, height: imageWidth)
+        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return }
+        let croppedUIImage = UIImage(cgImage: croppedCGImage,
+                                     scale: image.scale,
+                                     orientation: image.imageOrientation)
+        UIImageWriteToSavedPhotosAlbum(croppedUIImage, nil, nil, nil)
+        print("이미지가 저장되었습니다.")
     }
 }
+
+extension Camera: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+    }
     
-    extension Camera: AVCapturePhotoCaptureDelegate {
-        func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        }
+    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let imageData = photo.fileDataRepresentation() else { return }
+        self.cropAndSavePhoto(imageData)
         
-        func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        }
-        
-        func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        }
-        
-        func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-            guard let imageData = photo.fileDataRepresentation() else { return }
-            self.savePhoto(imageData)
-            
-            print("[CameraModel]: Capture routine's done")
-        }
+        print("[CameraModel]: Capture routine's done")
+    }
     
 }
