@@ -22,14 +22,9 @@ struct CameraView: View {
                 Spacer()
                 
                 Button(action: {viewModel.capturePhoto()}, label: {
-//                    ZStack{
-//                        Circle()
-//                            .fill(.black)
-//                            .frame(width: 55.33, height: 55.33)
                         Circle()
                             .stroke(.black,lineWidth: 4)
                             .frame(width: 72, height: 72)
-//                    }
                     .padding()
                 })
             }

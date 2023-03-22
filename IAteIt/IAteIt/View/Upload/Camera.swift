@@ -13,7 +13,7 @@ class Camera: NSObject, ObservableObject {
     var videoDeviceInput: AVCaptureDeviceInput!
     let output = AVCapturePhotoOutput()
     
-    // 카메라 셋업 과정을 담당하는 함수, positio
+    // 카메라 셋업 과정을 담당하는 함수, position
     func setUpCamera() {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                 for: .video, position: .back) {
@@ -30,13 +30,13 @@ class Camera: NSObject, ObservableObject {
                 }
                 session.startRunning() // 세션 시작
             } catch {
-                print(error) // 에러 프린트
+                print(error)
             }
         }
     }
     
     func requestAndCheckPermissions() {
-        // 카메라 권한 상태 확인
+
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
             // 권한 요청
@@ -59,7 +59,7 @@ class Camera: NSObject, ObservableObject {
     }
     
     func capturePhoto() {
-        // 사진 옵션 세팅
+
         let photoSettings = AVCapturePhotoSettings()
         photoSettings.isHighResolutionPhotoEnabled = true
         photoSettings.photoQualityPrioritization = .quality
