@@ -14,7 +14,7 @@ struct Meal: Identifiable, Codable {
     var caption: String?
     var generatedDate: Date
     var plates: [Plate]
-    var comments: [Comment]
+    var comments: [Comment]?
     
 }
 
