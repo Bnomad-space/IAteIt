@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct FeedView: View {
     var tempFeedPhotoCardList = TempFeedPhotoCardData().list
     var tempPlateList = TempPlateData().list
     
     var body: some View {
-        NavigationView{
             ScrollView {
                 VStack{
                     
@@ -45,7 +46,6 @@ struct FeedView: View {
             )
         }
         
-    }
 }
 
 struct FeedView_Previews: PreviewProvider {
