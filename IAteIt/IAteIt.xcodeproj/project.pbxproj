@@ -419,7 +419,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IAteIt/Preview Content\"";
-				DEVELOPMENT_TEAM = NH6966C938;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "이 앱은 사진을 촬영하기 위해 카메라를 사용합니다. 카메라 접근 권한을 허용해 주세요.";
@@ -452,7 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IAteIt/Preview Content\"";
-				DEVELOPMENT_TEAM = NH6966C938;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "이 앱은 사진을 촬영하기 위해 카메라를 사용합니다. 카메라 접근 권한을 허용해 주세요.";
