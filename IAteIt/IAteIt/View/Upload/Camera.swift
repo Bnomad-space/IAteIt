@@ -68,18 +68,17 @@ class Camera: NSObject, ObservableObject {
         print("[Camera]: Photo's taken")
     }
     
-    func cropAndSavePhoto(_ imageData: Data) {
-        guard let image = UIImage(data: imageData) else { return }
+    func cropAndSavePhoto(_ imageData: Data) -> UIImage {
+        guard let image = UIImage(data: imageData) else { return UIImage() }
         let imageWidth = image.size.width
         let imageHeight = image.size.height
         let resize = imageHeight * 0.5
         let cropRect = CGRect(x: resize - imageWidth * 0.5, y: 0, width: imageWidth, height: imageWidth)
-        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return }
+        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return UIImage() }
         let croppedUIImage = UIImage(cgImage: croppedCGImage,
                                      scale: image.scale,
                                      orientation: image.imageOrientation)
-        UIImageWriteToSavedPhotosAlbum(croppedUIImage, nil, nil, nil)
-        print("이미지가 저장되었습니다.")
+        return croppedUIImage
     }
 }
 
@@ -95,8 +94,9 @@ extension Camera: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let imageData = photo.fileDataRepresentation() else { return }
-        self.cropAndSavePhoto(imageData)
-        
+        let image = self.cropAndSavePhoto(imageData)
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        print("이미지가 저장되었습니다.")
         print("[CameraModel]: Capture routine's done")
     }
     
