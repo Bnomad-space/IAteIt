@@ -27,7 +27,7 @@ struct CameraPreviewView: UIViewRepresentable {
         view.videoPreviewLayer.session = session
         view.backgroundColor = .black
         view.videoPreviewLayer.videoGravity = .resizeAspectFill
-        view.videoPreviewLayer.cornerRadius = 0
+        view.videoPreviewLayer.cornerRadius = 20
         view.videoPreviewLayer.connection?.videoOrientation = .portrait
         
         return view
@@ -36,4 +36,5 @@ struct CameraPreviewView: UIViewRepresentable {
     func updateUIView(_ uiView: VideoPreviewView, context: Context) {
         
     }
+
 }
