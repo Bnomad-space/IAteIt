@@ -12,12 +12,6 @@ struct User: Identifiable, Codable {
     var nickname: String // Eng only, Must be unique, no blank space
     var profileImageUrl: String? // profileImageUrl nil이라면, systemName으로 Image 넣어주어야 함
     
-    init(id: String, nickname: String, profileImageUrl: String? = "default") {
-        self.id = id
-        self.nickname = nickname
-        self.profileImageUrl = profileImageUrl
-    }
-    
 }
 
 extension User {
