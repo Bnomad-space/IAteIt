@@ -12,7 +12,7 @@ struct Meal: Identifiable, Codable {
     var userId: String
     var location: String?
     var caption: String?
-    var generatedDate: Date
+    var uploadDate: Date
     var plates: [Plate]
     var comments: [Comment]?
     
@@ -20,8 +20,8 @@ struct Meal: Identifiable, Codable {
 
 extension Meal {
     static let meals = [
-        Meal(id: "meal1", userId: "user1", generatedDate: Date(), plates: [Plate.plates[0], Plate.plates[1]], comments: [Comment.comments[0]]),
-        Meal(id: "meal2", userId: "user2", generatedDate: Date(), plates: [Plate.plates[2]], comments: [Comment.comments[1], Comment.comments[2]])
+        Meal(id: "meal1", userId: "user1", uploadDate: Date(), plates: [Plate.plates[0], Plate.plates[1]], comments: [Comment.comments[0]]),
+        Meal(id: "meal2", userId: "user2", uploadDate: Date(), plates: [Plate.plates[2]], comments: [Comment.comments[1], Comment.comments[2]])
     ]
     
 }

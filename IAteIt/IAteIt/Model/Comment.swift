@@ -12,15 +12,15 @@ struct Comment: Identifiable, Codable {
     let userId: String
     let mealId: String
     var comment: String
-    let uploadTimestamp: Date
+    let uploadDate: Date
     
 }
 
 extension Comment {
     static let comments: [Comment] = [
-        Comment(id: UUID().uuidString, userId: "user1", mealId: "meal1", comment: "This is great", uploadTimestamp: Date()),
-        Comment(id: UUID().uuidString, userId: "user1", mealId: "meal2", comment: "This is comment From rain", uploadTimestamp: Date()),
-        Comment(id: UUID().uuidString, userId: "user2", mealId: "meal2", comment: "This is awful", uploadTimestamp: Date())
+        Comment(id: UUID().uuidString, userId: "user1", mealId: "meal1", comment: "This is great", uploadDate: Date()),
+        Comment(id: UUID().uuidString, userId: "user1", mealId: "meal2", comment: "This is comment From rain", uploadDate: Date()),
+        Comment(id: UUID().uuidString, userId: "user2", mealId: "meal2", comment: "This is awful", uploadDate: Date())
     ]
     
 }
