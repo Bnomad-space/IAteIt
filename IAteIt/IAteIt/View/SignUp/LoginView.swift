@@ -38,10 +38,14 @@ struct LoginView: View {
                 )
                 .padding([.bottom], 32)
             
-            Text("I'll sign in next time.")
-                .font(.body)
-                .foregroundColor(.gray)
-                .underline()
+            Button(action: {
+                // TODO: 액션 추가
+            }, label: {
+                Text("I'll sign in next time.")
+                    .font(.body)
+                    .foregroundColor(.gray)
+                    .underline()
+            })
         }
     }
 }
