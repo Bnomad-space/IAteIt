@@ -30,9 +30,12 @@ struct LoginView: View {
                       print("Authorisation failed: \(error.localizedDescription)")
                   }
                 }
-                .signInWithAppleButtonStyle(.whiteOutline)
+                .signInWithAppleButtonStyle(.white)
                 .frame(width: 268, height: 50, alignment: .center)
-                .cornerRadius(25)
+                .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(.black, lineWidth: 1)
+                )
                 .padding([.bottom], 32)
             
             Text("I'll sign in next time.")
