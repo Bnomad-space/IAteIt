@@ -29,6 +29,7 @@
 		7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069DF29A7A7B400284CBD /* CommentView.swift */; };
 		7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */; };
 		7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */; };
+		7E9198A329CF56B400044815 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9198A229CF56B400044815 /* LoginView.swift */; };
 		7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28729A5228D0021B9FE /* IAteItApp.swift */; };
 		7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28929A5228D0021B9FE /* ContentView.swift */; };
 		7EFFE28C29A5228F0021B9FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFE28B29A5228F0021B9FE /* Assets.xcassets */; };
@@ -69,6 +70,8 @@
 		7E6069DF29A7A7B400284CBD /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardView.swift; sourceTree = "<group>"; };
 		7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagOnPhotoView.swift; sourceTree = "<group>"; };
+		7E9198A229CF56B400044815 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7E9198A429CF591200044815 /* IAteIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IAteIt.entitlements; sourceTree = "<group>"; };
 		7EFFE28429A5228D0021B9FE /* IAteIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IAteIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EFFE28729A5228D0021B9FE /* IAteItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAteItApp.swift; sourceTree = "<group>"; };
 		7EFFE28929A5228D0021B9FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -127,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				7E6069CC29A5CADE00284CBD /* SignUpView.swift */,
+				7E9198A229CF56B400044815 /* LoginView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -242,6 +246,7 @@
 		7EFFE28629A5228D0021B9FE /* IAteIt */ = {
 			isa = PBXGroup;
 			children = (
+				7E9198A429CF591200044815 /* IAteIt.entitlements */,
 				DF2213A329BB3215000134FC /* Network */,
 				7E6069D929A5CB1E00284CBD /* Utility */,
 				7E6069C629A5CA6900284CBD /* View */,
@@ -371,6 +376,7 @@
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */,
+				7E9198A329CF56B400044815 /* LoginView.swift in Sources */,
 				DF2213A229BB2ADC000134FC /* AppDelegate.swift in Sources */,
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
@@ -506,6 +512,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = IAteIt/IAteIt.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -540,6 +547,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = IAteIt/IAteIt.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
