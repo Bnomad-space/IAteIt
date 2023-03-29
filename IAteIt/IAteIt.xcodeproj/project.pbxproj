@@ -38,6 +38,8 @@
 		DF2213A029BB293C000134FC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DF22139F29BB293C000134FC /* FirebaseStorage */; };
 		DF2213A229BB2ADC000134FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2213A129BB2ADC000134FC /* AppDelegate.swift */; };
 		DF2213A529BB324F000134FC /* FirebaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2213A429BB324F000134FC /* FirebaseConnector.swift */; };
+		8C73F00329BDD010007D1A1E /* DailyMealCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00229BDD010007D1A1E /* DailyMealCellView.swift */; };
+		8C73F00529BDDAE6007D1A1E /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */; };
 		DF883D4229B58F2C0029DC60 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4129B58F2C0029DC60 /* User.swift */; };
 		DF883D4629B58F3D0029DC60 /* Plate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4529B58F3D0029DC60 /* Plate.swift */; };
 		DF883D4829B58F430029DC60 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4729B58F430029DC60 /* Comment.swift */; };
@@ -75,6 +77,8 @@
 		DF22139A29BB2843000134FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF2213A129BB2ADC000134FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF2213A429BB324F000134FC /* FirebaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConnector.swift; sourceTree = "<group>"; };
+		8C73F00229BDD010007D1A1E /* DailyMealCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMealCellView.swift; sourceTree = "<group>"; };
+		8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		DF883D4129B58F2C0029DC60 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DF883D4529B58F3D0029DC60 /* Plate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plate.swift; sourceTree = "<group>"; };
 		DF883D4729B58F430029DC60 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				7E6069D429A5CAFA00284CBD /* MyProfileView.swift */,
+				8C73F00229BDD010007D1A1E /* DailyMealCellView.swift */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				7E6069DB29A5CB3A00284CBD /* TempExtension.swift */,
+				8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -349,10 +355,12 @@
 				04C1189529B74DD60073EDB7 /* TempFeedHeader.swift in Sources */,
 				7E6069DC29A5CB3A00284CBD /* TempExtension.swift in Sources */,
 				7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */,
+				8C73F00529BDDAE6007D1A1E /* DateFormatter.swift in Sources */,
 				04C1189329B74D6C0073EDB7 /* FeedHeaderView.swift in Sources */,
 				7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */,
 				DF883D4829B58F430029DC60 /* Comment.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
+				8C73F00329BDD010007D1A1E /* DailyMealCellView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				DF883D4229B58F2C0029DC60 /* User.swift in Sources */,
 				7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */,
@@ -505,7 +513,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 승인이 필요합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "이 앱은 사진을 촬영하기 위해 카메라를 사용합니다. 카메라 접근 권한을 허용해 주세요.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "이 앱은 사진을 촬영 후 저장합니다. 앨범 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -538,7 +547,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 승인이 필요합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "이 앱은 사진을 촬영하기 위해 카메라를 사용합니다. 카메라 접근 권한을 허용해 주세요.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "이 앱은 사진을 촬영 후 저장합니다. 앨범 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

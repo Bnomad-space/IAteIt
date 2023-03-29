@@ -16,7 +16,11 @@ class CameraViewModel: ObservableObject {
     init() {
         model = Camera()
         session = model.session
-        cameraPreview = AnyView(CameraPreviewView(session: session))
+        
+        let screenSize = UIScreen.main.bounds.size
+        let length: CGFloat = min(screenSize.width - 16, screenSize.height)
+        cameraPreview = AnyView(CameraPreviewView(session: session)
+            .frame(width: length, height: length))
     }
     
     func configure() {
@@ -24,6 +28,7 @@ class CameraViewModel: ObservableObject {
     }
     
     func capturePhoto() {
+        model.capturePhoto()
         print("[CameraViewModel]: Photo captured!")
     }
     
