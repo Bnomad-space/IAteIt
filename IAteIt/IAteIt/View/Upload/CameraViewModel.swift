@@ -13,8 +13,11 @@ class CameraViewModel: ObservableObject {
     private let model: Camera
     private let session: AVCaptureSession
     private var isCameraBusy = false
+    let hapticImpact = UIImpactFeedbackGenerator()
     let cameraPreview: AnyView
     private var subscriptions = Set<AnyCancellable>()
+    
+    @Published var shutterEffect = false
     
     init() {
         model = Camera()
@@ -37,6 +40,15 @@ class CameraViewModel: ObservableObject {
     
     func capturePhoto() {
         if isCameraBusy == false {
+            hapticImpact.impactOccurred()
+            withAnimation(.easeInOut(duration: 0.1)) {
+                shutterEffect = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                withAnimation(.easeInOut(duration: 0.1)) {
+                    self.shutterEffect = false
+                }
+            }
             model.capturePhoto()
             print("[CameraViewModel]: Photo captured!")
         } else {
