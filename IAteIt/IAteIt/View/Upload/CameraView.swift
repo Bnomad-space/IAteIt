@@ -16,19 +16,25 @@ struct CameraView: View {
             HStack() {
                 Button(action: {}, label: {
                     Image(systemName: "multiply")
-                        .frame(width: 75, height: 40, alignment: .leading)
-                        .padding(.leading)
+                        .frame(width: 40, height: 40)
+//                        .padding(.leading)
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundColor(.black)
                 })
-                Text("I'm eating it.")
-                    .frame(width: 240, height: 49)
-                    .font(.system(size: 20, weight: .semibold))
-                
                 
                 Spacer()
+
+                    
                 
+                Text("I'm eating it.")
+                    .frame(width: 240, height: 49, alignment: .center)
+                    .font(.system(size: 20, weight: .semibold))
+                Spacer()
+                
+                Text("")
+                    .frame(width: 40)
             }
+            
             ZStack {
                 viewModel.cameraPreview
                     .onAppear {
