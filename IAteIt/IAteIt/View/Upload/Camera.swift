@@ -13,11 +13,12 @@ class Camera: NSObject, ObservableObject {
     var videoDeviceInput: AVCaptureDeviceInput!
     let output = AVCapturePhotoOutput()
     
-    // 카메라 셋업 과정을 담당하는 함수, position
+    @Published var isCameraBusy = false
+    
     func setUpCamera() {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                 for: .video, position: .back) {
-            do { // 카메라가 사용 가능하면 세션에 input과 output을 연결
+            do {
                 videoDeviceInput = try AVCaptureDeviceInput(device: device)
                 if session.canAddInput(videoDeviceInput) {
                     session.addInput(videoDeviceInput)
@@ -28,7 +29,7 @@ class Camera: NSObject, ObservableObject {
                     output.isHighResolutionCaptureEnabled = true
                     output.maxPhotoQualityPrioritization = .quality
                 }
-                session.startRunning() // 세션 시작
+                session.startRunning()
             } catch {
                 print(error)
             }
@@ -39,7 +40,7 @@ class Camera: NSObject, ObservableObject {
 
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
-            // 권한 요청
+            
             AVCaptureDevice.requestAccess(for: .video) { [weak self] authStatus in
                 if authStatus {
                     DispatchQueue.main.async {
@@ -50,10 +51,10 @@ class Camera: NSObject, ObservableObject {
         case .restricted:
             break
         case .authorized:
-            // 이미 권한 받은 경우 셋업
+            
             setUpCamera()
         default:
-            // 거절했을 경우
+            
             print("Permession declined")
         }
     }
@@ -82,6 +83,7 @@ class Camera: NSObject, ObservableObject {
 
 extension Camera: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+        self.isCameraBusy = true
     }
     
 //    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
@@ -94,6 +96,7 @@ extension Camera: AVCapturePhotoCaptureDelegate {
         guard let imageData = photo.fileDataRepresentation() else { return }
         let image = self.cropAndSavePhoto(imageData)
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        self.isCameraBusy = false
         print("이미지가 저장되었습니다.")
         print("[CameraModel]: Capture routine's done")
     }
