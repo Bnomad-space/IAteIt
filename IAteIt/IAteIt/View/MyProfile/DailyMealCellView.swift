@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Meal: Identifiable {
+struct tempMeal: Identifiable {
     let id: String
     let user: String
     let date: Date
@@ -24,12 +24,12 @@ struct MockPlate {
 struct DailyMealCellView: View {
     let paddingLR: CGFloat = 16
     
-    let meals: [Meal] = [
-        Meal(id: "1", user: "hero", date: Date.now, plate: [MockPlate(mealId: "1", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.now)]),
-        Meal(id: "2", user: "hero", date: Date.now, plate: [MockPlate(mealId: "2", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.now)]),
-        Meal(id: "3", user: "joij", date: Date.now, plate: [MockPlate(mealId: "3", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.distantPast)]),
-        Meal(id: "3", user: "joij", date: Date.now, plate: [MockPlate(mealId: "3", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.distantPast)]),
-        Meal(id: "3", user: "joij", date: Date.now, plate: [MockPlate(mealId: "3", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.distantPast)])
+    let meals: [tempMeal] = [
+        tempMeal(id: "1", user: "hero", date: Date.now, plate: [MockPlate(mealId: "1", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.now)]),
+        tempMeal(id: "2", user: "hero", date: Date.now, plate: [MockPlate(mealId: "2", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.now)]),
+        tempMeal(id: "3", user: "joij", date: Date.now, plate: [MockPlate(mealId: "3", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.distantPast)]),
+        tempMeal(id: "3", user: "joij", date: Date.now, plate: [MockPlate(mealId: "3", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.distantPast)]),
+        tempMeal(id: "3", user: "joij", date: Date.now, plate: [MockPlate(mealId: "3", imageUrl: "https://cdn.hswstatic.com/gif/google-update.jpg", uploadTimestamp: Date.distantPast)])
     ]
     
         
