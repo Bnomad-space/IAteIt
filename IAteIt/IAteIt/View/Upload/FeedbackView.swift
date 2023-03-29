@@ -46,9 +46,7 @@ struct FeedbackView: View {
                             Capsule()
                                 .overlay(
                                     HStack {
-                                        Image(systemName: "arrow.left")
-                                            .foregroundColor(.white)
-                                        Text("Retake")
+                                        Text("\(Image(systemName: "arrow.left"))  Retake")
                                             .font(.system(size: 20, weight: .semibold))
                                             .foregroundColor(.white)
                                     })
@@ -63,12 +61,9 @@ struct FeedbackView: View {
                             Capsule()
                                 .overlay(
                                     HStack {
-                                        Text("Upload")
+                                        Text("Upload  \(Image(systemName: "arrow.right"))")
                                             .font(.system(size: 20, weight: .semibold))
                                             .foregroundColor(.white)
-                                        Image(systemName: "arrow.right")
-                                            .foregroundColor(.white)
-
                                     })
                                 .frame(width: 140, height: 50)
                                 .foregroundColor(.black)

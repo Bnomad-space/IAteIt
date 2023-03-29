@@ -13,7 +13,10 @@ class Camera: NSObject, ObservableObject {
     var videoDeviceInput: AVCaptureDeviceInput!
     let output = AVCapturePhotoOutput()
     
+
     @Published var isCameraBusy = false
+    @Published var isSaved = false
+    @Published var picData = Data(count: 0)
     
     func setUpCamera() {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera,
@@ -67,23 +70,28 @@ class Camera: NSObject, ObservableObject {
         
         self.output.capturePhoto(with: photoSettings, delegate: self)
         print("[Camera]: Photo's taken")
+        
     }
     
-    func cropAndSavePhoto(_ imageData: Data) -> UIImage {
-        guard let image = UIImage(data: imageData) else { return UIImage() }
+    func cropAndSavePhoto() {
+
+        let image = UIImage(data: self.picData)!
         let imageWidth = image.size.width
         let imageHeight = image.size.height
         let resize = imageHeight * 0.5
         let cropRect = CGRect(x: resize - imageWidth * 0.5, y: 0, width: imageWidth, height: imageWidth)
-        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return UIImage() }
+        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return }
         let croppedUIImage = UIImage(cgImage: croppedCGImage, scale: image.scale, orientation: image.imageOrientation)
-        return croppedUIImage
+        UIImageWriteToSavedPhotosAlbum(croppedUIImage, nil, nil, nil)
+        print("[Camera]: Photo's saved")
+        self.isSaved = true
     }
 }
 
 extension Camera: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
         self.isCameraBusy = true
+        self.session.stopRunning()
     }
     
 //    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
@@ -93,11 +101,17 @@ extension Camera: AVCapturePhotoCaptureDelegate {
 //    }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        if error != nil {
+            return
+        }
         guard let imageData = photo.fileDataRepresentation() else { return }
-        let image = self.cropAndSavePhoto(imageData)
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        self.picData = imageData
+        
+        
+
         self.isCameraBusy = false
-        print("이미지가 저장되었습니다.")
+
         print("[CameraModel]: Capture routine's done")
     }
     

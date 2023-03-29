@@ -17,7 +17,9 @@ class CameraViewModel: ObservableObject {
     let cameraPreview: AnyView
     private var subscriptions = Set<AnyCancellable>()
     
+    @Published var isTaken = false
     @Published var shutterEffect = false
+    @Published var isSaved = false
     
     init() {
         model = Camera()
@@ -54,5 +56,28 @@ class CameraViewModel: ObservableObject {
         } else {
             print("[CameraViewModel]: Camera's busy.")
         }
+
+        DispatchQueue.main.async {
+            withAnimation{self.isTaken.toggle()}
+        }
+        
+    }
+    
+    func reTake() {
+        
+        DispatchQueue.global(qos: .background).async {
+            self.session.startRunning()
+            
+            DispatchQueue.main.async {
+                withAnimation{self.isTaken.toggle()}
+                
+                self.isSaved = false
+            }
+        }
+    }
+    
+    func upload() {
+        model.cropAndSavePhoto()
+        
     }
 }
