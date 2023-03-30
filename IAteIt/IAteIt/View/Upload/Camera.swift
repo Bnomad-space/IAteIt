@@ -74,7 +74,7 @@ class Camera: NSObject, ObservableObject {
     }
     
     func cropAndSavePhoto() {
-
+        let watermark = UIImage(named: "Sample_Coffee")
         let image = UIImage(data: self.picData)!
         let imageWidth = image.size.width
         let imageHeight = image.size.height
@@ -82,7 +82,8 @@ class Camera: NSObject, ObservableObject {
         let cropRect = CGRect(x: resize - imageWidth * 0.5, y: 0, width: imageWidth, height: imageWidth)
         guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return }
         let croppedUIImage = UIImage(cgImage: croppedCGImage, scale: image.scale, orientation: image.imageOrientation)
-        UIImageWriteToSavedPhotosAlbum(croppedUIImage, nil, nil, nil)
+        let newImage = croppedUIImage.overlayWith(image: watermark ?? UIImage())
+        UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
         print("[Camera]: Photo's saved")
         self.isSaved = true
     }
@@ -115,4 +116,20 @@ extension Camera: AVCapturePhotoCaptureDelegate {
         print("[CameraModel]: Capture routine's done")
     }
     
+}
+
+extension UIImage {
+    // 워터마크 오버레이 헬퍼 함수
+    func overlayWith(image: UIImage) -> UIImage {
+        let newSize = CGSize(width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        
+        draw(in: CGRect(origin: CGPoint.zero, size: size))
+        image.draw(in: CGRect(origin: CGPoint(x: size.width - 800, y: size.height - 2400), size: image.size))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
 }
