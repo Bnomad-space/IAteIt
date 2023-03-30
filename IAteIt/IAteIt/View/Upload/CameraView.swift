@@ -13,21 +13,14 @@ struct CameraView: View {
     @ObservedObject var model = Camera()
     
     static let dateFormat: DateFormatter = {
-          let formatter = DateFormatter()
-           formatter.dateFormat = "HH:mm"
-           return formatter
-       }()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
     
     @State var currentTime = Date()
     
-
-
-    
-    
-    
-    
     var body: some View {
-        
         VStack {
             HStack {
                 Button(action: {}, label: {
@@ -57,16 +50,15 @@ struct CameraView: View {
                     }
                     .padding(.bottom, 120)
                     .overlay(
-                Capsule()
-                    .foregroundColor(.gray)
-                    .opacity(0.6)
-                    .frame(width: 60, height: 28)
-                    .overlay(
-                        Text("\(currentTime, formatter: CameraView.dateFormat)")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.white)
-                )
-                    .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
+                        Capsule()
+                            .foregroundColor(Color.gray.opacity(0.6))
+                            .frame(width: 60, height: 28)
+                            .overlay(
+                                Text("\(currentTime, formatter: CameraView.dateFormat)")
+                                    .font(.system(size: 13, weight: .regular))
+                                    .foregroundColor(.white)
+                            )
+                            .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
                 
                 
                 
@@ -83,7 +75,6 @@ struct CameraView: View {
                                                 .foregroundColor(.white)
                                         })
                                     .frame(width: 140, height: 50)
-                                
                                     .foregroundColor(.gray)
                             })
                             .padding(.leading)

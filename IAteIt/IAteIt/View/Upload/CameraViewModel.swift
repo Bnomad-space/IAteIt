@@ -56,7 +56,7 @@ class CameraViewModel: ObservableObject {
         } else {
             print("[CameraViewModel]: Camera's busy.")
         }
-
+        
         DispatchQueue.main.async {
             withAnimation{self.isTaken.toggle()}
         }

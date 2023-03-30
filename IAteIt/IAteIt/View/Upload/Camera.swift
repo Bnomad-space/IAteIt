@@ -12,8 +12,15 @@ class Camera: NSObject, ObservableObject {
     var session = AVCaptureSession()
     var videoDeviceInput: AVCaptureDeviceInput!
     let output = AVCapturePhotoOutput()
+    static let dateFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
     
-
+    @State var currentTime = Date()
+    
+    
     @Published var isCameraBusy = false
     @Published var isSaved = false
     @Published var picData = Data(count: 0)
@@ -30,9 +37,11 @@ class Camera: NSObject, ObservableObject {
                 if session.canAddOutput(output) {
                     session.addOutput(output)
                     output.isHighResolutionCaptureEnabled = true
-                    output.maxPhotoQualityPrioritization = .quality
+                    output.maxPhotoQualityPrioritization = .balanced
                 }
-                session.startRunning()
+                DispatchQueue.global(qos: .background).async {
+                    self.session.startRunning()
+                }
             } catch {
                 print(error)
             }
@@ -40,7 +49,7 @@ class Camera: NSObject, ObservableObject {
     }
     
     func requestAndCheckPermissions() {
-
+        
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
             
@@ -63,26 +72,50 @@ class Camera: NSObject, ObservableObject {
     }
     
     func capturePhoto() {
-
+        
         let photoSettings = AVCapturePhotoSettings()
-        photoSettings.isHighResolutionPhotoEnabled = true
-        photoSettings.photoQualityPrioritization = .quality
+        //        photoSettings.isHighResolutionPhotoEnabled = true
+        //        photoSettings.photoQualityPrioritization = .quality
         
         self.output.capturePhoto(with: photoSettings, delegate: self)
         print("[Camera]: Photo's taken")
         
     }
     
+    func viewConvert(from view: UIView) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    
     func cropAndSavePhoto() {
-        let watermark = UIImage(named: "Sample_Coffee")
         let image = UIImage(data: self.picData)!
         let imageWidth = image.size.width
         let imageHeight = image.size.height
         let resize = imageHeight * 0.5
         let cropRect = CGRect(x: resize - imageWidth * 0.5, y: 0, width: imageWidth, height: imageWidth)
+        
         guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return }
         let croppedUIImage = UIImage(cgImage: croppedCGImage, scale: image.scale, orientation: image.imageOrientation)
-        let newImage = croppedUIImage.overlayWith(image: watermark ?? UIImage())
+        
+        let capsuleView = UIView(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
+        capsuleView.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
+        capsuleView.layer.cornerRadius = 38
+        
+        let timeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
+        timeLabel.text = Camera.dateFormat.string(from: Date())
+        timeLabel.font = UIFont.systemFont(ofSize: 38)
+        timeLabel.textColor = .white
+        timeLabel.textAlignment = .center
+        
+        capsuleView.addSubview(timeLabel)
+        
+        let viewConvert = viewConvert(from: capsuleView)
+        let newImage = croppedUIImage.overlayWith(image: viewConvert ?? UIImage())
+        
         UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
         print("[Camera]: Photo's saved")
         self.isSaved = true
@@ -95,11 +128,11 @@ extension Camera: AVCapturePhotoCaptureDelegate {
         self.session.stopRunning()
     }
     
-//    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-//    }
-//
-//    func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-//    }
+    //    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+    //    }
+    //
+    //    func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+    //    }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error != nil {
@@ -110,22 +143,22 @@ extension Camera: AVCapturePhotoCaptureDelegate {
         self.picData = imageData
         
         
-
+        
         self.isCameraBusy = false
-
+        
         print("[CameraModel]: Capture routine's done")
     }
     
 }
 
 extension UIImage {
-    // 워터마크 오버레이 헬퍼 함수
+    
     func overlayWith(image: UIImage) -> UIImage {
         let newSize = CGSize(width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         
         draw(in: CGRect(origin: CGPoint.zero, size: size))
-        image.draw(in: CGRect(origin: CGPoint(x: size.width - 800, y: size.height - 2400), size: image.size))
+        image.draw(in: CGRect(origin: CGPoint(x: size.width - 210, y: size.height - 1035), size: image.size))
         
         let newImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
@@ -133,3 +166,4 @@ extension UIImage {
         return newImage
     }
 }
+
