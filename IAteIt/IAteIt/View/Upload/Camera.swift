@@ -12,13 +12,7 @@ class Camera: NSObject, ObservableObject {
     var session = AVCaptureSession()
     var videoDeviceInput: AVCaptureDeviceInput!
     let output = AVCapturePhotoOutput()
-    static let dateFormat: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter
-    }()
-    
-    @State var currentTime = Date()
+
     
     
     @Published var isCameraBusy = false
@@ -90,33 +84,37 @@ class Camera: NSObject, ObservableObject {
         return image
     }
     
-    
-    func cropAndSavePhoto() {
+    func cropPictureSquare() -> UIImage? {
         let image = UIImage(data: self.picData)!
         let imageWidth = image.size.width
         let imageHeight = image.size.height
         let resize = imageHeight * 0.5
         let cropRect = CGRect(x: resize - imageWidth * 0.5, y: 0, width: imageWidth, height: imageWidth)
         
-        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return }
+        guard let croppedCGImage = image.cgImage?.cropping(to: cropRect) else { return nil }
         let croppedUIImage = UIImage(cgImage: croppedCGImage, scale: image.scale, orientation: image.imageOrientation)
-        
+        return croppedUIImage
+    }
+    
+    func timestampOverlay(image: UIImage) -> UIImage {
         let capsuleView = UIView(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
         capsuleView.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
         capsuleView.layer.cornerRadius = 38
         
         let timeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
-        timeLabel.text = Camera.dateFormat.string(from: Date())
+        timeLabel.text = Date().toTimeString()
         timeLabel.font = UIFont.systemFont(ofSize: 38)
         timeLabel.textColor = .white
         timeLabel.textAlignment = .center
-        
         capsuleView.addSubview(timeLabel)
         
         let viewConvert = viewConvert(from: capsuleView)
-        let newImage = croppedUIImage.overlayWith(image: viewConvert ?? UIImage())
-        
-        UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
+        let newImage = image.overlayWith(image: viewConvert ?? UIImage())
+        return newImage
+    }
+
+    func savePhoto(image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         print("[Camera]: Photo's saved")
         self.isSaved = true
     }

@@ -77,7 +77,8 @@ class CameraViewModel: ObservableObject {
     }
     
     func upload() {
-        model.cropAndSavePhoto()
-        
+        guard let croppedImage = model.cropPictureSquare() else { return }
+        let overlayImage = model.timestampOverlay(image: croppedImage)
+        model.savePhoto(image: overlayImage)
     }
 }
