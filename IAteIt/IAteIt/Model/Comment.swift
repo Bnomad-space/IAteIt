@@ -9,17 +9,18 @@ import Foundation
 
 struct Comment: Identifiable, Codable {
     let id: String
-    let plateId: String
-    let ownerId: String
+    let userId: String
+    let mealId: String
     var comment: String
-    let commentTimestamp: Date
+    let uploadDate: Date
     
 }
 
 extension Comment {
     static let comments: [Comment] = [
-        Comment(id: UUID().uuidString, plateId: "plate1", ownerId: "123", comment: "This is great", commentTimestamp: Date()),
-        Comment(id: UUID().uuidString, plateId: "plate2", ownerId: "456", comment: "This is awful", commentTimestamp: Date())
-        
+        Comment(id: UUID().uuidString, userId: "user1", mealId: "meal1", comment: "This is great", uploadDate: Date()),
+        Comment(id: UUID().uuidString, userId: "user1", mealId: "meal2", comment: "This is comment From rain", uploadDate: Date()),
+        Comment(id: UUID().uuidString, userId: "user2", mealId: "meal2", comment: "This is awful", uploadDate: Date())
     ]
+    
 }
