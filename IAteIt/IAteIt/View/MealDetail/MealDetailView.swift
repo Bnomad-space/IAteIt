@@ -11,29 +11,32 @@ struct MealDetailView: View {
     var tempPlateList = TempPlateData().list
     var tempCommentList = TempCommentData().list
     
+    var mealData: Meal = Meal.meals[3]
+    
     let paddingLR: CGFloat = 16
-    let photoCorner: CGFloat = 20
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView()
+                    MealDetailTopView(meal: mealData)
                     
                     TabView {
-                        ForEach(tempPlateList, id: \.self) { plate in
+                        ForEach(mealData.plates, id: \.self) { plate in
                             PhotoCardView(plate: plate)
                         }
                     }
                     .frame(minHeight: 358)
                     .tabViewStyle(.page)
                     
-                    VStack(alignment: .leading, spacing: 12) {
-                        ForEach(tempCommentList, id: \.self) { comment in
-                            CommentView(comment: comment)
+                    if let comments = mealData.comments {
+                        VStack(alignment: .leading, spacing: 12) {
+                            ForEach(comments, id: \.self) { comment in
+                                CommentView(comment: comment, userId: comment.userId)
+                            }
                         }
+                        .padding([.top], 24)
                     }
-                    .padding([.top], 24)
                 }
             }
             AddCommentBarView()

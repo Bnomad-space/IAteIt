@@ -24,6 +24,6 @@ struct TagOnPhotoView: View {
 
 struct TagOnPhotoView_Previews: PreviewProvider {
     static var previews: some View {
-        TagOnPhotoView(tagText: "07:40")
+        TagOnPhotoView(tagText: Plate.plates[3].uploadDate.toTimeString())
     }
 }

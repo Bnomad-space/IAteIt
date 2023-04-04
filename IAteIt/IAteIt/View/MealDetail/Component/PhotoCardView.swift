@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PhotoCardView: View {
-    var plate: TempPlate
+    var plate: Plate
     
     let photoCorner: CGFloat = 20
     
@@ -17,7 +17,7 @@ struct PhotoCardView: View {
             ZStack {
                 Rectangle()
                     .aspectRatio(1, contentMode: .fit)
-                Image(plate.image)
+                Image(plate.imageUrl)
                     .resizable()
                     .scaledToFill()
                     .layoutPriority(-1)
@@ -28,7 +28,7 @@ struct PhotoCardView: View {
             VStack {
                 HStack {
                     Spacer()
-                    TagOnPhotoView(tagText: plate.time)
+                    TagOnPhotoView(tagText: plate.uploadDate.toTimeString())
                 }
                 .padding()
                 
@@ -40,6 +40,6 @@ struct PhotoCardView: View {
 
 struct PhotoCardView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotoCardView(plate: TempPlateData().list[0])
+        PhotoCardView(plate: Plate.plates[3])
     }
 }
