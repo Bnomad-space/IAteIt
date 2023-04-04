@@ -13,7 +13,7 @@ struct CommentView: View {
     var comment: TempComment
     
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: 12) {
             ZStack {
                 Rectangle()
                     .aspectRatio(contentMode: .fit)
@@ -40,7 +40,6 @@ struct CommentView: View {
                 Text(comment.comment)
                     .font(.subheadline)
             }
-            .padding([.leading], 12)
             
             Spacer()
         }
