@@ -26,14 +26,15 @@ struct CameraView: View {
                 Button(action: {}, label: {
                     Image(systemName: "multiply")
                         .frame(width: 40, height: 40)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(.headline)
                         .foregroundColor(.black)
                 })
                 
                 Spacer()
                 Text("I'm eating it.")
                     .frame(width: 240, height: 49, alignment: .center)
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(.headline)
+                
                 Spacer()
                 
                 Text("")
@@ -51,11 +52,11 @@ struct CameraView: View {
                     .padding(.bottom, 120)
                     .overlay(
                         Capsule()
-                            .foregroundColor(Color.gray.opacity(0.6))
+                            .foregroundColor(Color.black.opacity(0.6))
                             .frame(width: 60, height: 28)
                             .overlay(
                                 Text("\(currentTime, formatter: CameraView.dateFormat)")
-                                    .font(.system(size: 13, weight: .regular))
+                                    .font(.footnote)
                                     .foregroundColor(.white)
                             )
                             .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
@@ -71,7 +72,8 @@ struct CameraView: View {
                                     .overlay(
                                         HStack {
                                             Text("\(Image(systemName: "arrow.left"))  Retake")
-                                                .font(.system(size: 20, weight: .semibold))
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
                                                 .foregroundColor(.white)
                                         })
                                     .frame(width: 140, height: 50)
@@ -85,7 +87,8 @@ struct CameraView: View {
                                     .overlay(
                                         HStack {
                                             Text("Upload  \(Image(systemName: "arrow.right"))")
-                                                .font(.system(size: 20, weight: .semibold))
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
                                                 .foregroundColor(.white)
                                         })
                                     .frame(width: 140, height: 50)

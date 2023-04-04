@@ -57,7 +57,7 @@ class Camera: NSObject, ObservableObject {
         case .restricted:
             break
         case .authorized:
-            
+
             setUpCamera()
         default:
             
@@ -98,7 +98,7 @@ class Camera: NSObject, ObservableObject {
     
     func timestampOverlay(image: UIImage) -> UIImage {
         let capsuleView = UIView(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
-        capsuleView.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
+        capsuleView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         capsuleView.layer.cornerRadius = 38
         
         let timeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
