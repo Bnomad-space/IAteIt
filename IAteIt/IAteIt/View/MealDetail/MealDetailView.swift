@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    var tempPlateList = TempPlateData().list
-    var tempCommentList = TempCommentData().list
-    
-    var mealData: Meal = Meal.meals[3]
+    var meal: Meal
     
     let paddingLR: CGFloat = 16
     
@@ -19,17 +16,17 @@ struct MealDetailView: View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView(meal: mealData)
+                    MealDetailTopView(meal: meal)
                     
                     TabView {
-                        ForEach(mealData.plates, id: \.self) { plate in
+                        ForEach(meal.plates, id: \.self) { plate in
                             PhotoCardView(plate: plate)
                         }
                     }
                     .frame(minHeight: 358)
                     .tabViewStyle(.page)
                     
-                    if let comments = mealData.comments {
+                    if let comments = meal.comments {
                         VStack(alignment: .leading, spacing: 12) {
                             ForEach(comments, id: \.self) { comment in
                                 CommentView(comment: comment, userId: comment.userId)
@@ -48,6 +45,6 @@ struct MealDetailView: View {
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView()
+        MealDetailView(meal: Meal.meals[2])
     }
 }

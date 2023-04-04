@@ -13,30 +13,31 @@ struct FeedView: View {
     var tempFeedPhotoCardList = TempFeedPhotoCardData().list
     var tempPlateList = TempPlateData().list
     
+    var mealList = Meal.meals
+    
+    let paddingLR: CGFloat = 16
+    
     var body: some View {
-            ScrollView {
-                VStack{
-                    
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 27) {
                     AddMealView()
                         .padding([.top], 24)
-                        .padding([.bottom], 24)
-                        .padding([.leading, .trailing], 16)
-                    ForEach(tempFeedPhotoCardList, id: \.self) { postInfo in
-                        FeedHeaderView(PostInfo: postInfo)
-                            .padding([.bottom], 8)
-                        TabView {
-                            ForEach(tempPlateList, id: \.self) { plate in
-                                PhotoCardView(plate: plate)
+                    ForEach(mealList, id: \.self) { meal in
+                        VStack(spacing: 8) {
+                            FeedHeaderView(meal: meal, userId: meal.userId)
+                            TabView {
+                                ForEach(meal.plates, id: \.self) { plate in
+                                    PhotoCardView(plate: plate)
+                                }
                             }
+                            .frame(minHeight: 358)
+                            .tabViewStyle(.page)
+                            FeedFooterView(meal: meal)
                         }
-                        .frame(minHeight: 358)
-                        .tabViewStyle(.page)
-                        .padding([.bottom], 8)
-                        FeedFooterView()
-                            .padding([.bottom], 27)
                     }
                 }
             }
+            .padding([.leading, .trailing], paddingLR)
             .navigationBarItems(leading:
                     FeedTitleView()
                     .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시

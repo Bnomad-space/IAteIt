@@ -8,27 +8,31 @@
 import SwiftUI
 
 struct FeedFooterView: View {
+    var meal: Meal
     
     var body: some View {
         
         HStack {
             VStack(alignment: .leading) {
-                Text("Caption")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                Text("View all comments")
-                    .font(.footnote)
-                    .fontWeight(.regular)
-                    .foregroundColor(.gray)
+                if let caption = meal.caption {
+                    Text(caption)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                }
+                if meal.comments?.count ?? 0 > 0 {
+                    Text("View all comments")
+                        .font(.footnote)
+                        .fontWeight(.regular)
+                        .foregroundColor(.gray)
+                }
             }
             Spacer()
         }
-        .padding([.leading], 16)
     }
 }
 
 struct FeedFooterView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedFooterView()
+        FeedFooterView(meal: Meal.meals[2])
     }
 }

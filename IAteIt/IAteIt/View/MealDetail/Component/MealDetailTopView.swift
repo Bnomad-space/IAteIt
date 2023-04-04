@@ -35,6 +35,6 @@ struct MealDetailTopView: View {
 
 struct MealDetailTopView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailTopView(meal: Meal.meals[3])
+        MealDetailTopView(meal: Meal.meals[2])
     }
 }

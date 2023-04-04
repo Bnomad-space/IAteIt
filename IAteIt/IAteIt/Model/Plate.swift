@@ -21,7 +21,8 @@ extension Plate {
         Plate(id: "plate2", mealId: "meal1", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK5q0FP74VV9wbfwP378_7kj7iDomHuKrxkXsxDdUT28V9dlVMNUe-EMzaLwaFhneeuZI&usqp=CAU", uploadDate: Date()),
         Plate(id: "plate3", mealId: "meal2", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK5q0FP74VV9wbfwP378_7kj7iDomHuKrxkXsxDdUT28V9dlVMNUe-EMzaLwaFhneeuZI&usqp=CAU", uploadDate: Date()),
         Plate(id: "plate4", mealId: "meal3", imageUrl: "https://cdn.shopify.com/app-store/listing_images/a78e004f44cded1b6998e7a6e081a230/promotional_image/CPKYl-_NivsCEAE=.png?height=720&width=1280", uploadDate: Date()),
-        Plate(id: "plate5", mealId: "meal3", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK5q0FP74VV9wbfwP378_7kj7iDomHuKrxkXsxDdUT28V9dlVMNUe-EMzaLwaFhneeuZI&usqp=CAU", uploadDate: Date())
+        Plate(id: "plate5", mealId: "meal3", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK5q0FP74VV9wbfwP378_7kj7iDomHuKrxkXsxDdUT28V9dlVMNUe-EMzaLwaFhneeuZI&usqp=CAU", uploadDate: Date()),
+        Plate(id: "plate5", mealId: "meal4", imageUrl: "https://cdn.shopify.com/app-store/listing_images/a78e004f44cded1b6998e7a6e081a230/promotional_image/CPKYl-_NivsCEAE=.png?height=720&width=1280", uploadDate: Date())
     ]
     
 }
