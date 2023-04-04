@@ -18,15 +18,24 @@ struct CommentView: View {
             if let indexOfUser = User.users.firstIndex(where: { $0.id == userId }) {
                 
                 ZStack {
-                    Rectangle()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: profilePicSize, height: profilePicSize)
-                    if let image = User.users[indexOfUser].profileImageUrl {
-                        Image(image)
-                            .resizable()
-                            .scaledToFill()
-                            .layoutPriority(-1)
+                    if let userImage = User.users[indexOfUser].profileImageUrl {
+                        Rectangle()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: profilePicSize, height: profilePicSize)
+                        AsyncImage(url: URL(string: userImage)) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .layoutPriority(-1)
+                                .frame(width: profilePicSize, height: profilePicSize)
+                        } placeholder: {
+                            Color.gray
+                        }
+                    } else {
+                        Image(systemName: "person.crop.circle")
+                            .resizable()
+                            .frame(width: profilePicSize, height: profilePicSize)
+                            .foregroundColor(.gray)
                     }
                 }
                 .clipped()
@@ -53,6 +62,6 @@ struct CommentView: View {
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentView(comment: Comment.comments[3], userId: User.users[0].id)
+        CommentView(comment: Comment.comments[3], userId: User.users[1].id)
     }
 }

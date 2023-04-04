@@ -17,10 +17,21 @@ struct PhotoCardView: View {
             ZStack {
                 Rectangle()
                     .aspectRatio(1, contentMode: .fit)
-                Image(plate.imageUrl)
-                    .resizable()
-                    .scaledToFill()
-                    .layoutPriority(-1)
+                    .cornerRadius(photoCorner)
+//                Image(plate.imageUrl)
+//                    .resizable()
+//                    .scaledToFill()
+//                    .layoutPriority(-1)
+                
+                AsyncImage(url: URL(string: plate.imageUrl)) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .layoutPriority(-1)
+                        .cornerRadius(photoCorner)
+                } placeholder: {
+                    Color.gray
+                }
             }
             .clipped()
             .cornerRadius(photoCorner)

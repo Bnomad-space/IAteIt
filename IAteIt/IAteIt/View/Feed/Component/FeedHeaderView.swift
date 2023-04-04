@@ -18,15 +18,24 @@ struct FeedHeaderView: View {
             HStack(alignment: .center, spacing: 12) {
                 if let indexOfUser = User.users.firstIndex(where: { $0.id == userId }) {
                     ZStack {
+                        if let userImage = User.users[indexOfUser].profileImageUrl {
                         Rectangle()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: profilePicSize, height: profilePicSize)
-                        if let image = User.users[indexOfUser].profileImageUrl {
-                            Image(image)
+                            AsyncImage(url: URL(string: userImage)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .layoutPriority(-1)
+                                    .frame(width: profilePicSize, height: profilePicSize)
+                            } placeholder: {
+                                Color.gray
+                            }
+                        } else {
+                            Image(systemName: "person.crop.circle")
                                 .resizable()
-                                .scaledToFill()
-                                .layoutPriority(-1)
                                 .frame(width: profilePicSize, height: profilePicSize)
+                                .foregroundColor(.gray)
                         }
                     }
                     .clipped()
