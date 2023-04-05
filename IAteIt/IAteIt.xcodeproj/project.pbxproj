@@ -322,7 +322,7 @@
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				DF883D4229B58F2C0029DC60 /* User.swift in Sources */,
-				7E6069CF29A5CAE500284CBD /* UploadView.swift in Sources */,
+				7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */,
 				630BA6C029AF57BE00019F2E /* Camera.swift in Sources */,
 				630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */,
 				7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */,
