@@ -23,4 +23,8 @@ extension Comment {
         Comment(id: UUID().uuidString, userId: "user2", mealId: "meal2", comment: "This is awful", uploadDate: Date())
     ]
     
+    static let comment1 = Comment(id: "comment1", userId: "user1", mealId: "meal1", comment: "Looks delicious!", uploadDate: Date().addingTimeInterval(-1800)) // 30 minutes ago
+    static let comment2 = Comment(id: "comment2", userId: "user2", mealId: "meal1", comment: "I want to try this!", uploadDate: Date().addingTimeInterval(-3600)) // 1 hour ago
+    static let comment3 = Comment(id: "comment3", userId: "user3", mealId: "meal2", comment: "Great presentation!", uploadDate: Date().addingTimeInterval(-43200)) // 12 hours ago
+    static let comment4 = Comment(id: "comment4", userId: "user1", mealId: "meal3", comment: "Yummy!", uploadDate: Date().addingTimeInterval(-86400)) // 1 day ago
 }

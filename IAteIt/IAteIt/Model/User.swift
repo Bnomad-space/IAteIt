@@ -20,4 +20,7 @@ extension User {
         User(id: "user2", nickname: "ThisfromHero")
     ]
     
+    static let user1 = User(id: "user1", nickname: "John", profileImageUrl: "https://example.com/john.jpg")
+    static let user2 = User(id: "user2", nickname: "Alice", profileImageUrl: "https://example.com/alice.jpg")
+    static let user3 = User(id: "user3", nickname: "Bob", profileImageUrl: nil)
 }

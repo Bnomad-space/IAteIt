@@ -22,4 +22,15 @@ extension Plate {
         Plate(id: "plate3", mealId: "meal2", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK5q0FP74VV9wbfwP378_7kj7iDomHuKrxkXsxDdUT28V9dlVMNUe-EMzaLwaFhneeuZI&usqp=CAU", uploadDate: Date())
     ]
     
+    static let plate1 = Plate(id: "plate1", mealId: "meal1", imageUrl: "https://example.com/plate1.jpg", uploadDate: Date())
+    static let plate2 = Plate(id: "plate2", mealId: "meal1", imageUrl: "https://example.com/plate2.jpg", uploadDate: Date())
+
+    static let plate3 = Plate(id: "plate3", mealId: "meal2", imageUrl: "https://example.com/plate3.jpg", uploadDate: Date())
+    static let plate4 = Plate(id: "plate4", mealId: "meal2", imageUrl: "https://example.com/plate4.jpg", uploadDate: Date())
+
+    static let plate5 = Plate(id: "plate5", mealId: "meal3", imageUrl: "https://example.com/plate5.jpg", uploadDate: Date())
+    static let plate6 = Plate(id: "plate6", mealId: "meal3", imageUrl: "https://example.com/plate6.jpg", uploadDate: Date())
+
+
+    
 }
