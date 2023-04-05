@@ -14,7 +14,7 @@ struct MealDetailTopView: View {
         VStack(alignment: .center, spacing: 6) {
             HStack {
                 Spacer()
-                Text("2 hours ago")
+                Text(meal.uploadDate.timeAgoDisplay())
                     .font(.footnote)
                     .foregroundColor(Color(UIColor.systemGray))
             }

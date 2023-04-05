@@ -17,10 +17,12 @@ struct MealDetailView: View {
             ScrollView {
                 VStack {
                     MealDetailTopView(meal: meal)
+                        .padding(.horizontal, paddingLR)
                     
                     TabView {
                         ForEach(meal.plates, id: \.self) { plate in
                             PhotoCardView(plate: plate)
+                                .padding(.horizontal, paddingLR)
                         }
                     }
                     .frame(minHeight: 358)
@@ -33,13 +35,14 @@ struct MealDetailView: View {
                             }
                         }
                         .padding([.top], 24)
+                        .padding(.horizontal, paddingLR)
                     }
                 }
             }
             AddCommentBarView()
                 .padding([.bottom], 10)
+                .padding(.horizontal, paddingLR)
         }
-        .padding([.leading, .trailing], paddingLR)
     }
 }
 

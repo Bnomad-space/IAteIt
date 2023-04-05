@@ -18,10 +18,6 @@ struct PhotoCardView: View {
                 Rectangle()
                     .aspectRatio(1, contentMode: .fit)
                     .cornerRadius(photoCorner)
-//                Image(plate.imageUrl)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .layoutPriority(-1)
                 
                 AsyncImage(url: URL(string: plate.imageUrl)) { image in
                     image

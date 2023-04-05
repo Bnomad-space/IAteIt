@@ -22,22 +22,25 @@ struct FeedView: View {
                 VStack(spacing: 27) {
                     AddMealView()
                         .padding([.top], 24)
+                        .padding(.horizontal, paddingLR)
                     ForEach(mealList, id: \.self) { meal in
                         VStack(spacing: 8) {
                             FeedHeaderView(meal: meal, userId: meal.userId)
+                                .padding(.horizontal, paddingLR)
                             TabView {
                                 ForEach(meal.plates, id: \.self) { plate in
                                     PhotoCardView(plate: plate)
+                                        .padding(.horizontal, paddingLR)
                                 }
                             }
                             .frame(minHeight: 358)
                             .tabViewStyle(.page)
                             FeedFooterView(meal: meal)
+                                .padding(.horizontal, paddingLR)
                         }
                     }
                 }
             }
-            .padding([.leading, .trailing], paddingLR)
             .navigationBarItems(leading:
                     FeedTitleView()
                     .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
@@ -46,7 +49,6 @@ struct FeedView: View {
                                     ProfilePhotoButtonView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 프로필사진 연결
             )
         }
-        
 }
 
 struct FeedView_Previews: PreviewProvider {

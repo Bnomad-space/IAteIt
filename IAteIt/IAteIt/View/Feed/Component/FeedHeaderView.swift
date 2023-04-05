@@ -48,10 +48,10 @@ struct FeedHeaderView: View {
                             .fontWeight(.semibold)
 
                             if let location = meal.location {
-                                Text("\(location) • \(meal.uploadDate.toTimeString())")
+                                Text("\(location) • \(meal.uploadDate.timeAgoDisplay())")
                                     .font(.footnote)
                             } else {
-                                Text(meal.uploadDate.toTimeString())
+                                Text(meal.uploadDate.timeAgoDisplay())
                                     .font(.footnote)
                             }
                     }
