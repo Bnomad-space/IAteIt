@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @State private var username = ""
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         VStack {
@@ -18,6 +19,10 @@ struct SignUpView: View {
             TextField("username", text: $username)
                 .limitTextLength($username, to: 16)
                 .textInputAutocapitalization(.never)
+                .focused($isFocused)
+                .onAppear() {
+                    isFocused = true
+                }
                 .onChange(of: username) { _ in
                     username = username.replacingOccurrences(of: " ", with: "")
                 }
@@ -31,13 +36,15 @@ struct SignUpView: View {
         }
         .overlay {
             VStack {
-            Spacer()
-                Button(action: {
-                    // TODO: username 저장, 다음 뷰로 넘기기
-                }, label: {
+                Spacer()
+                NavigationLink(destination: SignUpSecondView()
+                    , label: {
                     BottomButtonView(label: "Next")
                 })
-                .disabled(username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .disabled(username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || username.count < 3)
+                .simultaneousGesture(TapGesture().onEnded {
+                    //TODO: username 저장
+                })
             }
         }
     }
