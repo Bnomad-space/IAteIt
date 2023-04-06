@@ -11,11 +11,10 @@ struct CommentView: View {
     let profilePicSize: CGFloat = 36
     
     var comment: Comment
-    var userId: String
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            if let indexOfUser = User.users.firstIndex(where: { $0.id == userId }) {
+            if let indexOfUser = User.users.firstIndex(where: { $0.id == comment.userId }) {
                 
                 ZStack {
                     if let userImage = User.users[indexOfUser].profileImageUrl {
@@ -62,6 +61,7 @@ struct CommentView: View {
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentView(comment: Comment.comments[3], userId: User.users[1].id)
+//        CommentView(comment: Comment.comments[3], userId: User.users[1].id)
+        CommentView(comment: Comment.comments[3])
     }
 }

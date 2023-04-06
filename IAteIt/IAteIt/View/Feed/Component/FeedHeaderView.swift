@@ -11,12 +11,11 @@ struct FeedHeaderView: View {
     let profilePicSize: CGFloat = 36
     
     var meal: Meal
-    var userId: String
     
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 12) {
-                if let indexOfUser = User.users.firstIndex(where: { $0.id == userId }) {
+                if let indexOfUser = User.users.firstIndex(where: { $0.id == meal.userId }) {
                     ZStack {
                         if let userImage = User.users[indexOfUser].profileImageUrl {
                         Rectangle()

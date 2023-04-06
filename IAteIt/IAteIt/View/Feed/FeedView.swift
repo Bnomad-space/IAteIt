@@ -25,7 +25,7 @@ struct FeedView: View {
                         .padding(.horizontal, paddingLR)
                     ForEach(mealList, id: \.self) { meal in
                         VStack(spacing: 8) {
-                            FeedHeaderView(meal: meal, userId: meal.userId)
+                            FeedHeaderView(meal: meal)
                                 .padding(.horizontal, paddingLR)
                             TabView {
                                 ForEach(meal.plates, id: \.self) { plate in

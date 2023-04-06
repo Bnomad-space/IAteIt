@@ -31,7 +31,7 @@ struct MealDetailView: View {
                     if let comments = meal.comments {
                         VStack(alignment: .leading, spacing: 12) {
                             ForEach(comments, id: \.self) { comment in
-                                CommentView(comment: comment, userId: comment.userId)
+                                CommentView(comment: comment)
                             }
                         }
                         .padding([.top], 24)
