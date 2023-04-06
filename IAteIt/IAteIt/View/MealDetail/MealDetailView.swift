@@ -10,19 +10,17 @@ import SwiftUI
 struct MealDetailView: View {
     var meal: Meal
     
-    let paddingLR: CGFloat = 16
-    
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
                     MealDetailTopView(meal: meal)
-                        .padding(.horizontal, paddingLR)
+                        .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {
                         ForEach(meal.plates, id: \.self) { plate in
                             PhotoCardView(plate: plate)
-                                .padding(.horizontal, paddingLR)
+                                .padding(.horizontal, .paddingHorizontal)
                         }
                     }
                     .frame(minHeight: 358)
@@ -35,13 +33,13 @@ struct MealDetailView: View {
                             }
                         }
                         .padding([.top], 24)
-                        .padding(.horizontal, paddingLR)
+                        .padding(.horizontal, .paddingHorizontal)
                     }
                 }
             }
             AddCommentBarView()
                 .padding([.bottom], 10)
-                .padding(.horizontal, paddingLR)
+                .padding(.horizontal, .paddingHorizontal)
         }
     }
 }

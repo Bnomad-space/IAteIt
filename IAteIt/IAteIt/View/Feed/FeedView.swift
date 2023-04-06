@@ -15,28 +15,26 @@ struct FeedView: View {
     
     var mealList = Meal.meals
     
-    let paddingLR: CGFloat = 16
-    
     var body: some View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 27) {
                     AddMealView()
                         .padding([.top], 24)
-                        .padding(.horizontal, paddingLR)
+                        .padding(.horizontal, .paddingHorizontal)
                     ForEach(mealList, id: \.self) { meal in
                         VStack(spacing: 8) {
                             FeedHeaderView(meal: meal)
-                                .padding(.horizontal, paddingLR)
+                                .padding(.horizontal, .paddingHorizontal)
                             TabView {
                                 ForEach(meal.plates, id: \.self) { plate in
                                     PhotoCardView(plate: plate)
-                                        .padding(.horizontal, paddingLR)
+                                        .padding(.horizontal, .paddingHorizontal)
                                 }
                             }
                             .frame(minHeight: 358)
                             .tabViewStyle(.page)
                             FeedFooterView(meal: meal)
-                                .padding(.horizontal, paddingLR)
+                                .padding(.horizontal, .paddingHorizontal)
                         }
                     }
                 }
