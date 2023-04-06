@@ -37,6 +37,10 @@ struct SignUpView: View {
         .overlay {
             VStack {
                 Spacer()
+                Text("Username must be between 3 and 16 characters.")
+                    .font(.subheadline)
+                    .foregroundColor(Color(UIColor.systemGray))
+                    .padding(.bottom, 20)
                 NavigationLink(destination: SignUpSecondView()
                     , label: {
                     BottomButtonView(label: "Next")
