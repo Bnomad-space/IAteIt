@@ -36,15 +36,10 @@
 		7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28929A5228D0021B9FE /* ContentView.swift */; };
 		7EFFE28C29A5228F0021B9FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFE28B29A5228F0021B9FE /* Assets.xcassets */; };
 		7EFFE28F29A5228F0021B9FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFE28E29A5228F0021B9FE /* Preview Assets.xcassets */; };
-<<<<<<< Updated upstream
-		8C73F00329BDD010007D1A1E /* DailyMealCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00229BDD010007D1A1E /* DailyMealCellView.swift */; };
-		8C73F00529BDDAE6007D1A1E /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */; };
-=======
 		8C54181D29E30B99009D165D /* MealListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C54181C29E30B99009D165D /* MealListRowView.swift */; };
 		8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00229BDD010007D1A1E /* MealListView.swift */; };
 		8C73F00529BDDAE6007D1A1E /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */; };
 		8C73F00E29E1291A007D1A1E /* ProfileCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00D29E1291A007D1A1E /* ProfileCellView.swift */; };
->>>>>>> Stashed changes
 		DF22139B29BB2843000134FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF22139A29BB2843000134FC /* GoogleService-Info.plist */; };
 		DF22139E29BB293C000134FC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DF22139D29BB293C000134FC /* FirebaseFirestore */; };
 		DF2213A029BB293C000134FC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DF22139F29BB293C000134FC /* FirebaseStorage */; };
@@ -88,15 +83,10 @@
 		7EFFE28929A5228D0021B9FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7EFFE28B29A5228F0021B9FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7EFFE28E29A5228F0021B9FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-<<<<<<< Updated upstream
-		8C73F00229BDD010007D1A1E /* DailyMealCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMealCellView.swift; sourceTree = "<group>"; };
-		8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
-=======
 		8C54181C29E30B99009D165D /* MealListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListRowView.swift; sourceTree = "<group>"; };
 		8C73F00229BDD010007D1A1E /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
 		8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		8C73F00D29E1291A007D1A1E /* ProfileCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellView.swift; sourceTree = "<group>"; };
->>>>>>> Stashed changes
 		DF22139A29BB2843000134FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF2213A129BB2ADC000134FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF2213A429BB324F000134FC /* FirebaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConnector.swift; sourceTree = "<group>"; };
