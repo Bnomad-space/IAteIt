@@ -9,8 +9,6 @@ import SwiftUI
 
 struct AddMealView: View {
     
-    let paddingLR: CGFloat = 16
-    
     var body: some View {
         ZStack {
             Button(action: {
