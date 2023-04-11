@@ -26,7 +26,7 @@ struct ProfileCellView: View {
             .clipped()
             .cornerRadius(profileImgSize/2)
             
-            Text("\(User.user1.nickname)")
+            Text("\(User.users[0].nickname)")
             
         }
 

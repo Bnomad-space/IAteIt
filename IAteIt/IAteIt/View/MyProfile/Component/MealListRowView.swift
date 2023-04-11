@@ -10,7 +10,6 @@ import SwiftUI
 struct MealListRowView: View {
     
     let mealsInADay: [Meal]
-    let paddingLR: CGFloat = 16
     let photoCorner: CGFloat = 20
     
     var body: some View {

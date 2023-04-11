@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct MyProfileView: View {
-    
-    let paddingLR: CGFloat = 16
-    
+
     var body: some View {
-        ScrollView {
-            VStack {
-                ProfileCellView()
-                MealListView()
+        GeometryReader { g in
+            ScrollView {
+                VStack {
+                    ProfileCellView()
+                    MealListView()
+                }
+                .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
             }
         }
-        .padding([.leading, .trailing], paddingLR)
+
     }
 }
 
