@@ -50,6 +50,7 @@ struct FeedView: View {
                     }
                 }
             }
+            
             .navigationBarItems(leading:
                                     FeedTitleView()
                 .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
