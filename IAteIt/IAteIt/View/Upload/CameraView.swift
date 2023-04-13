@@ -12,12 +12,6 @@ struct CameraView: View {
     @ObservedObject var viewModel = CameraViewModel()
     @ObservedObject var model = Camera()
     
-    static let dateFormat: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter
-    }()
-    
     @State var currentTime = Date()
     
     var body: some View {
@@ -45,7 +39,7 @@ struct CameraView: View {
                 viewModel.cameraPreview
                     .onAppear {
                         viewModel.configure()
-                        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) {
+                        Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) {
                             timer in currentTime = Date()
                         }
                     }
@@ -55,13 +49,11 @@ struct CameraView: View {
                             .foregroundColor(Color.black.opacity(0.6))
                             .frame(width: 60, height: 28)
                             .overlay(
-                                Text("\(currentTime, formatter: CameraView.dateFormat)")
+                                Text("\(currentTime.toTimeString())")
                                     .font(.footnote)
                                     .foregroundColor(.white)
                             )
                             .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
-                
-                
                 
                 if viewModel.isTaken {
                     VStack {

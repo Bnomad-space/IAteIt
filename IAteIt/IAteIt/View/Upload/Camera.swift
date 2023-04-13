@@ -12,8 +12,6 @@ class Camera: NSObject, ObservableObject {
     var session = AVCaptureSession()
     var videoDeviceInput: AVCaptureDeviceInput!
     let output = AVCapturePhotoOutput()
-
-    
     
     @Published var isCameraBusy = false
     @Published var isSaved = false
@@ -57,7 +55,7 @@ class Camera: NSObject, ObservableObject {
         case .restricted:
             break
         case .authorized:
-
+            
             setUpCamera()
         default:
             
@@ -102,7 +100,7 @@ class Camera: NSObject, ObservableObject {
         capsuleView.layer.cornerRadius = 38
         
         let timeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
-//        timeLabel.text = Date().toTimeString()
+        timeLabel.text = Date().toTimeString()
         timeLabel.font = UIFont.systemFont(ofSize: 38)
         timeLabel.textColor = .white
         timeLabel.textAlignment = .center
@@ -112,7 +110,7 @@ class Camera: NSObject, ObservableObject {
         let newImage = image.overlayWith(image: viewConvert ?? UIImage())
         return newImage
     }
-
+    
     func savePhoto(image: UIImage) {
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         print("[Camera]: Photo's saved")
