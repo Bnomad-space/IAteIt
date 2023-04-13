@@ -12,9 +12,9 @@ struct ProfilePhotoButtonView: View {
     var profileInfo: TempFeedHeader //TODO: 프로필 데이터 수정
     
     var body: some View {
-        Button {
-            //TODO: 프로필 내비게이션
-        } label: {
+//        Button {
+//            //TODO: 프로필 내비게이션
+//        } label: {
             ZStack{
                 Rectangle()
                     .aspectRatio(contentMode: .fit)
@@ -29,5 +29,5 @@ struct ProfilePhotoButtonView: View {
             .cornerRadius(14)
             .padding([.top], 3)
         }
-    }
+//    }
 }
