@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AddCommentBarView: View {
-    @State var commentInput: String = ""
+    @ObservedObject var commentBar: CommentBar
+    @FocusState var isFocused: Bool
     
     var body: some View {
         VStack {
@@ -19,16 +20,37 @@ struct AddCommentBarView: View {
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.10), radius: 20, x: 4, y: 4)
                 HStack {
-                    TextField("Add a comment...", text: $commentInput)
+                    TextField(commentBar.type.commentBarPlaceholder(), text: $commentBar.input)
                         .font(.body)
+                        .focused($isFocused)
+                        .onChange(of: commentBar.type) { type in
+                            if type == .caption || type == .location {
+                                isFocused = true
+                            }
+                        }
+                        .onChange(of: isFocused) { _ in
+                            if !isFocused && commentBar.type != CommentBarType.comment {
+                                commentBar.input = ""
+                                commentBar.type = CommentBarType.comment
+                            }
+                        }
                     Spacer()
                     Button(action: {
-                        // TODO: 코멘트 추가 액션
+                        // TODO: commentBar.type에 따라 commentBar.input을 코멘트/캡션/장소에 저장
+                        isFocused = false
+                        commentBar.input = ""
                     }, label: {
-                        Image(systemName: "paperplane")
-                            .tint(.black)
-                            .font(.body)
+                        if commentBar.input.count > 0 {
+                            Image(systemName: "paperplane.fill")
+                                .tint(.black)
+                                .font(.body)
+                        } else {
+                            Image(systemName: "paperplane")
+                                .tint(.black)
+                                .font(.body)
+                        }
                     })
+                    .disabled(commentBar.input.isEmpty)
                 }
                 .padding([.leading, .trailing], 18)
             }
@@ -38,6 +60,6 @@ struct AddCommentBarView: View {
 
 struct AddCommentBarView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentBarView()
+        AddCommentBarView(commentBar: CommentBar())
     }
 }
