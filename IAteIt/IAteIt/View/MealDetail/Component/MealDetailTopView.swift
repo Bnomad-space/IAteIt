@@ -22,7 +22,7 @@ struct MealDetailTopView: View {
             }
             Button(action: {
                 // TODO: CommentBar에 focus
-                commentBar.type = CommentBarType.caption
+                commentBar.type = .caption
                 commentBar.input = meal.caption ?? ""
             }, label: {
                 if let caption = meal.caption {
@@ -36,7 +36,7 @@ struct MealDetailTopView: View {
                 }
             })
             Button(action: {
-                commentBar.type = CommentBarType.location
+                commentBar.type = .location
                 commentBar.input = meal.location ?? ""
             }, label: {
                 if let location = meal.location {

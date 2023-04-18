@@ -165,6 +165,7 @@
 		7E6069C929A5CA9600284CBD /* MealDetail */ = {
 			isa = PBXGroup;
 			children = (
+				7EDF91AC29EE8ECB00FB23A8 /* Model */,
 				7E6069DE29A7995400284CBD /* Component */,
 				7E6069D229A5CAF300284CBD /* MealDetailView.swift */,
 			);
@@ -202,7 +203,6 @@
 				7E1F719329A90449005A7B56 /* TempPlate.swift */,
 				04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */,
 				DFD52CE329CB127D00E86F9F /* Meal.swift */,
-				7EDF91A829E97CD800FB23A8 /* CommentBar.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,6 +257,14 @@
 				7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		7EDF91AC29EE8ECB00FB23A8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EDF91A829E97CD800FB23A8 /* CommentBar.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7EFFE27B29A5228D0021B9FE = {

@@ -20,7 +20,7 @@ struct AddCommentBarView: View {
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.10), radius: 20, x: 4, y: 4)
                 HStack {
-                    TextField(commentBar.type.commentBarPlaceholder(), text: $commentBar.input)
+                    TextField(commentBar.type.placeholder(), text: $commentBar.input)
                         .font(.body)
                         .focused($isFocused)
                         .onChange(of: commentBar.type) { type in
@@ -29,9 +29,9 @@ struct AddCommentBarView: View {
                             }
                         }
                         .onChange(of: isFocused) { _ in
-                            if !isFocused && commentBar.type != CommentBarType.comment {
+                            if !isFocused && commentBar.type != .comment {
                                 commentBar.input = ""
-                                commentBar.type = CommentBarType.comment
+                                commentBar.type = .comment
                             }
                         }
                     Spacer()
