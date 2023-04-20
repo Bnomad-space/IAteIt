@@ -144,4 +144,80 @@ class FirebaseConnector {
             }
         }
     }
+    
+    // 특정 meal에 caption 업데이트
+    func setMealCaption(mealId: String, caption: String) {
+        FirebaseConnector.meals.document(mealId).updateData([
+            "caption": caption as Any
+        ])
+    }
+    
+    // 특정 meal에 location 업데이트
+    func setMealLocation(mealId: String, location: String) {
+        FirebaseConnector.meals.document(mealId).updateData([
+            "location": location as Any
+        ])
+    }
+    
+    // 특정 meal의 모든 plate 데이터 가져오기
+    func fetchMealPlates(mealId: String, completion: @escaping([Plate]) -> Void) {
+        var plateHistory: [Plate] = []
+        
+        FirebaseConnector.meals.document(mealId).collection("plates").getDocuments() { (plateSnapshot, plateErr) in
+            if let plateErr = plateErr {
+                print("Error getting plates: \(plateErr.localizedDescription)")
+            } else {
+                for plateDocument in plateSnapshot!.documents {
+                    print("\(plateDocument.documentID) => \(plateDocument.data())")
+
+                    let plateDictionary = plateDocument.data()
+                    guard let plateId = plateDictionary["id"] as? String,
+                          let imageUrl = plateDictionary["imageUrl"] as? String,
+                          let plateUploadTimestamp = plateDictionary["uploadDate"] as? Timestamp
+                    else {
+                        print("failed converting plates data")
+                        return
+                    }
+                    let plateUploadDate = plateUploadTimestamp.dateValue()
+                    let plate = Plate(id: plateId, mealId: mealId, imageUrl: imageUrl, uploadDate: plateUploadDate)
+                    plateHistory.append(plate)
+                }
+                completion(plateHistory)
+            }
+        }
+    }
+    
+    
+    // 특정 user의 모든 meal 데이터 가져오기 (plate는 따로 fetchMealPlates로 가져와야함..)
+    func fetchUserMealHistory(userId: String, completion: @escaping([Meal]) -> Void) {
+        var mealHistory: [Meal] = []
+        
+        FirebaseConnector.meals.whereField("userId", isEqualTo: userId).getDocuments() { (mealSnapshot, mealErr) in
+            if let mealErr = mealErr {
+                print("Error getting documents: \(mealErr.localizedDescription)")
+            } else {
+                for mealDocument in mealSnapshot!.documents {
+                    print("\(mealDocument.documentID) => \(mealDocument.data())")
+                    
+                    let mealDictionary = mealDocument.data()
+                    guard let mealId = mealDictionary["id"] as? String,
+                          let mealUploadTimestamp = mealDictionary["uploadDate"] as? Timestamp
+                    else { return }
+                    let mealUploadDate = mealUploadTimestamp.dateValue()
+                    let caption = mealDictionary["caption"] as? String
+                    let location = mealDictionary["location"] as? String
+
+                    var plateHistory: [Plate] = []
+                    
+                    // 여기선 plates 안가져와짐 ㅜㅜ
+//                    self.fetchMealPlates(mealId: mealId) { plates in
+//                        plateHistory = plates
+//                    }
+                    let meal = Meal(id: mealId, userId: userId, location: location, caption: caption, uploadDate: mealUploadDate, plates: plateHistory)
+                    mealHistory.append(meal)
+                }
+                completion(mealHistory)
+            }
+        }
+    }
 }

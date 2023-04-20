@@ -14,8 +14,8 @@ struct FirebaseTestView: View {
             
             // 프로필이미지 업로드, 회원가입
             Button(action: {
-                var user = User(id: "testUser1Id", nickname: "testUser1Nickname")
-                let image = UIImage(named: "Sample_Profile1")
+                var user = User(id: "testUser2Id", nickname: "testUser2Nickname")
+                let image = UIImage(named: "Sample_Profile2")
                 if let image = image {
                     FirebaseConnector().uploadProfileImage(userId: user.id, image: image) { url in
                         user.profileImageUrl = url
@@ -36,7 +36,7 @@ struct FirebaseTestView: View {
             
             // 특정 user 정보 가져오기
             Button(action: {
-                FirebaseConnector().fetchUser(id: "testUser1Id") { user in
+                FirebaseConnector().fetchUser(id: "testUser2Id") { user in
                     print(user.id)
                     print(user.nickname)
                     if let profileImage = user.profileImageUrl {
@@ -49,9 +49,9 @@ struct FirebaseTestView: View {
             
             // 새로운 meal 생성 & plate 이미지 업로드
             Button(action: {
-                let image = UIImage(named: "Sample_McMorning")
-                var meal = Meal(id: "testMealId1", userId: "testUser1Id", uploadDate: Date(), plates: [])
-                var plate = Plate(id: "testPlateId1", mealId: meal.id, imageUrl: "", uploadDate: Date())
+                let image = UIImage(named: "Sample_Coffee")
+                var meal = Meal(id: "testMealId3", userId: "testUser1Id", uploadDate: Date(), plates: [])
+                var plate = Plate(id: "testPlateId3", mealId: meal.id, imageUrl: "", uploadDate: Date())
                 if let image = image {
                     FirebaseConnector().uploadPlateImage(mealId: meal.id, plateId: plate.id, image: image) { url in
                         plate.imageUrl = url
@@ -77,7 +77,30 @@ struct FirebaseTestView: View {
                 Text("Add a plate to a meal")
             })
             
+            // meal에 caption 추가/수정
+            Button(action: {
+                let caption = "맥모닝 맛있다"
+                FirebaseConnector().setMealCaption(mealId: "testMealId1", caption: caption)
+            }, label: {
+                Text("Caption")
+            })
             
+            // meal에 location 추가/수정
+            Button(action: {
+                let location = "맥도날드"
+                FirebaseConnector().setMealLocation(mealId: "testMealId1", location: location)
+            }, label: {
+                Text("Location")
+            })
+            
+            // 특정 user의 모든 meal 데이터 가져오기
+            Button(action: {
+                FirebaseConnector().fetchUserMealHistory(userId: "testUser1Id") { meals in
+                    print("number of meals: \(meals.count)")
+                }
+            }, label: {
+                Text("Getting meal history of a user")
+            })
         }
     }
 }
