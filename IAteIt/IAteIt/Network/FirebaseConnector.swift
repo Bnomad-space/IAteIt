@@ -187,7 +187,6 @@ class FirebaseConnector {
         }
     }
     
-    
     // 특정 user의 모든 meal 데이터 가져오기 (plate는 따로 fetchMealPlates로 가져와야함..)
     func fetchUserMealHistory(userId: String, completion: @escaping([Meal]) -> Void) {
         var mealHistory: [Meal] = []
@@ -217,6 +216,78 @@ class FirebaseConnector {
                     mealHistory.append(meal)
                 }
                 completion(mealHistory)
+            }
+        }
+    }
+    
+    // 24시간 이내 업로드된 모든 meal 데이터 가져오기
+    func fetchMealIn24Hours(date: Date, completion: @escaping([Meal]) -> Void) {
+        var meals: [Meal] = []
+        
+        let toTime = date
+        let toTimestamp = Timestamp(date: toTime)
+        let fromTime = date-3600*24
+        let fromTimestamp = Timestamp(date: fromTime)
+        
+        FirebaseConnector.meals.order(by: "uploadDate", descending: true)
+            .whereField("uploadDate", isGreaterThan: fromTimestamp)
+            .whereField("uploadDate", isLessThanOrEqualTo: toTimestamp)
+            .getDocuments() { (snapshot, err) in
+                if let err = err {
+                    print("Error getting document: \(err.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        let dict = document.data()
+                        guard let mealId = dict["id"] as? String,
+                              let userId = dict["userId"] as? String,
+                              let uploadTimestamp = dict["uploadDate"] as? Timestamp
+                        else { return }
+                        let uploadDate = uploadTimestamp.dateValue()
+                        let caption = dict["caption"] as? String
+                        let location = dict["location"] as? String
+                        
+                        let meal = Meal(id: mealId, userId: userId, uploadDate: uploadDate, plates: [])
+                        meals.append(meal)
+                    }
+                    completion(meals)
+                }
+            }
+    }
+
+    // MARK: - comments
+    
+    // 새로운 comment 생성
+    func setNewComment(comment: Comment) {
+        FirebaseConnector.comments.document(comment.id).setData([
+            "id": comment.id,
+            "userId": comment.userId,
+            "mealId": comment.mealId,
+            "comment": comment.comment,
+            "uploadDate": comment.uploadDate
+        ])
+    }
+    
+    // 특정 meal의 모든 comment 데이터 가져오기
+    func fetchMealComments(mealId: String, completion: @escaping([Comment]) -> Void) {
+        var commentList: [Comment] = []
+
+        FirebaseConnector.comments.whereField("mealId", isEqualTo: mealId).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err.localizedDescription)")
+            } else {
+                for commentDocument in querySnapshot!.documents {
+                    let commentDictionary = commentDocument.data()
+                    guard let commentId = commentDictionary["id"] as? String,
+                          let userId = commentDictionary["userId"] as? String,
+                          let content = commentDictionary["comment"] as? String,
+                          let uploadDateTimestamp = commentDictionary["uploadDate"] as? Timestamp
+                    else { return }
+                    let uploadDate = uploadDateTimestamp.dateValue()
+
+                    let comment = Comment(id: commentId, userId: userId, mealId: mealId, comment: content, uploadDate: uploadDate)
+                    commentList.append(comment)
+                }
+                completion(commentList)
             }
         }
     }
