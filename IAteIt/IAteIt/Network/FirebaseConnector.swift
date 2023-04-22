@@ -122,7 +122,6 @@ class FirebaseConnector {
     func uploadPlateImage(mealId: String, plateId: String, image: UIImage, completion: @escaping(String) -> Void) {
         let storageRef = Storage.storage().reference()
         let imageRef = storageRef.child("plateImage/\(plateId)")
-        let plates = FirebaseConnector.meals.document(mealId).collection("plates")
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
             print("DEBUG - fail compression")
             return
@@ -205,13 +204,7 @@ class FirebaseConnector {
                     let caption = mealDictionary["caption"] as? String
                     let location = mealDictionary["location"] as? String
 
-                    var plateHistory: [Plate] = []
-                    
-                    // 여기선 plates 안가져와짐 ㅜㅜ
-//                    self.fetchMealPlates(mealId: mealId) { plates in
-//                        plateHistory = plates
-//                    }
-                    let meal = Meal(id: mealId, userId: userId, location: location, caption: caption, uploadDate: mealUploadDate, plates: plateHistory)
+                    let meal = Meal(id: mealId, userId: userId, location: location, caption: caption, uploadDate: mealUploadDate, plates: [])
                     mealHistory.append(meal)
                 }
                 completion(mealHistory)
@@ -245,7 +238,7 @@ class FirebaseConnector {
                         let caption = dict["caption"] as? String
                         let location = dict["location"] as? String
                         
-                        let meal = Meal(id: mealId, userId: userId, uploadDate: uploadDate, plates: [])
+                        let meal = Meal(id: mealId, userId: userId, location: location, caption: caption, uploadDate: uploadDate, plates: [])
                         meals.append(meal)
                     }
                     completion(meals)
