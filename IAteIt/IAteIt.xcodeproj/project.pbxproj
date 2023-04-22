@@ -36,6 +36,8 @@
 		7E9FEF3529DEA07A002E7211 /* BottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */; };
 		7E9FEF3729DEBAA9002E7211 /* SignUpSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3629DEBAA9002E7211 /* SignUpSecondView.swift */; };
 		7E9FEF3929DF12EF002E7211 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3829DF12EF002E7211 /* ImagePicker.swift */; };
+		7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF91A829E97CD800FB23A8 /* CommentBar.swift */; };
+		7EDF91AB29E989BD00FB23A8 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */; };
 		7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28729A5228D0021B9FE /* IAteItApp.swift */; };
 		7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFE28929A5228D0021B9FE /* ContentView.swift */; };
 		7EFFE28C29A5228F0021B9FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFE28B29A5228F0021B9FE /* Assets.xcassets */; };
@@ -84,6 +86,8 @@
 		7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButtonView.swift; sourceTree = "<group>"; };
 		7E9FEF3629DEBAA9002E7211 /* SignUpSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondView.swift; sourceTree = "<group>"; };
 		7E9FEF3829DF12EF002E7211 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		7EDF91A829E97CD800FB23A8 /* CommentBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentBar.swift; sourceTree = "<group>"; };
+		7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		7EFFE28429A5228D0021B9FE /* IAteIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IAteIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EFFE28729A5228D0021B9FE /* IAteItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAteItApp.swift; sourceTree = "<group>"; };
 		7EFFE28929A5228D0021B9FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 		7E6069C929A5CA9600284CBD /* MealDetail */ = {
 			isa = PBXGroup;
 			children = (
+				7EDF91AC29EE8ECB00FB23A8 /* Model */,
 				7E6069DE29A7995400284CBD /* Component */,
 				7E6069D229A5CAF300284CBD /* MealDetailView.swift */,
 			);
@@ -218,6 +223,7 @@
 				7E6069DB29A5CB3A00284CBD /* TempExtension.swift */,
 				8C73F00429BDDAE6007D1A1E /* DateFormatter.swift */,
 				7E9FEF3129DE9BFA002E7211 /* TextField+Extension.swift */,
+				7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -251,6 +257,14 @@
 				7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		7EDF91AC29EE8ECB00FB23A8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EDF91A829E97CD800FB23A8 /* CommentBar.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7EFFE27B29A5228D0021B9FE = {
@@ -395,6 +409,7 @@
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */,
 				8C73F00329BDD010007D1A1E /* DailyMealCellView.swift in Sources */,
+				7EDF91AB29E989BD00FB23A8 /* View+Extension.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				DF883D4229B58F2C0029DC60 /* User.swift in Sources */,
 				7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */,
@@ -411,6 +426,7 @@
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
 				7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
+				7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */,
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
 				7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */,
