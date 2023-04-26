@@ -8,54 +8,99 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @State private var username = ""
+    @ObservedObject var loginUser: LoginUser
+    @ObservedObject var signUpVM: SignUpViewModel
+    @State var username = ""
     @FocusState private var isFocused: Bool
+    @State var isValidFormat: Bool = false
+    @State var isUnique: Bool = true
+    @State var usernameList: [String] = []
+    
+    var userIdentifier: String = ""
     
     var body: some View {
-        VStack {
-            Text("Please create your username.")
-                .font(.headline)
-                .padding(.top, 60)
-            TextField("username", text: $username)
-                .limitTextLength($username, to: 16)
-                .textInputAutocapitalization(.never)
-                .focused($isFocused)
-                .onAppear() {
-                    isFocused = true
-                }
-                .onChange(of: username) { _ in
-                    username = username.replacingOccurrences(of: " ", with: "")
-                }
-                .font(Font.title2.weight(.bold))
-                .multilineTextAlignment(.center)
-                .padding(.top, 40)
-            Text("\(username.count) / 16")
-                .font(.caption2)
-                .foregroundColor(.gray)
-            Spacer()
-        }
-        .overlay {
+        NavigationView {
             VStack {
+                Text("Please create your username.")
+                    .font(.headline)
+                    .padding(.top, 60)
+                TextField("username", text: $username)
+                    .limitTextLength($username, to: 16)
+                    .textCase(.lowercase)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .focused($isFocused)
+                    .onAppear() {
+                        isFocused = true
+                    }
+                    .onChange(of: username) { _ in
+                        username = username.replacingOccurrences(of: " ", with: "")
+                        isValidFormat = testValidUsername(testString: username)
+                        isUnique = testUnique(testString: username)
+                    }
+                    .font(Font.title2.weight(.bold))
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 40)
+                Text("\(username.count) / 16")
+                    .font(.caption2)
+                    .foregroundColor(.gray)
+                if !isUnique {
+                    Text("This username is already taken.")
+                        .font(.caption2)
+                        .foregroundColor(Color(UIColor.systemRed))
+                        .padding(.top, 1)
+                }
                 Spacer()
-                Text("Username must be between 3 and 16 characters.")
-                    .font(.subheadline)
-                    .foregroundColor(Color(UIColor.systemGray))
-                    .padding(.bottom, 20)
-                NavigationLink(destination: SignUpSecondView()
-                    , label: {
-                    BottomButtonView(label: "Next")
-                })
-                .disabled(username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || username.count < 3)
-                .simultaneousGesture(TapGesture().onEnded {
-                    //TODO: username 저장
-                })
             }
+            .overlay {
+                VStack {
+                    Spacer()
+                    Text("Username must be 4 to 16 alphanumeric characters.\nThe first character must be a letter.")
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(UIColor.systemGray))
+                        .padding(.bottom, 20)
+                    NavigationLink(destination: SignUpSecondView(loginUser: loginUser, signUpVM: signUpVM),
+                        label: {
+                        BottomButtonView(label: "Next")
+                    })
+                    .disabled(
+                        !isValidFormat || !isUnique
+                    )
+                    .simultaneousGesture(TapGesture().onEnded {
+                        signUpVM.username = username
+                    })
+                }
+            }
+            .onAppear {
+                getAllUsernames()
+            }
+        }
+    }
+}
+
+extension SignUpView {
+    func testValidUsername(testString: String?) -> Bool {
+        let regEx = "^[a-zA-Z][a-zA-Z0-9]{3,15}$"
+        let usernameTest = NSPredicate(format:"SELF MATCHES %@", regEx)
+        return usernameTest.evaluate(with: testString)
+    }
+    func testUnique(testString: String) -> Bool {
+        if usernameList.contains(testString) {
+            return false
+        } else {
+            return true
+        }
+    }
+    func getAllUsernames() {
+        FirebaseConnector().fetchAllUsernames { list in
+            self.usernameList = list
         }
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignUpView(loginUser: LoginUser(), signUpVM: SignUpViewModel())
     }
 }

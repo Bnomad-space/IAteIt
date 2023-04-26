@@ -11,6 +11,8 @@ import FirebaseAuth
 import SwiftUI
 
 struct LoginView: View {
+    @ObservedObject var loginUser: LoginUser
+    @ObservedObject var signUpVM: SignUpViewModel
     @State var currentNonce: String?
     
     var body: some View {
@@ -58,8 +60,20 @@ struct LoginView: View {
                             }
                             if let user = authResult?.user {
                                 print("애플 로그인 결과:", user.uid, user.email ?? "-")
+                                FirebaseConnector().checkExistingUser(userUid: user.uid) { isExist in
+                                    if isExist {
+                                        FirebaseConnector().fetchUser(id: user.uid) { user in
+                                            // TODO: viewModel에 user 넣기
+                                            loginUser.user = user
+                                            loginUser.isAppleLoginRequired = false
+                                        }
+                                    } else {
+                                        loginUser.appleUid = user.uid
+                                        loginUser.isAppleLoginRequired = false
+                                        signUpVM.isPresent = true
+                                    }
+                                }
                             }
-                            print("signed in")
                         }
                         print("\(String(describing: Auth.auth().currentUser?.uid))")
                         
@@ -95,8 +109,6 @@ struct LoginView: View {
 }
 
 extension LoginView {
-    
-    
     @available(iOS 13, *)
     private func sha256(_ input: String) -> String {
       let inputData = Data(input.utf8)
@@ -129,12 +141,10 @@ extension LoginView {
 
       return String(nonce)
     }
-    
-    
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(loginUser: LoginUser(), signUpVM: SignUpViewModel())
     }
 }
