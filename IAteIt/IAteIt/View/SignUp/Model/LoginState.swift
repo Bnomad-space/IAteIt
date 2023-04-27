@@ -1,5 +1,5 @@
 //
-//  LoginUser.swift
+//  LoginState.swift
 //  IAteIt
 //
 //  Created by Eunbee Kang on 2023/04/26.
@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
-class LoginUser: ObservableObject {
+class LoginState: ObservableObject {
     @Published var appleUid: String = ""
     @Published var user: User?
     @Published var isAppleLoginRequired: Bool = false

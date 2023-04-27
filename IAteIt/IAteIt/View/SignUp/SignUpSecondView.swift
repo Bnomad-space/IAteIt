@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SignUpSecondView: View {
-    @ObservedObject var loginUser: LoginUser
-    @ObservedObject var signUpVM: SignUpViewModel
+    @ObservedObject var loginState: LoginState
+    @ObservedObject var signUpState: SignUpState
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
@@ -64,15 +64,15 @@ struct SignUpSecondView: View {
             Button(action: {
                 // TODO: 이미지 저장, SignUpView dismiss
                 if let image = selectedImage {
-                    FirebaseConnector().uploadProfileImage(userId: loginUser.appleUid, image: image) { url in
-                        let user = User(id: loginUser.appleUid, nickname: signUpVM.username, profileImageUrl: url)
+                    FirebaseConnector().uploadProfileImage(userId: loginState.appleUid, image: image) { url in
+                        let user = User(id: loginState.appleUid, nickname: signUpState.username, profileImageUrl: url)
                         FirebaseConnector().setNewUser(user: user)
                     }
                 } else {
-                    let user = User(id: loginUser.appleUid, nickname: signUpVM.username)
+                    let user = User(id: loginState.appleUid, nickname: signUpState.username)
                     FirebaseConnector().setNewUser(user: user)
                 }
-                signUpVM.isPresent = false
+                signUpState.isPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
             })
@@ -91,6 +91,6 @@ extension SignUpSecondView {
 
 struct SignUpSecondView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpSecondView(loginUser: LoginUser(), signUpVM: SignUpViewModel())
+        SignUpSecondView(loginState: LoginState(), signUpState: SignUpState())
     }
 }

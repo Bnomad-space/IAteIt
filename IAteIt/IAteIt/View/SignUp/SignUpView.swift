@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @ObservedObject var loginUser: LoginUser
-    @ObservedObject var signUpVM: SignUpViewModel
+    @ObservedObject var loginState: LoginState
+    @ObservedObject var signUpState: SignUpState
     @State var username = ""
     @FocusState private var isFocused: Bool
     @State var isValidFormat: Bool = false
@@ -60,7 +60,7 @@ struct SignUpView: View {
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(UIColor.systemGray))
                         .padding(.bottom, 20)
-                    NavigationLink(destination: SignUpSecondView(loginUser: loginUser, signUpVM: signUpVM),
+                    NavigationLink(destination: SignUpSecondView(loginState: loginState, signUpState: signUpState),
                         label: {
                         BottomButtonView(label: "Next")
                     })
@@ -68,7 +68,7 @@ struct SignUpView: View {
                         !isValidFormat || !isUnique
                     )
                     .simultaneousGesture(TapGesture().onEnded {
-                        signUpVM.username = username
+                        signUpState.username = username
                     })
                 }
             }
@@ -101,6 +101,6 @@ extension SignUpView {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(loginUser: LoginUser(), signUpVM: SignUpViewModel())
+        SignUpView(loginState: LoginState(), signUpState: SignUpState())
     }
 }

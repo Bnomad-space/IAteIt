@@ -11,8 +11,8 @@ import FirebaseAuth
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var loginUser: LoginUser
-    @ObservedObject var signUpVM: SignUpViewModel
+    @ObservedObject var loginState: LoginState
+    @ObservedObject var signUpState: SignUpState
     @State var currentNonce: String?
     
     var body: some View {
@@ -64,13 +64,13 @@ struct LoginView: View {
                                     if isExist {
                                         FirebaseConnector().fetchUser(id: user.uid) { user in
                                             // TODO: viewModel에 user 넣기
-                                            loginUser.user = user
-                                            loginUser.isAppleLoginRequired = false
+                                            loginState.user = user
+                                            loginState.isAppleLoginRequired = false
                                         }
                                     } else {
-                                        loginUser.appleUid = user.uid
-                                        loginUser.isAppleLoginRequired = false
-                                        signUpVM.isPresent = true
+                                        loginState.appleUid = user.uid
+                                        loginState.isAppleLoginRequired = false
+                                        signUpState.isPresent = true
                                     }
                                 }
                             }
@@ -145,6 +145,6 @@ extension LoginView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginUser: LoginUser(), signUpVM: SignUpViewModel())
+        LoginView(loginState: LoginState(), signUpState: SignUpState())
     }
 }
