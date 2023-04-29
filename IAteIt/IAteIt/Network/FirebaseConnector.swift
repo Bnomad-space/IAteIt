@@ -60,7 +60,6 @@ class FirebaseConnector {
                 print("Error getting documents: \(err)")
             } else {
                 for document in snapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
                     let dict = document.data()
                     guard let username = dict["nickname"] as? String else { return }
                     usernameList.append(username)

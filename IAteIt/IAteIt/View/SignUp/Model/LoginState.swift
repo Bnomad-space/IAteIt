@@ -11,8 +11,10 @@ import FirebaseAuth
 
 class LoginState: ObservableObject {
     @Published var appleUid: String = ""
+    @Published var username: String = ""
     @Published var user: User?
     @Published var isAppleLoginRequired: Bool = false
+    @Published var isSignUpViewPresent: Bool = false
     
     init() {
         self.checkLoginUser()

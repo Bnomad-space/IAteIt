@@ -12,8 +12,8 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var loginState: LoginState
-    @ObservedObject var signUpState: SignUpState
     @State var currentNonce: String?
+    @State var isSignUpRequired: Bool = false
     
     var body: some View {
         VStack {
@@ -63,14 +63,13 @@ struct LoginView: View {
                                 FirebaseConnector().checkExistingUser(userUid: user.uid) { isExist in
                                     if isExist {
                                         FirebaseConnector().fetchUser(id: user.uid) { user in
-                                            // TODO: viewModel에 user 넣기
                                             loginState.user = user
                                             loginState.isAppleLoginRequired = false
                                         }
                                     } else {
                                         loginState.appleUid = user.uid
                                         loginState.isAppleLoginRequired = false
-                                        signUpState.isPresent = true
+                                        isSignUpRequired = true
                                     }
                                 }
                             }
@@ -91,10 +90,7 @@ struct LoginView: View {
                     RoundedRectangle(cornerRadius: 25)
                         .stroke(.black, lineWidth: 1)
             )
-                .padding([.bottom], 32)
-            
-            
-            
+            .padding([.bottom], 32)
             
             Button(action: {
                 // TODO: 액션 추가
@@ -104,6 +100,9 @@ struct LoginView: View {
                     .foregroundColor(.gray)
                     .underline()
             })
+        }
+        .onDisappear {
+            loginState.isSignUpViewPresent = isSignUpRequired
         }
     }
 }
@@ -145,6 +144,6 @@ extension LoginView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginState: LoginState(), signUpState: SignUpState())
+        LoginView(loginState: LoginState())
     }
 }
