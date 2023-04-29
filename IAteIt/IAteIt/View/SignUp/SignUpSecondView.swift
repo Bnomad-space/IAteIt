@@ -61,7 +61,6 @@ struct SignUpSecondView: View {
                     .padding(.bottom, 20)
             }
             Button(action: {
-                // TODO: 이미지 저장, SignUpView dismiss
                 if let image = selectedImage {
                     FirebaseConnector().uploadProfileImage(userId: loginState.appleUid, image: image) { url in
                         let user = User(id: loginState.appleUid, nickname: loginState.username, profileImageUrl: url)
