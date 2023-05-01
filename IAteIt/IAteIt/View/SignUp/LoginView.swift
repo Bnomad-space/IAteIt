@@ -13,7 +13,6 @@ import SwiftUI
 struct LoginView: View {
     @ObservedObject var loginState: LoginStateModel
     @State var currentNonce: String?
-    @State var isSignUpRequired: Bool = false
     
     var body: some View {
         VStack {
@@ -31,58 +30,8 @@ struct LoginView: View {
                 currentNonce = nonce
                 request.requestedScopes = [.fullName, .email]
                 request.nonce = sha256(nonce)
-                
             } onCompletion: { result in
-                switch result {
-                case .success(let authResults):
-                    print("Authorisation successful \(authResults)")
-                  
-                    switch authResults.credential {
-                    case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                        guard let nonce = currentNonce else {
-                            fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                        }
-                        guard let appleIDToken = appleIDCredential.identityToken else {
-                            fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                        }
-                        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                            print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                            return
-                        }
-                        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-                        Auth.auth().signIn(with: credential) { (authResult, error) in
-                            if error != nil {
-                                // Error. If error.code == .MissingOrInvalidNonce, make sure
-                                // you're sending the SHA256-hashed nonce as a hex string with
-                                // your request to Apple.
-                                print(error?.localizedDescription as Any)
-                                return
-                            }
-                            if let user = authResult?.user {
-                                print("애플 로그인 결과:", user.uid, user.email ?? "-")
-                                FirebaseConnector().checkExistingUser(userUid: user.uid) { isExist in
-                                    if isExist {
-                                        FirebaseConnector().fetchUser(id: user.uid) { user in
-                                            loginState.user = user
-                                            loginState.isAppleLoginRequired = false
-                                        }
-                                    } else {
-                                        loginState.appleUid = user.uid
-                                        loginState.isAppleLoginRequired = false
-                                        isSignUpRequired = true
-                                    }
-                                }
-                            }
-                        }
-                        print("\(String(describing: Auth.auth().currentUser?.uid))")
-                        
-                    default:
-                        break
-                    }
-                    
-                case .failure(let error):
-                  print("Authorisation failed: \(error.localizedDescription)")
-              }
+                loginState.getResultOfAppleLogin(result: result, currentNonce: currentNonce)
             }
             .signInWithAppleButtonStyle(.white)
             .frame(width: 268, height: 50, alignment: .center)
@@ -102,7 +51,7 @@ struct LoginView: View {
             })
         }
         .onDisappear {
-            loginState.isSignUpViewPresent = isSignUpRequired
+            loginState.isSignUpViewPresent = loginState.isSignUpRequired
         }
     }
 }
