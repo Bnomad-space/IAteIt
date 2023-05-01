@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 struct FeedView: View {
-    @ObservedObject var loginState: LoginState
+    @ObservedObject var loginState: LoginStateModel
     
     var tempFeedPhotoCardList = TempFeedPhotoCardData().list
     var tempPlateList = TempPlateData().list
@@ -72,6 +72,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(loginState: LoginState())
+        FeedView(loginState: LoginStateModel())
     }
 }

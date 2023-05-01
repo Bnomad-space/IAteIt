@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
-class LoginState: ObservableObject {
+class LoginStateModel: ObservableObject {
     @Published var appleUid: String = ""
     @Published var username: String = ""
     @Published var user: User?

@@ -12,7 +12,7 @@ import Firebase
 struct IAteItApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @StateObject var loginState: LoginState = LoginState()
+    @StateObject var loginState: LoginStateModel = LoginStateModel()
     
     var body: some Scene {
         WindowGroup {

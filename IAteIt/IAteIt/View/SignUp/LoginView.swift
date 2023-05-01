@@ -11,7 +11,7 @@ import FirebaseAuth
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var loginState: LoginState
+    @ObservedObject var loginState: LoginStateModel
     @State var currentNonce: String?
     @State var isSignUpRequired: Bool = false
     
@@ -144,6 +144,6 @@ extension LoginView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginState: LoginState())
+        LoginView(loginState: LoginStateModel())
     }
 }
