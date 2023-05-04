@@ -57,7 +57,7 @@ struct FeedView: View {
                 .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
             )
             .navigationBarItems(trailing: NavigationLink(destination: MyProfileView()) {
-                ProfilePhotoButtonView(profileInfo: tempFeedPhotoCardList[0]) //TODO: 유저 이미지
+                ProfilePhotoButtonView(loginState: loginState, profileInfo: tempFeedPhotoCardList[0]) //TODO: 유저 이미지
             })
         }
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {

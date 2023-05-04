@@ -26,7 +26,7 @@ struct PhotoCardView: View {
                         .layoutPriority(-1)
                         .cornerRadius(photoCorner)
                 } placeholder: {
-                    Color.gray
+                    Color(UIColor.systemGray5)
                 }
             }
             .clipped()

@@ -18,23 +18,23 @@ struct FeedHeaderView: View {
                 if let indexOfUser = User.users.firstIndex(where: { $0.id == meal.userId }) {
                     ZStack {
                         if let userImage = User.users[indexOfUser].profileImageUrl {
-                        Rectangle()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: profilePicSize, height: profilePicSize)
+                            Rectangle()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: profilePicSize, height: profilePicSize)
                             AsyncImage(url: URL(string: userImage)) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
                                     .layoutPriority(-1)
-                                    .frame(width: profilePicSize, height: profilePicSize)
                             } placeholder: {
-                                Color.gray
+                                Color(UIColor.systemGray5)
                             }
+                            .frame(width: profilePicSize, height: profilePicSize)
                         } else {
                             Image(systemName: "person.crop.circle")
                                 .resizable()
                                 .frame(width: profilePicSize, height: profilePicSize)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color(UIColor.systemGray3))
                         }
                     }
                     .clipped()
