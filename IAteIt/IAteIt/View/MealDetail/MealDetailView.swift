@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct MealDetailView: View {
+    @StateObject var commentBar: CommentBar
+    
     var meal: Meal
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView(meal: meal)
+                    MealDetailTopView(commentBar: commentBar, meal: meal)
                         .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {
@@ -37,15 +39,18 @@ struct MealDetailView: View {
                     }
                 }
             }
-            AddCommentBarView()
+            AddCommentBarView(commentBar: commentBar)
                 .padding([.bottom], 10)
                 .padding(.horizontal, .paddingHorizontal)
+        }
+        .onTapGesture {
+            self.hideKeyboard()
         }
     }
 }
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(meal: Meal.meals[2])
+        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2])
     }
 }
