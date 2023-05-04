@@ -31,6 +31,57 @@ class FirebaseConnector {
         ])
     }
     
+    // username 중복 체크(회원가입 시)
+    func checkExistingUsername(username: String, completion: @escaping(Bool) -> Void) {
+        FirebaseConnector.users.whereField("nickname", isEqualTo: username)
+            .getDocuments() { (snapshot, err) in
+                if let snapshot = snapshot {
+                    if snapshot.count > 0 {
+                        print("same username exists: \(snapshot.count)")
+                        completion(true)
+                    } else {
+                        print("unique username")
+                        completion(false)
+                    }
+                } else {
+                    if let err = err {
+                        print(err.localizedDescription)
+                    }
+                }
+            }
+    }
+    
+    // 가입된 username 모두 가져오기
+    func fetchAllUsernames(completion: @escaping([String]) -> Void) {
+        var usernameList: [String] = []
+        
+        FirebaseConnector.users.getDocuments() { (snapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in snapshot!.documents {
+                    let dict = document.data()
+                    guard let username = dict["nickname"] as? String else { return }
+                    usernameList.append(username)
+                }
+                completion(usernameList)
+            }
+        }
+    }
+    
+    // 이미 가입된 유저인지 체크
+    func checkExistingUser(userUid: String, completion: @escaping(Bool) -> Void) {
+        FirebaseConnector.users.document(userUid).getDocument { (document, error) in
+            if let document = document, document.exists {
+                print("이미 가입된 유저 로그인.")
+                completion(true)
+            } else {
+                print("Document does not exist. 새로운 유저 로그인.")
+                completion(false)
+            }
+        }
+    }
+    
     // user 정보 업데이트(프로필 수정)
     func updateUser(user: User) {
         FirebaseConnector.users.document(user.id)

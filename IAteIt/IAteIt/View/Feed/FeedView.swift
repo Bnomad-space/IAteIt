@@ -10,6 +10,8 @@ import Firebase
 import FirebaseFirestore
 
 struct FeedView: View {
+    @ObservedObject var loginState: LoginStateModel
+    
     var tempFeedPhotoCardList = TempFeedPhotoCardData().list
     var tempPlateList = TempPlateData().list
     
@@ -59,11 +61,17 @@ struct FeedView: View {
                 ProfilePhotoButtonView(profileInfo: tempFeedPhotoCardList[0])
             })
         }
+        .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
+            LoginView(loginState: loginState)
+        })
+        .fullScreenCover(isPresented: self.$loginState.isSignUpViewPresent, content: {
+            SignUpView(loginState: loginState)
+        })
     }
 }
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        FeedView(loginState: LoginStateModel())
     }
 }

@@ -12,10 +12,12 @@ import Firebase
 struct IAteItApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    @StateObject var loginState: LoginStateModel = LoginStateModel()
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                FeedView()
+                FeedView(loginState: loginState)
             }
         }
     }

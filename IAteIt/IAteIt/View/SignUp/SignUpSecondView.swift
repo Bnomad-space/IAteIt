@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct SignUpSecondView: View {
+    @ObservedObject var loginState: LoginStateModel
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
     @State private var isLaterTextPresented = true
+    
+//    var user: User?
     
     let imgSize: CGFloat = 148
     
@@ -58,7 +61,16 @@ struct SignUpSecondView: View {
                     .padding(.bottom, 20)
             }
             Button(action: {
-                // TODO: 이미지 저장, SignUpView dismiss
+                if let image = selectedImage {
+                    FirebaseConnector().uploadProfileImage(userId: loginState.appleUid, image: image) { url in
+                        let user = User(id: loginState.appleUid, nickname: loginState.username, profileImageUrl: url)
+                        FirebaseConnector().setNewUser(user: user)
+                    }
+                } else {
+                    let user = User(id: loginState.appleUid, nickname: loginState.username)
+                    FirebaseConnector().setNewUser(user: user)
+                }
+                loginState.isSignUpViewPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
             })
@@ -77,6 +89,6 @@ extension SignUpSecondView {
 
 struct SignUpSecondView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpSecondView()
+        SignUpSecondView(loginState: LoginStateModel())
     }
 }
