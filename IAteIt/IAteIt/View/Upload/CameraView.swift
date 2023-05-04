@@ -9,6 +9,8 @@ import SwiftUI
 import AVFoundation
 
 struct CameraView: View {
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var loginState: LoginStateModel
     @ObservedObject var viewModel = CameraViewModel()
     @ObservedObject var model = Camera()
     
@@ -23,7 +25,9 @@ struct CameraView: View {
     var body: some View {
         VStack {
             HStack {
-                Button(action: {}, label: {
+                Button(action: {
+                    dismiss()
+                }, label: {
                     Image(systemName: "multiply")
                         .frame(width: 40, height: 40)
                         .font(.headline)
@@ -82,7 +86,11 @@ struct CameraView: View {
                             .padding(.leading)
                             Spacer()
                             
-                            Button(action: viewModel.upload, label: {
+                            Button(action: {
+                                viewModel.upload()
+                                saveNewMeal()
+                                dismiss()
+                            }, label: {
                                 Capsule()
                                     .overlay(
                                         HStack {
@@ -116,8 +124,23 @@ struct CameraView: View {
     }
 }
 
+extension CameraView {
+    func saveNewMeal() {
+        guard let userId = loginState.user?.id,
+              let image = viewModel.imageToBeUploaded
+        else { return }
+        var meal = Meal(id: UUID().uuidString, userId: userId, uploadDate: Date(), plates: [])
+        var plate = Plate(id: UUID().uuidString, mealId: meal.id, imageUrl: "", uploadDate: Date())
+        FirebaseConnector().uploadPlateImage(mealId: meal.id, plateId: plate.id, image: image) { url in
+            plate.imageUrl = url
+            meal.plates.append(plate)
+            FirebaseConnector().setNewMeal(meal: meal)
+        }
+    }
+}
+
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView()
+        CameraView(loginState: LoginStateModel())
     }
 }

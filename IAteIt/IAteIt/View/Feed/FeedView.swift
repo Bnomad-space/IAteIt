@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct FeedView: View {
     @ObservedObject var loginState: LoginStateModel
+    @State private var isCameraViewPresented = false
     
     var tempFeedPhotoCardList = TempFeedPhotoCardData().list
 
@@ -20,12 +21,17 @@ struct FeedView: View {
         NavigationView() {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 27) {
-                    NavigationLink(destination: CameraView()) {
+                    Button(action: {
+                        isCameraViewPresented.toggle()
+                    }, label: {
                         AddMealView()
                             .padding([.top], 24)
                             .padding(.horizontal, .paddingHorizontal)
-                    }
-                    .buttonStyle(PlainButtonStyle()) //버튼스타일 메소드 삭제하려면 컴포넌트 자체에서 지정해주어야
+                    })
+                    .tint(.black)
+                    .fullScreenCover(isPresented: $isCameraViewPresented, content: {
+                        CameraView(loginState: loginState)
+                    })
                     ForEach(mealList, id: \.self) { eachMeal in
                         VStack(spacing: 8) {
                             FeedHeaderView(meal: eachMeal)
