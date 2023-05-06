@@ -70,17 +70,6 @@ final class FirebaseConnector {
     }
     
     // 이미 가입된 유저인지 체크
-//    func checkExistingUser(userUid: String, completion: @escaping(Bool) -> Void) {
-//        FirebaseConnector.users.document(userUid).getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                print("이미 가입된 유저 로그인.")
-//                completion(true)
-//            } else {
-//                print("Document does not exist. 새로운 유저 로그인.")
-//                completion(false)
-//            }
-//        }
-//    }
     func checkExistingUser(userUid: String) async throws -> Bool {
         let document = try await FirebaseConnector.users.document(userUid).getDocument()
         if document.exists {
@@ -103,22 +92,6 @@ final class FirebaseConnector {
     }
     
     // user 데이터 가져오기
-//    func fetchUser(id: String, completion: @escaping(User) -> Void) {
-//        FirebaseConnector.users.document(id).getDocument { (document, error) in
-//            guard
-//                let document = document, document.exists,
-//                let dictionary = document.data(),
-//                let nickname = dictionary["nickname"] as? String
-//            else {
-//                print("Document does not exist")
-//                return
-//            }
-//            let profileImageUrl = dictionary["profileImageUrl"] as? String
-//            let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl)
-//
-//            completion(user)
-//        }
-//    }
     func fetchUser(id: String) async throws -> User {
         let snapshot = try await FirebaseConnector.users.document(id).getDocument()
         guard let data = snapshot.data(),
