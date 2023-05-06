@@ -9,13 +9,9 @@ import SwiftUI
 
 struct ProfilePhotoButtonView: View {
     @ObservedObject var loginState: LoginStateModel
-    var profileInfo: TempFeedHeader //TODO: 프로필 데이터 수정
     let profilePicSize: CGFloat = 28
     
     var body: some View {
-//        Button {
-//            //TODO: 프로필 내비게이션
-//        } label: {
             ZStack{
                 if let profileImageUrl = loginState.user?.profileImageUrl {
                     Rectangle()
@@ -41,5 +37,4 @@ struct ProfilePhotoButtonView: View {
             .cornerRadius(profilePicSize/2)
             .padding([.top], 3)
         }
-//    }
 }

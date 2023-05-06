@@ -11,6 +11,7 @@ import AVFoundation
 struct CameraView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var loginState: LoginStateModel
+    @ObservedObject var feedMeals: FeedMealModel
     @ObservedObject var viewModel = CameraViewModel()
     @ObservedObject var model = Camera()
     
@@ -88,7 +89,9 @@ struct CameraView: View {
                             
                             Button(action: {
                                 viewModel.upload()
-                                saveNewMeal()
+                                Task {
+                                    saveNewMeal()
+                                }
                                 dismiss()
                             }, label: {
                                 Capsule()
@@ -129,18 +132,22 @@ extension CameraView {
         guard let userId = loginState.user?.id,
               let image = viewModel.imageToBeUploaded
         else { return }
-        var meal = Meal(id: UUID().uuidString, userId: userId, uploadDate: Date(), plates: [])
-        var plate = Plate(id: UUID().uuidString, mealId: meal.id, imageUrl: "", uploadDate: Date())
-        FirebaseConnector().uploadPlateImage(mealId: meal.id, plateId: plate.id, image: image) { url in
-            plate.imageUrl = url
+        
+        var meal = Meal(userId: userId, uploadDate: Date(), plates: [])
+        var plate = Plate(id: UUID().uuidString, mealId: "", imageUrl: "", uploadDate: Date())
+        Task {
+            let plateImageUrl = try await FirebaseConnector().uploadPlateImage(plateId: plate.id, image: image)
+            print(plateImageUrl)
+            plate.imageUrl = plateImageUrl
             meal.plates.append(plate)
-            FirebaseConnector().setNewMeal(meal: meal)
+            feedMeals.mealList.insert(meal, at: 0)
+            try await FirebaseConnector().setNewMeal(meal: meal)
         }
     }
 }
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView(loginState: LoginStateModel())
+        CameraView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
     }
 }

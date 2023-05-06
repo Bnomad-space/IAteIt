@@ -6,16 +6,16 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct Meal: Identifiable, Codable, Hashable {
-    var id: String
+    @DocumentID var id: String?
     var userId: String
     var location: String?
     var caption: String?
     var uploadDate: Date
     var plates: [Plate]
     var comments: [Comment]?
-    
 }
 
 extension Meal {

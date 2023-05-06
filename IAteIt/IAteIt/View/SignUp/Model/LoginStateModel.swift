@@ -24,21 +24,24 @@ class LoginStateModel: ObservableObject {
     }
     
     func checkLoginUser() {
-        let currentUser = Auth.auth().currentUser
-        if currentUser != nil {
-            guard let userUid = currentUser?.uid else { return }
-            FirebaseConnector().checkExistingUser(userUid: userUid) { isExist in
+        Task {
+            let currentUser = Auth.auth().currentUser
+            if currentUser != nil {
+                guard let userUid = currentUser?.uid else { return }
+                let isExist = try await FirebaseConnector().checkExistingUser(userUid: userUid)
                 if isExist {
-                    FirebaseConnector().fetchUser(id: userUid) { user in
-                        self.user = user
+                    let fetchedUser = try await FirebaseConnector().fetchUser(id: userUid)
+                    await MainActor.run {
+                        self.user = fetchedUser
+                        self.isAppleLoginRequired = false
                     }
-                    self.isAppleLoginRequired = false
                 } else {
                     self.isAppleLoginRequired = true
                 }
+                
+            } else {
+                self.isAppleLoginRequired = true
             }
-        } else {
-            self.isAppleLoginRequired = true
         }
     }
     
@@ -60,30 +63,7 @@ class LoginStateModel: ObservableObject {
                     return
                 }
                 let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-                Auth.auth().signIn(with: credential) { (authResult, error) in
-                    if error != nil {
-                        // Error. If error.code == .MissingOrInvalidNonce, make sure
-                        // you're sending the SHA256-hashed nonce as a hex string with
-                        // your request to Apple.
-                        print(error?.localizedDescription as Any)
-                        return
-                    }
-                    if let authUser = authResult?.user {
-                        print("애플 로그인 결과:", authUser.uid, authUser.email ?? "-")
-                        FirebaseConnector().checkExistingUser(userUid: authUser.uid) { isExist in
-                            if isExist {
-                                FirebaseConnector().fetchUser(id: authUser.uid) { fetchedUser in
-                                    self.user = fetchedUser
-                                    self.isAppleLoginRequired = false
-                                }
-                            } else {
-                                self.appleUid = authUser.uid
-                                self.isAppleLoginRequired = false
-                                self.isSignUpRequired = true
-                            }
-                        }
-                    }
-                }
+                signInComplete(credential: credential)
                 print("\(String(describing: Auth.auth().currentUser?.uid))")
                 
             default:
@@ -92,6 +72,36 @@ class LoginStateModel: ObservableObject {
             
         case .failure(let error):
           print("Authorisation failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func signInToFirebase(credential: AuthCredential) async throws -> AuthDataResultModel {
+        let authDataResult = try await Auth.auth().signIn(with: credential)
+        let result = AuthDataResultModel(uid: authDataResult.user.uid, email: authDataResult.user.email ?? "-")
+        return result
+    }
+    
+    func signInComplete(credential: AuthCredential) {
+        Task {
+            do {
+                let returnedUserData = try await signInToFirebase(credential: credential)
+                let userUid = returnedUserData.uid
+                print("애플 로그인 결과: \(userUid), \(returnedUserData.email)")
+                
+                let isExist = try await FirebaseConnector().checkExistingUser(userUid: userUid)
+                if isExist {
+                    let fetchedUser = try await FirebaseConnector().fetchUser(id: userUid)
+                    self.user = fetchedUser
+                    self.isAppleLoginRequired = false
+                    
+                } else {
+                    self.appleUid = userUid
+                    self.isAppleLoginRequired = false
+                    self.isSignUpRequired = true
+                }
+            } catch {
+                print("Error: \(error)")
+            }
         }
     }
 }

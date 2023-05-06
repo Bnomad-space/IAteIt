@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseStorage
 import SwiftUI
 
-class FirebaseConnector {
+final class FirebaseConnector {
     
     /*
      TODO: - 논의된 모델로 Firebase에는 어떻게 저장할 건지 다시 바꿔주어야 함
@@ -70,15 +70,25 @@ class FirebaseConnector {
     }
     
     // 이미 가입된 유저인지 체크
-    func checkExistingUser(userUid: String, completion: @escaping(Bool) -> Void) {
-        FirebaseConnector.users.document(userUid).getDocument { (document, error) in
-            if let document = document, document.exists {
-                print("이미 가입된 유저 로그인.")
-                completion(true)
-            } else {
-                print("Document does not exist. 새로운 유저 로그인.")
-                completion(false)
-            }
+//    func checkExistingUser(userUid: String, completion: @escaping(Bool) -> Void) {
+//        FirebaseConnector.users.document(userUid).getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                print("이미 가입된 유저 로그인.")
+//                completion(true)
+//            } else {
+//                print("Document does not exist. 새로운 유저 로그인.")
+//                completion(false)
+//            }
+//        }
+//    }
+    func checkExistingUser(userUid: String) async throws -> Bool {
+        let document = try await FirebaseConnector.users.document(userUid).getDocument()
+        if document.exists {
+            print("이미 가입된 유저 로그인.")
+            return true
+        } else {
+            print("Document does not exist. 새로운 유저 로그인.")
+            return false
         }
     }
     
@@ -93,21 +103,31 @@ class FirebaseConnector {
     }
     
     // user 데이터 가져오기
-    func fetchUser(id: String, completion: @escaping(User) -> Void) {
-        FirebaseConnector.users.document(id).getDocument { (document, error) in
-            guard
-                let document = document, document.exists,
-                let dictionary = document.data(),
-                let nickname = dictionary["nickname"] as? String
-            else {
-                print("Document does not exist")
-                return
-            }
-            let profileImageUrl = dictionary["profileImageUrl"] as? String
-            let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl)
+//    func fetchUser(id: String, completion: @escaping(User) -> Void) {
+//        FirebaseConnector.users.document(id).getDocument { (document, error) in
+//            guard
+//                let document = document, document.exists,
+//                let dictionary = document.data(),
+//                let nickname = dictionary["nickname"] as? String
+//            else {
+//                print("Document does not exist")
+//                return
+//            }
+//            let profileImageUrl = dictionary["profileImageUrl"] as? String
+//            let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl)
+//
+//            completion(user)
+//        }
+//    }
+    func fetchUser(id: String) async throws -> User {
+        let snapshot = try await FirebaseConnector.users.document(id).getDocument()
+        guard let data = snapshot.data(),
+              let nickname = data["nickname"] as? String
+        else { throw URLError(.badServerResponse) }
+        let profileImageUrl = data["profileImageUrl"] as? String
+        let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl)
             
-            completion(user)
-        }
+        return user
     }
     
     // user profile 이미지 업로드

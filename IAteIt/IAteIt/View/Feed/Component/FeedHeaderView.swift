@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FeedHeaderView: View {
+    @ObservedObject var feedMeals: FeedMealModel
     let profilePicSize: CGFloat = 36
     
     var meal: Meal
@@ -15,9 +16,9 @@ struct FeedHeaderView: View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 12) {
-                if let indexOfUser = User.users.firstIndex(where: { $0.id == meal.userId }) {
+                if let indexOfUser = feedMeals.userList.firstIndex(where: { $0.id == meal.userId }) {
                     ZStack {
-                        if let userImage = User.users[indexOfUser].profileImageUrl {
+                        if let userImage = feedMeals.userList[indexOfUser].profileImageUrl {
                             Rectangle()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: profilePicSize, height: profilePicSize)
@@ -63,6 +64,6 @@ struct FeedHeaderView: View {
 
 struct FeedHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(loginState: LoginStateModel())
+        FeedView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
     }
 }

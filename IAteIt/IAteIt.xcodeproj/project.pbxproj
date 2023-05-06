@@ -20,6 +20,9 @@
 		7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */; };
 		7E1F719429A90449005A7B56 /* TempPlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719329A90449005A7B56 /* TempPlate.swift */; };
 		7E2B2DAD29DE9304009EC0ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2B2DAC29DE9304009EC0ED /* Constants.swift */; };
+		7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */; };
+		7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */; };
+		7E407CD02A0558A3001CAFBF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E407CCF2A0558A3001CAFBF /* FirebaseFirestoreSwift */; };
 		7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */; };
 		7E48DC1C29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */; };
 		7E48DC1E29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */; };
@@ -76,6 +79,8 @@
 		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
 		7E1F719329A90449005A7B56 /* TempPlate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPlate.swift; sourceTree = "<group>"; };
 		7E2B2DAC29DE9304009EC0ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMealModel.swift; sourceTree = "<group>"; };
+		7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataResultModel.swift; sourceTree = "<group>"; };
 		7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailTopView.swift; sourceTree = "<group>"; };
 		7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForMeals.swift"; sourceTree = "<group>"; };
 		7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForComments.swift"; sourceTree = "<group>"; };
@@ -125,6 +130,7 @@
 				DF22139E29BB293C000134FC /* FirebaseFirestore in Frameworks */,
 				7E48DC2129F810420079E896 /* FirebaseAuth in Frameworks */,
 				DF2213A029BB293C000134FC /* FirebaseStorage in Frameworks */,
+				7E407CD02A0558A3001CAFBF /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +149,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		7E407CCA2A044CBC001CAFBF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7E48DC1F29F810420079E896 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				7E48DC2429F93E1F0079E896 /* LoginStateModel.swift */,
+				7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +201,7 @@
 		7E6069C829A5CA7B00284CBD /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				7E407CCA2A044CBC001CAFBF /* Model */,
 				04C1189129B74D410073EDB7 /* Component */,
 				04C1188F29B74BF40073EDB7 /* FeedView.swift */,
 			);
@@ -377,6 +393,7 @@
 				DF22139D29BB293C000134FC /* FirebaseFirestore */,
 				DF22139F29BB293C000134FC /* FirebaseStorage */,
 				7E48DC2029F810420079E896 /* FirebaseAuth */,
+				7E407CCF2A0558A3001CAFBF /* FirebaseFirestoreSwift */,
 			);
 			productName = IAteIt;
 			productReference = 7EFFE28429A5228D0021B9FE /* IAteIt.app */;
@@ -455,7 +472,7 @@
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,
 				7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */,
-				8C73F00329BDD010007D1A1E /* DailyMealCellView.swift in Sources */,
+				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,
 				7E48DC2529F93E1F0079E896 /* LoginStateModel.swift in Sources */,
 				7EDF91AB29E989BD00FB23A8 /* View+Extension.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
@@ -478,7 +495,9 @@
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
 				7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
+				7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */,
 				7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */,
+				7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */,
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
 				7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */,
@@ -718,6 +737,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7E407CCF2A0558A3001CAFBF /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF22139C29BB293C000134FC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		7E48DC2029F810420079E896 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DF22139C29BB293C000134FC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

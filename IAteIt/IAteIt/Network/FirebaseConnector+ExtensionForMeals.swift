@@ -14,19 +14,18 @@ extension FirebaseConnector {
     static let meals = Firestore.firestore().collection("meals")
     
     // 새로운 meal 생성 (첫번째 plate 생성 포함, 캡션, 장소 없는 상태)
-    func setNewMeal(meal: Meal) {
-        let plate = meal.plates[0]
-        let plates = FirebaseConnector.meals.document(meal.id).collection("plates")
-        FirebaseConnector.meals.document(meal.id).setData([
-            "id": meal.id,
+    func setNewMeal(meal: Meal) async throws {
+        let document = FirebaseConnector.meals.document()
+        let documentId = document.documentID
+        var plate = meal.plates[0]
+        plate.mealId = documentId
+        try await document.setData([
+            "id": documentId,
             "userId": meal.userId,
             "uploadDate": meal.uploadDate
         ])
-        plates.document(plate.id).setData([
-            "id": plate.id,
-            "mealId": meal.id,
-            "imageUrl": plate.imageUrl,
-            "uploadDate": plate.uploadDate
+        try await FirebaseConnector.meals.document(documentId).updateData([
+            "plates": FieldValue.arrayUnion([plate.firebaseData])
         ])
     }
     
@@ -40,30 +39,25 @@ extension FirebaseConnector {
             "uploadDate": plate.uploadDate
         ])
     }
+    func addPlateToMeal(mealId: String, plate: Plate) async throws {
+        try await FirebaseConnector.meals.document(mealId).updateData([
+            "plates": FieldValue.arrayUnion([plate.firebaseData])
+        ])
+    }
     
     // plate 이미지 업로드
-    func uploadPlateImage(mealId: String, plateId: String, image: UIImage, completion: @escaping(String) -> Void) {
+    func uploadPlateImage(plateId: String, image: UIImage) async throws -> String {
+        var plateImageUrl = ""
         let storageRef = Storage.storage().reference()
         let imageRef = storageRef.child("plateImage/\(plateId)")
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
-            print("DEBUG - fail compression")
-            return
+            throw URLError(.badServerResponse)
         }
-        imageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if let error = error {
-                print("DEBUG \(error.localizedDescription)")
-                return
-            }
-            imageRef.downloadURL { (url, error) in
-                if let error = error {
-                    print("DEBUG \(error.localizedDescription)")
-                    return
-                }
-                guard let imageUrl = url else { return }
-                
-                completion(imageUrl.absoluteString)
-            }
-        }
+        let returnedMetaData = try await imageRef.putDataAsync(imageData, metadata: nil)
+        let imageUrl: URL = try await imageRef.downloadURL()
+        plateImageUrl = imageUrl.absoluteString
+        
+        return plateImageUrl
     }
     
     // 특정 meal에 caption 업데이트
@@ -81,7 +75,7 @@ extension FirebaseConnector {
     }
     
     // 특정 meal의 모든 plate 데이터 가져오기
-    func fetchMealPlates(mealId: String, completion: @escaping([Plate]) -> Void) {
+    func fetchMealPlates(mealId: String, completion: @escaping([Plate]) -> Void) async {
         var plateHistory: [Plate] = []
         
         FirebaseConnector.meals.document(mealId).collection("plates").getDocuments() { (plateSnapshot, plateErr) in
@@ -136,36 +130,23 @@ extension FirebaseConnector {
     }
     
     // 24시간 이내 업로드된 모든 meal 데이터 가져오기
-    func fetchMealIn24Hours(date: Date, completion: @escaping([Meal]) -> Void) {
+    func fetchMealIn24Hours(date: Date) async throws -> [Meal] {
         var meals: [Meal] = []
-        
+
         let toTime = date
         let toTimestamp = Timestamp(date: toTime)
         let fromTime = date-3600*24
         let fromTimestamp = Timestamp(date: fromTime)
-        
-        FirebaseConnector.meals.order(by: "uploadDate", descending: true)
+
+        let snapshots = try await FirebaseConnector.meals.order(by: "uploadDate", descending: true)
             .whereField("uploadDate", isGreaterThan: fromTimestamp)
             .whereField("uploadDate", isLessThanOrEqualTo: toTimestamp)
-            .getDocuments() { (snapshot, err) in
-                if let err = err {
-                    print("Error getting document: \(err.localizedDescription)")
-                } else {
-                    for document in snapshot!.documents {
-                        let dict = document.data()
-                        guard let mealId = dict["id"] as? String,
-                              let userId = dict["userId"] as? String,
-                              let uploadTimestamp = dict["uploadDate"] as? Timestamp
-                        else { return }
-                        let uploadDate = uploadTimestamp.dateValue()
-                        let caption = dict["caption"] as? String
-                        let location = dict["location"] as? String
-                        
-                        let meal = Meal(id: mealId, userId: userId, location: location, caption: caption, uploadDate: uploadDate, plates: [])
-                        meals.append(meal)
-                    }
-                    completion(meals)
-                }
-            }
+            .getDocuments()
+        
+        for document in snapshots.documents {
+            let meal = try document.data(as: Meal.self)
+            meals.append(meal)
+        }
+        return meals
     }
 }
