@@ -9,8 +9,11 @@ import SwiftUI
 
 struct MealDetailView: View {
     @StateObject var commentBar: CommentBar
+    @ObservedObject var loginState: LoginStateModel
+    @State private var navTitleText = ""
     
     var meal: Meal
+    var user: User
     
     var body: some View {
         ZStack {
@@ -43,14 +46,28 @@ struct MealDetailView: View {
                 .padding([.bottom], 10)
                 .padding(.horizontal, .paddingHorizontal)
         }
+        .navigationTitle(navTitleText)
         .onTapGesture {
             self.hideKeyboard()
+        }
+        .onAppear {
+            setNavigationTitleText()
+        }
+    }
+}
+
+extension MealDetailView {
+    func setNavigationTitleText() {
+        if loginState.user?.id == user.id {
+            navTitleText = "I ate it."
+        } else {
+            navTitleText = "\(user.nickname) ate it."
         }
     }
 }
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2])
+        MealDetailView(commentBar: CommentBar(), loginState: LoginStateModel(), meal: Meal.meals[2], user: User.users[0])
     }
 }
