@@ -36,10 +36,14 @@ class LoginStateModel: ObservableObject {
                         self.isAppleLoginRequired = false
                     }
                 } else {
-                    self.isAppleLoginRequired = true
+                    await MainActor.run {
+                        self.isAppleLoginRequired = true
+                    }
                 }
             } else {
-                self.isAppleLoginRequired = true
+                await MainActor.run {
+                    self.isAppleLoginRequired = true
+                }
             }
         }
     }
@@ -93,9 +97,11 @@ class LoginStateModel: ObservableObject {
                     self.user = fetchedUser
                     self.isAppleLoginRequired = false
                 } else {
-                    self.appleUid = userUid
-                    self.isAppleLoginRequired = false
-                    self.isSignUpRequired = true
+                    await MainActor.run {
+                        self.appleUid = userUid
+                        self.isAppleLoginRequired = false
+                        self.isSignUpRequired = true
+                    }
                 }
             } catch {
                 print("Error: \(error)")
