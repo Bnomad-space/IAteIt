@@ -11,6 +11,7 @@ struct MealDetailView: View {
     @StateObject var commentBar: CommentBar
     @ObservedObject var loginState: LoginStateModel
     @State private var navTitleText = ""
+    @State private var isMyMeal = false
     
     var meal: Meal
     var user: User
@@ -30,6 +31,10 @@ struct MealDetailView: View {
                     }
                     .frame(minHeight: 358)
                     .tabViewStyle(.page)
+                    
+                    if isMyMeal {
+                        AddPlateButtonView()
+                    }
                     
                     if let comments = meal.comments {
                         VStack(alignment: .leading, spacing: 12) {
@@ -51,16 +56,18 @@ struct MealDetailView: View {
             self.hideKeyboard()
         }
         .onAppear {
-            setNavigationTitleText()
+            configMyMealUI()
         }
     }
 }
 
 extension MealDetailView {
-    func setNavigationTitleText() {
+    func configMyMealUI() {
         if loginState.user?.id == user.id {
+            isMyMeal = true
             navTitleText = "I ate it."
         } else {
+            isMyMeal = false
             navTitleText = "\(user.nickname) ate it."
         }
     }

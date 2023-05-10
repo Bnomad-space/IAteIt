@@ -23,6 +23,7 @@
 		7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */; };
 		7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */; };
 		7E407CD02A0558A3001CAFBF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E407CCF2A0558A3001CAFBF /* FirebaseFirestoreSwift */; };
+		7E407CD22A0BEBEF001CAFBF /* AddPlateButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CD12A0BEBEF001CAFBF /* AddPlateButtonView.swift */; };
 		7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */; };
 		7E48DC1C29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */; };
 		7E48DC1E29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */; };
@@ -81,6 +82,7 @@
 		7E2B2DAC29DE9304009EC0ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMealModel.swift; sourceTree = "<group>"; };
 		7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataResultModel.swift; sourceTree = "<group>"; };
+		7E407CD12A0BEBEF001CAFBF /* AddPlateButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlateButtonView.swift; sourceTree = "<group>"; };
 		7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailTopView.swift; sourceTree = "<group>"; };
 		7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForMeals.swift"; sourceTree = "<group>"; };
 		7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForComments.swift"; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */,
 				7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */,
 				7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */,
+				7E407CD12A0BEBEF001CAFBF /* AddPlateButtonView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */,
 				7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */,
 				04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */,
+				7E407CD22A0BEBEF001CAFBF /* AddPlateButtonView.swift in Sources */,
 				7E9FEF3529DEA07A002E7211 /* BottomButtonView.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
