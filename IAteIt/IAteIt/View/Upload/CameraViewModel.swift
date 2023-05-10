@@ -16,6 +16,7 @@ class CameraViewModel: ObservableObject {
     let hapticImpact = UIImpactFeedbackGenerator()
     let cameraPreview: AnyView
     private var subscriptions = Set<AnyCancellable>()
+    var imageToBeUploaded: UIImage?
     
     @Published var isTaken = false
     @Published var shutterEffect = false
@@ -78,6 +79,7 @@ class CameraViewModel: ObservableObject {
     
     func upload() {
         guard let croppedImage = model.cropPictureSquare() else { return }
+        imageToBeUploaded = croppedImage
         let overlayImage = model.timestampOverlay(image: croppedImage)
         model.savePhoto(image: overlayImage)
     }

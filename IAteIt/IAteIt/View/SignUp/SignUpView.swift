@@ -90,7 +90,7 @@ extension SignUpView {
         }
     }
     func getAllUsernames() {
-        FirebaseConnector().fetchAllUsernames { list in
+        FirebaseConnector.shared.fetchAllUsernames { list in
             self.usernameList = list
         }
     }

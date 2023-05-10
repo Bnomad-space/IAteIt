@@ -9,10 +9,18 @@ import Foundation
 
 struct Plate: Identifiable, Codable, Hashable {
     let id: String
-    let mealId: String
+    var mealId: String
     var imageUrl: String
     let uploadDate: Date
     
+    var firebaseData: [String: Any] {
+        return [
+            "id": id,
+            "mealId": mealId,
+            "imageUrl": imageUrl,
+            "uploadDate": uploadDate
+        ]
+    }
 }
 
 extension Plate {

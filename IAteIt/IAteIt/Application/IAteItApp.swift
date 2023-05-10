@@ -13,11 +13,12 @@ struct IAteItApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     @StateObject var loginState: LoginStateModel = LoginStateModel()
+    @StateObject var feedMeals: FeedMealModel = FeedMealModel()
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                FeedView(loginState: loginState)
+                FeedView(loginState: loginState, feedMeals: feedMeals)
             }
         }
     }

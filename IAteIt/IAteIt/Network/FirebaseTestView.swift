@@ -35,49 +35,49 @@ struct FirebaseTestView: View {
                 })
                 
                 // 특정 user 정보 가져오기
-                Button(action: {
-                    FirebaseConnector().fetchUser(id: "testUser2Id") { user in
-                        print(user.id)
-                        print(user.nickname)
-                        if let profileImage = user.profileImageUrl {
-                            print(profileImage)
-                        }
-                    }
-                }, label: {
-                    Text("Fetch user")
-                })
+//                Button(action: {
+//                    FirebaseConnector().fetchUser(id: "testUser2Id") { user in
+//                        print(user.id)
+//                        print(user.nickname)
+//                        if let profileImage = user.profileImageUrl {
+//                            print(profileImage)
+//                        }
+//                    }
+//                }, label: {
+//                    Text("Fetch user")
+//                })
             }
             
             VStack {
                 // 새로운 meal 생성 & plate 이미지 업로드
-                Button(action: {
-                    let image = UIImage(named: "Sample_Hashbrown")
-                    var meal = Meal(id: "testMealId4", userId: "testUser2Id", uploadDate: Date(), plates: [])
-                    var plate = Plate(id: "testPlateId5", mealId: meal.id, imageUrl: "", uploadDate: Date())
-                    if let image = image {
-                        FirebaseConnector().uploadPlateImage(mealId: meal.id, plateId: plate.id, image: image) { url in
-                            plate.imageUrl = url
-                            meal.plates.append(plate)
-                            FirebaseConnector().setNewMeal(meal: meal)
-                        }
-                    }
-                }, label: {
-                    Text("Create a meal")
-                })
+//                Button(action: {
+//                    let image = UIImage(named: "Sample_Hashbrown")
+//                    var meal = Meal(id: "testMealId4", userId: "testUser2Id", uploadDate: Date(), plates: [])
+//                    var plate = Plate(id: "testPlateId5", mealId: meal.id, imageUrl: "", uploadDate: Date())
+//                    if let image = image {
+//                        FirebaseConnector().uploadPlateImage(mealId: meal.id, plateId: plate.id, image: image) { url in
+//                            plate.imageUrl = url
+//                            meal.plates.append(plate)
+//                            FirebaseConnector().setNewMeal(meal: meal)
+//                        }
+//                    }
+//                }, label: {
+//                    Text("Create a meal")
+//                })
                 
                 // meal에 plate 추가
-                Button(action: {
-                    let image = UIImage(named: "Sample_McMorning")
-                    var plate2 = Plate(id: "testPlateId2", mealId: "testMealId1", imageUrl: "", uploadDate: Date())
-                    if let image = image {
-                        FirebaseConnector().uploadPlateImage(mealId: plate2.mealId, plateId: plate2.id, image: image) { url in
-                            plate2.imageUrl = url
-                            FirebaseConnector().setMealAddPlate(mealId: plate2.mealId, plate: plate2)
-                        }
-                    }
-                }, label: {
-                    Text("Add a plate to a meal")
-                })
+//                Button(action: {
+//                    let image = UIImage(named: "Sample_McMorning")
+//                    var plate2 = Plate(id: "testPlateId2", mealId: "testMealId1", imageUrl: "", uploadDate: Date())
+//                    if let image = image {
+//                        FirebaseConnector().uploadPlateImage(mealId: plate2.mealId, plateId: plate2.id, image: image) { url in
+//                            plate2.imageUrl = url
+//                            FirebaseConnector().setMealAddPlate(mealId: plate2.mealId, plate: plate2)
+//                        }
+//                    }
+//                }, label: {
+//                    Text("Add a plate to a meal")
+//                })
                 
                 // meal에 caption 추가/수정
                 Button(action: {
@@ -105,13 +105,13 @@ struct FirebaseTestView: View {
                 })
                 
                 // 24시간 이내 모든 meal 데이터 가져오기
-                Button(action: {
-                    FirebaseConnector().fetchMealIn24Hours(date: Date()) { meals in
-                        print("number of meals in 24 hours: \(meals.count)")
-                    }
-                }, label: {
-                    Text("get meals in 24 hours")
-                })
+//                Button(action: {
+//                    FirebaseConnector().fetchMealIn24Hours(date: Date()) { meals in
+//                        print("number of meals in 24 hours: \(meals.count)")
+//                    }
+//                }, label: {
+//                    Text("get meals in 24 hours")
+//                })
             }
             
             VStack {

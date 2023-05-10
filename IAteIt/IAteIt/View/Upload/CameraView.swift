@@ -9,6 +9,9 @@ import SwiftUI
 import AVFoundation
 
 struct CameraView: View {
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var loginState: LoginStateModel
+    @ObservedObject var feedMeals: FeedMealModel
     @ObservedObject var viewModel = CameraViewModel()
     @ObservedObject var model = Camera()
     
@@ -23,7 +26,9 @@ struct CameraView: View {
     var body: some View {
         VStack {
             HStack {
-                Button(action: {}, label: {
+                Button(action: {
+                    dismiss()
+                }, label: {
                     Image(systemName: "multiply")
                         .frame(width: 40, height: 40)
                         .font(.headline)
@@ -82,7 +87,13 @@ struct CameraView: View {
                             .padding(.leading)
                             Spacer()
                             
-                            Button(action: viewModel.upload, label: {
+                            Button(action: {
+                                viewModel.upload()
+                                Task {
+                                    saveNewMeal()
+                                }
+                                dismiss()
+                            }, label: {
                                 Capsule()
                                     .overlay(
                                         HStack {
@@ -116,8 +127,27 @@ struct CameraView: View {
     }
 }
 
+extension CameraView {
+    func saveNewMeal() {
+        guard let userId = loginState.user?.id,
+              let image = viewModel.imageToBeUploaded
+        else { return }
+        
+        var meal = Meal(userId: userId, uploadDate: Date(), plates: [])
+        var plate = Plate(id: UUID().uuidString, mealId: "", imageUrl: "", uploadDate: Date())
+        Task {
+            let plateImageUrl = try await FirebaseConnector.shared.uploadPlateImage(plateId: plate.id, image: image)
+            print(plateImageUrl)
+            plate.imageUrl = plateImageUrl
+            meal.plates.append(plate)
+            feedMeals.mealList.insert(meal, at: 0)
+            try await FirebaseConnector.shared.setNewMeal(meal: meal)
+        }
+    }
+}
+
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView()
+        CameraView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
     }
 }

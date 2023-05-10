@@ -28,13 +28,14 @@ struct CommentView: View {
                                 .layoutPriority(-1)
                                 .frame(width: profilePicSize, height: profilePicSize)
                         } placeholder: {
-                            Color.gray
+                            Color(UIColor.systemGray5)
                         }
+                        .frame(width: profilePicSize, height: profilePicSize)
                     } else {
                         Image(systemName: "person.crop.circle")
                             .resizable()
                             .frame(width: profilePicSize, height: profilePicSize)
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color(UIColor.systemGray3))
                     }
                 }
                 .clipped()
