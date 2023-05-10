@@ -136,12 +136,12 @@ extension CameraView {
         var meal = Meal(userId: userId, uploadDate: Date(), plates: [])
         var plate = Plate(id: UUID().uuidString, mealId: "", imageUrl: "", uploadDate: Date())
         Task {
-            let plateImageUrl = try await FirebaseConnector().uploadPlateImage(plateId: plate.id, image: image)
+            let plateImageUrl = try await FirebaseConnector.shared.uploadPlateImage(plateId: plate.id, image: image)
             print(plateImageUrl)
             plate.imageUrl = plateImageUrl
             meal.plates.append(plate)
             feedMeals.mealList.insert(meal, at: 0)
-            try await FirebaseConnector().setNewMeal(meal: meal)
+            try await FirebaseConnector.shared.setNewMeal(meal: meal)
         }
     }
 }

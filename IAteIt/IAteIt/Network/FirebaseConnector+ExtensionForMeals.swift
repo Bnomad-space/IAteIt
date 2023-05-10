@@ -30,15 +30,6 @@ extension FirebaseConnector {
     }
     
     // 특정 meal에 새로운 plate 추가
-    func setMealAddPlate(mealId: String, plate: Plate) {
-        let plates = FirebaseConnector.meals.document(mealId).collection("plates")
-        plates.document(plate.id).setData([
-            "id": plate.id,
-            "mealId": mealId,
-            "imageUrl": plate.imageUrl,
-            "uploadDate": plate.uploadDate
-        ])
-    }
     func addPlateToMeal(mealId: String, plate: Plate) async throws {
         try await FirebaseConnector.meals.document(mealId).updateData([
             "plates": FieldValue.arrayUnion([plate.firebaseData])
@@ -47,7 +38,6 @@ extension FirebaseConnector {
     
     // plate 이미지 업로드
     func uploadPlateImage(plateId: String, image: UIImage) async throws -> String {
-        var plateImageUrl = ""
         let storageRef = Storage.storage().reference()
         let imageRef = storageRef.child("plateImage/\(plateId)")
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
@@ -55,9 +45,8 @@ extension FirebaseConnector {
         }
         let returnedMetaData = try await imageRef.putDataAsync(imageData, metadata: nil)
         let imageUrl: URL = try await imageRef.downloadURL()
-        plateImageUrl = imageUrl.absoluteString
         
-        return plateImageUrl
+        return imageUrl.absoluteString
     }
     
     // 특정 meal에 caption 업데이트
@@ -72,34 +61,6 @@ extension FirebaseConnector {
         FirebaseConnector.meals.document(mealId).updateData([
             "location": location as Any
         ])
-    }
-    
-    // 특정 meal의 모든 plate 데이터 가져오기
-    func fetchMealPlates(mealId: String, completion: @escaping([Plate]) -> Void) async {
-        var plateHistory: [Plate] = []
-        
-        FirebaseConnector.meals.document(mealId).collection("plates").getDocuments() { (plateSnapshot, plateErr) in
-            if let plateErr = plateErr {
-                print("Error getting plates: \(plateErr.localizedDescription)")
-            } else {
-                for plateDocument in plateSnapshot!.documents {
-                    print("\(plateDocument.documentID) => \(plateDocument.data())")
-
-                    let plateDictionary = plateDocument.data()
-                    guard let plateId = plateDictionary["id"] as? String,
-                          let imageUrl = plateDictionary["imageUrl"] as? String,
-                          let plateUploadTimestamp = plateDictionary["uploadDate"] as? Timestamp
-                    else {
-                        print("failed converting plates data")
-                        return
-                    }
-                    let plateUploadDate = plateUploadTimestamp.dateValue()
-                    let plate = Plate(id: plateId, mealId: mealId, imageUrl: imageUrl, uploadDate: plateUploadDate)
-                    plateHistory.append(plate)
-                }
-                completion(plateHistory)
-            }
-        }
     }
     
     // 특정 user의 모든 meal 데이터 가져오기 (plate는 따로 fetchMealPlates로 가져와야함..)

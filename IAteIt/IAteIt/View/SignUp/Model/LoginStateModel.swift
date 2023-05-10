@@ -28,9 +28,9 @@ class LoginStateModel: ObservableObject {
             let currentUser = Auth.auth().currentUser
             if currentUser != nil {
                 guard let userUid = currentUser?.uid else { return }
-                let isExist = try await FirebaseConnector().checkExistingUser(userUid: userUid)
+                let isExist = try await FirebaseConnector.shared.checkExistingUser(userUid: userUid)
                 if isExist {
-                    let fetchedUser = try await FirebaseConnector().fetchUser(id: userUid)
+                    let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: userUid)
                     await MainActor.run {
                         self.user = fetchedUser
                         self.isAppleLoginRequired = false
@@ -38,7 +38,6 @@ class LoginStateModel: ObservableObject {
                 } else {
                     self.isAppleLoginRequired = true
                 }
-                
             } else {
                 self.isAppleLoginRequired = true
             }
@@ -88,12 +87,11 @@ class LoginStateModel: ObservableObject {
                 let userUid = returnedUserData.uid
                 print("애플 로그인 결과: \(userUid), \(returnedUserData.email)")
                 
-                let isExist = try await FirebaseConnector().checkExistingUser(userUid: userUid)
+                let isExist = try await FirebaseConnector.shared.checkExistingUser(userUid: userUid)
                 if isExist {
-                    let fetchedUser = try await FirebaseConnector().fetchUser(id: userUid)
+                    let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: userUid)
                     self.user = fetchedUser
                     self.isAppleLoginRequired = false
-                    
                 } else {
                     self.appleUid = userUid
                     self.isAppleLoginRequired = false

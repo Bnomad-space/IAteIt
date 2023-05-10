@@ -20,6 +20,7 @@ final class FirebaseConnector {
      
      */
     
+    static let shared = FirebaseConnector()
     static let users = Firestore.firestore().collection("users")
     
     // 새로운 user 생성(회원가입)

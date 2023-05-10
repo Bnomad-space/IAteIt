@@ -62,13 +62,13 @@ struct SignUpSecondView: View {
             }
             Button(action: {
                 if let image = selectedImage {
-                    FirebaseConnector().uploadProfileImage(userId: loginState.appleUid, image: image) { url in
+                    FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image) { url in
                         let user = User(id: loginState.appleUid, nickname: loginState.username, profileImageUrl: url)
-                        FirebaseConnector().setNewUser(user: user)
+                        FirebaseConnector.shared.setNewUser(user: user)
                     }
                 } else {
                     let user = User(id: loginState.appleUid, nickname: loginState.username)
-                    FirebaseConnector().setNewUser(user: user)
+                    FirebaseConnector.shared.setNewUser(user: user)
                 }
                 loginState.isSignUpViewPresent = false
             }, label: {
