@@ -9,9 +9,12 @@ import SwiftUI
 
 struct MealDetailView: View {
     @StateObject var commentBar: CommentBar
+    @StateObject var cameraViewModel: CameraViewModel
     @ObservedObject var loginState: LoginStateModel
+    @ObservedObject var feedMeals: FeedMealModel
     @State private var navTitleText = ""
     @State private var isMyMeal = false
+    @State private var isCameraViewPresented = false
     
     var meal: Meal
     var user: User
@@ -33,7 +36,19 @@ struct MealDetailView: View {
                     .tabViewStyle(.page)
                     
                     if isMyMeal {
-                        AddPlateButtonView()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                cameraViewModel.type = .addPlate
+                                isCameraViewPresented.toggle()
+                            }, label: {
+                                AddPlateButtonView()
+                            })
+                        }
+                        .padding(.horizontal, .paddingHorizontal)
+                        .fullScreenCover(isPresented: $isCameraViewPresented, content: {
+                            CameraView(loginState: loginState, feedMeals: feedMeals, viewModel: cameraViewModel, mealAddPlateTo: meal)
+                        })
                     }
                     
                     if let comments = meal.comments {
@@ -75,6 +90,6 @@ extension MealDetailView {
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), loginState: LoginStateModel(), meal: Meal.meals[2], user: User.users[0])
+        MealDetailView(commentBar: CommentBar(), cameraViewModel: CameraViewModel(), loginState: LoginStateModel(), feedMeals: FeedMealModel(), meal: Meal.meals[2], user: User.users[0])
     }
 }

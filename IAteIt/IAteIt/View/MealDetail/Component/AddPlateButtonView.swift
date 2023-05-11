@@ -8,27 +8,20 @@
 import SwiftUI
 
 struct AddPlateButtonView: View {
+    
     var body: some View {
         HStack {
-            Spacer()
-            Button(action: {
-                
-            }, label: {
-                HStack {
-                    Image(systemName: "camera.fill")
-                    Text("Add a plate")
-                        .fontWeight(.semibold)
-                }
-                .font(.subheadline)
-                .foregroundColor(.white)
-                .padding(EdgeInsets(top: 6, leading: 13, bottom: 6, trailing: 13))
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.black)
-                )
-            })
+            Image(systemName: "camera.fill")
+            Text("Add a plate")
+                .fontWeight(.semibold)
         }
-        .padding(.horizontal, .paddingHorizontal)
+        .font(.subheadline)
+        .foregroundColor(.white)
+        .padding(EdgeInsets(top: 6, leading: 13, bottom: 6, trailing: 13))
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.black)
+        )
     }
 }
 

@@ -18,6 +18,21 @@ class CameraViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     var imageToBeUploaded: UIImage?
     
+    enum types {
+        case newMeal
+        case addPlate
+        
+        func setButtonText() -> String {
+            switch self {
+            case .newMeal:
+                return "Upload"
+            case .addPlate:
+                return "Add"
+            }
+        }
+    }
+
+    @Published var type = types.newMeal
     @Published var isTaken = false
     @Published var shutterEffect = false
     @Published var isSaved = false
@@ -59,7 +74,7 @@ class CameraViewModel: ObservableObject {
         }
         
         DispatchQueue.main.async {
-            withAnimation{self.isTaken.toggle()}
+            withAnimation{self.isTaken = true}
         }
         
     }
@@ -70,7 +85,7 @@ class CameraViewModel: ObservableObject {
             self.session.startRunning()
             
             DispatchQueue.main.async {
-                withAnimation{self.isTaken.toggle()}
+                withAnimation{self.isTaken = false}
                 
                 self.isSaved = false
             }
