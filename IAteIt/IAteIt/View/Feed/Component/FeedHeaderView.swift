@@ -43,7 +43,7 @@ struct FeedHeaderView: View {
                     .padding([.top], 3)
                     
                     VStack(alignment: .leading) {
-                        Text(User.users[indexOfUser].nickname)
+                        Text(feedMeals.userList[indexOfUser].nickname)
                             .font(.subheadline)
                             .fontWeight(.semibold)
                         
