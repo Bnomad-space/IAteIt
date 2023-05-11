@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MealDetailView: View {
+    @ObservedObject var feedMeals: FeedMealModel
     @StateObject var commentBar: CommentBar
     
     var meal: Meal
@@ -28,18 +29,25 @@ struct MealDetailView: View {
                     .frame(minHeight: 358)
                     .tabViewStyle(.page)
                     
-                    if let comments = meal.comments {
-                        VStack(alignment: .leading, spacing: 12) {
-                            ForEach(comments, id: \.self) { comment in
-                                CommentView(comment: comment)
+                    if let targetMeal = feedMeals.mealList.first { $0.id == meal.id }  {
+                        if let comments = targetMeal.comments {
+                            VStack(alignment: .leading, spacing: 12) {
+                                ForEach(comments, id: \.self) { comment in
+                                    if let user = feedMeals.userList.first { $0.id == comment.userId } {
+                                        CommentView(user: user, comment: comment)
+                                    } else {
+                                        Text("NO USER")
+                                    }
+                                    
+                                }
                             }
+                            .padding([.top], 24)
+                            .padding(.horizontal, .paddingHorizontal)
                         }
-                        .padding([.top], 24)
-                        .padding(.horizontal, .paddingHorizontal)
                     }
                 }
             }
-            AddCommentBarView(commentBar: commentBar)
+            AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
                 .padding([.bottom], 10)
                 .padding(.horizontal, .paddingHorizontal)
         }
@@ -51,6 +59,6 @@ struct MealDetailView: View {
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2])
+        MealDetailView(feedMeals: FeedMealModel(), commentBar: CommentBar(), meal: Meal.meals[2])
     }
 }
