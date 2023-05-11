@@ -28,9 +28,9 @@ struct FeedView: View {
                 .fullScreenCover(isPresented: $isCameraViewPresented, content: {
                     CameraView(loginState: loginState, feedMeals: feedMeals)
                 })
-                ForEach(Array(zip(feedMeals.mealList.indices, feedMeals.mealList)), id: \.0) { index, eachMeal in
+                ForEach(feedMeals.mealList, id: \.self) { eachMeal in
                     VStack(spacing: 8) {
-                        FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, index: index)
+                        FeedHeaderView(feedMeals: feedMeals, meal: eachMeal)
                             .padding(.horizontal, .paddingHorizontal)
                         NavigationLink(destination: MealDetailView(commentBar: CommentBar(), meal: eachMeal)) {
                             TabView {

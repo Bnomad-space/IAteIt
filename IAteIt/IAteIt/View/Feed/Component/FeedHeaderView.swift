@@ -12,41 +12,41 @@ struct FeedHeaderView: View {
     let profilePicSize: CGFloat = 36
     
     var meal: Meal
-    var index: Int
     
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 12) {
-                ZStack {
-                    if let userImage = feedMeals.userList[index].profileImageUrl {
-                        Rectangle()
-                            .aspectRatio(contentMode: .fit)
+                if let indexOfUser = feedMeals.userList.firstIndex(where: { $0.id == meal.userId }) {
+                    ZStack {
+                        if let userImage = feedMeals.userList[indexOfUser].profileImageUrl {
+                            Rectangle()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: profilePicSize, height: profilePicSize)
+                            AsyncImage(url: URL(string: userImage)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .layoutPriority(-1)
+                            } placeholder: {
+                                Color(UIColor.systemGray5)
+                            }
                             .frame(width: profilePicSize, height: profilePicSize)
-                        AsyncImage(url: URL(string: userImage)) { image in
-                            image
+                        } else {
+                            Image(systemName: "person.crop.circle")
                                 .resizable()
-                                .scaledToFill()
-                                .layoutPriority(-1)
-                        } placeholder: {
-                            Color(UIColor.systemGray5)
+                                .frame(width: profilePicSize, height: profilePicSize)
+                                .foregroundColor(Color(UIColor.systemGray3))
                         }
-                        .frame(width: profilePicSize, height: profilePicSize)
-                    } else {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: profilePicSize, height: profilePicSize)
-                            .foregroundColor(Color(UIColor.systemGray3))
                     }
-                }
-                .clipped()
-                .cornerRadius(profilePicSize/2)
-                .padding([.top], 3)
-                
-                VStack(alignment: .leading) {
-                    Text(User.users[index].nickname)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-
+                    .clipped()
+                    .cornerRadius(profilePicSize/2)
+                    .padding([.top], 3)
+                    
+                    VStack(alignment: .leading) {
+                        Text(User.users[indexOfUser].nickname)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        
                         if let location = meal.location {
                             Text("\(location) • \(meal.uploadDate.timeAgoDisplay())")
                                 .font(.footnote)
@@ -54,8 +54,9 @@ struct FeedHeaderView: View {
                             Text(meal.uploadDate.timeAgoDisplay())
                                 .font(.footnote)
                         }
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
         }
     }
