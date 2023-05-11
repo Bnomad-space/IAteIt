@@ -29,26 +29,28 @@ struct FeedView: View {
                     CameraView(loginState: loginState, feedMeals: feedMeals)
                 })
                 ForEach(feedMeals.mealList, id: \.self) { eachMeal in
-                    VStack(spacing: 8) {
-                        FeedHeaderView(feedMeals: feedMeals, meal: eachMeal)
-                            .padding(.horizontal, .paddingHorizontal)
-                        NavigationLink(destination: MealDetailView(commentBar: CommentBar(), loginState: loginState, meal: eachMeal, user: feedMeals.userList[index])) {
-                            TabView {
-                                ForEach(eachMeal.plates, id: \.self) { plate in
-                                    PhotoCardView(plate: plate)
-                                        .padding(.horizontal, .paddingHorizontal)
+                    if let indexOfUser = feedMeals.userList.firstIndex(where: { $0.id == eachMeal.userId }) {
+                        VStack(spacing: 8) {
+                            FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: feedMeals.userList[indexOfUser])
+                                .padding(.horizontal, .paddingHorizontal)
+                            NavigationLink(destination: MealDetailView(commentBar: CommentBar(), loginState: loginState, meal: eachMeal, user: feedMeals.userList[indexOfUser])) {
+                                TabView {
+                                    ForEach(eachMeal.plates, id: \.self) { plate in
+                                        PhotoCardView(plate: plate)
+                                            .padding(.horizontal, .paddingHorizontal)
+                                    }
                                 }
                             }
+                            .buttonStyle(PlainButtonStyle())
+                            .frame(minHeight: 358)
+                            .tabViewStyle(.page)
+                            NavigationLink(destination: MealDetailView(commentBar: CommentBar(), loginState: loginState, meal: eachMeal, user: feedMeals.userList[indexOfUser])) {
+                                //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
+                                FeedFooterView(meal: eachMeal)
+                                    .padding(.horizontal, .paddingHorizontal)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .frame(minHeight: 358)
-                        .tabViewStyle(.page)
-                        NavigationLink(destination: MealDetailView(commentBar: CommentBar(), loginState: loginState, meal: eachMeal, user: feedMeals.userList[index])) {
-                            //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
-                            FeedFooterView(meal: eachMeal)
-                                .padding(.horizontal, .paddingHorizontal)
-                        }
-                        .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
