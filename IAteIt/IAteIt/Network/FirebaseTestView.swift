@@ -118,7 +118,7 @@ struct FirebaseTestView: View {
                 // 새로운 comment 생성
                 Button(action: {
                     let comment = Comment(id: "testCommentId1", userId: "testUser1Id", mealId: "testMealId1", comment: "첫번째 코멘트", uploadDate: Date())
-                    FirebaseConnector().setNewComment(comment: comment)
+//                    FirebaseConnector().setNewComment(comment: comment)
                 }, label: {
                     Text("new comment")
                 })
