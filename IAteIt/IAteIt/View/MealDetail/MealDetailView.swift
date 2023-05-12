@@ -23,7 +23,7 @@ struct MealDetailView: View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView(commentBar: commentBar, meal: meal)
+                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, meal: meal)
                         .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MealDetailTopView: View {
     @ObservedObject var commentBar: CommentBar
+    @Binding var isMyMeal: Bool
     
     var meal: Meal
     
@@ -20,25 +21,50 @@ struct MealDetailTopView: View {
                     .font(.footnote)
                     .foregroundColor(Color(UIColor.systemGray))
             }
-            Button(action: {
-                // TODO: CommentBar에 focus
-                commentBar.type = .caption
-                commentBar.input = meal.caption ?? ""
-            }, label: {
+            if isMyMeal {
+                Button(action: {
+                    commentBar.type = .caption
+                    commentBar.input = meal.caption ?? ""
+                }, label: {
+                    if let caption = meal.caption {
+                        Text(caption)
+                            .font(.headline)
+                            .foregroundColor(.black)
+                    } else {
+                        Text("Add a caption")
+                            .font(.headline)
+                            .foregroundColor(Color(.systemGray3))
+                    }
+                })
+            } else {
                 if let caption = meal.caption {
                     Text(caption)
                         .font(.headline)
                         .foregroundColor(.black)
-                } else {
-                    Text("Add a caption")
-                        .font(.headline)
-                        .foregroundColor(Color(.systemGray3))
                 }
-            })
-            Button(action: {
-                commentBar.type = .location
-                commentBar.input = meal.location ?? ""
-            }, label: {
+            }
+            if isMyMeal {
+                Button(action: {
+                    commentBar.type = .location
+                    commentBar.input = meal.location ?? ""
+                }, label: {
+                    if let location = meal.location {
+                        HStack(alignment: .center, spacing: 4) {
+                            Image(systemName: "location.fill")
+                            Text(location)
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    } else {
+                        HStack(alignment: .center, spacing: 4) {
+                            Image(systemName: "location.fill")
+                            Text("Add location")
+                        }
+                        .font(.footnote)
+                        .foregroundColor(Color(.systemGray3))
+                    }
+                })
+            } else {
                 if let location = meal.location {
                     HStack(alignment: .center, spacing: 4) {
                         Image(systemName: "location.fill")
@@ -46,21 +72,8 @@ struct MealDetailTopView: View {
                     }
                     .font(.subheadline)
                     .foregroundColor(.black)
-                } else {
-                    HStack(alignment: .center, spacing: 4) {
-                        Image(systemName: "location.fill")
-                        Text("Add location")
-                    }
-                    .font(.footnote)
-                    .foregroundColor(Color(.systemGray3))
                 }
-            })
+            }
         }
-    }
-}
-
-struct MealDetailTopView_Previews: PreviewProvider {
-    static var previews: some View {
-        MealDetailTopView(commentBar: CommentBar(), meal: Meal.meals[1])
     }
 }
