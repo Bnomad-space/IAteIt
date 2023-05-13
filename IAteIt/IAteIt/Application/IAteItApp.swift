@@ -20,6 +20,7 @@ struct IAteItApp: App {
             NavigationView {
                 FeedView(loginState: loginState, feedMeals: feedMeals)
             }
+            .accentColor(.black)
         }
     }
 }

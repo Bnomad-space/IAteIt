@@ -60,6 +60,7 @@ struct FeedView: View {
         .navigationBarItems(trailing: NavigationLink(destination: MyProfileView()) {
             ProfilePhotoButtonView(loginState: loginState)
         })
+        .navigationTitle("")
         .onAppear {
             Task {
                 feedMeals.getMealListIn24Hours()
