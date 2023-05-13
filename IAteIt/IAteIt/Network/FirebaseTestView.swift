@@ -125,10 +125,10 @@ struct FirebaseTestView: View {
                 
                 // 특정 meal의 모든 comment 데이터 가져오기
                 Button(action: {
-                    FirebaseConnector().fetchMealComments(mealId: "testMealId1") { comments in
-                        print("number of comments: \(comments.count)")
-                        print(comments[0].comment)
-                    }
+//                    FirebaseConnector().fetchMealComments(mealId: "testMealId1") { comments in
+//                        print("number of comments: \(comments.count)")
+//                        print(comments[0].comment)
+//                    }
                 }, label: {
                     Text("getting all comments for a meal")
                 })

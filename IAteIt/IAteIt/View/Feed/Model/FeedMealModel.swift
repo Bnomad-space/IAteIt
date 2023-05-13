@@ -10,29 +10,31 @@ import FirebaseAuth
 
 final class FeedMealModel: ObservableObject {
     @Published var mealList: [Meal] = []
-    @Published var userList: [User] = []
+    @Published var allUsers: [User] = []
+    
+    init() {
+        Task {
+            let fetchAllUser = try await FirebaseConnector.shared.fetchAllUsers()
+            await MainActor.run {
+                self.allUsers = fetchAllUser
+            }
+        }
+    }
     
     @MainActor
     func getMealListIn24Hours() {
         Task {
-            var localUserList: [User] = []
-            let localMealList = try await FirebaseConnector.shared.fetchMealIn24Hours(date: Date())
+            var localMealList = try await FirebaseConnector.shared.fetchMealIn24Hours(date: Date())
             var tempList: [Meal] = []
+            localMealList = localMealList.sorted { $0.uploadDate < $1.uploadDate }
             for meal in localMealList {
                 FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { comments in
                     var temp = meal
                     temp.comments = comments
                     tempList.append(temp)
+                    self.mealList = tempList
                 }
             }
-            
-            for meal in localMealList {
-                if let user = try? await FirebaseConnector.shared.fetchUser(id: meal.userId) {
-                    localUserList.append(user)
-                }
-            }
-            self.mealList = tempList
-            self.userList = localUserList
         }
     }
     
@@ -44,4 +46,5 @@ final class FeedMealModel: ObservableObject {
             }
         }
     }
+    
 }

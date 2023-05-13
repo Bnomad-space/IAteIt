@@ -43,6 +43,7 @@ extension FirebaseConnector {
                     let comment = Comment(id: commentId, userId: userId, mealId: mealId, comment: content, uploadDate: uploadDate)
                     commentList.append(comment)
                 }
+                commentList = commentList.sorted { $0.uploadDate < $1.uploadDate }
                 completion(commentList)
             }
         }

@@ -33,12 +33,11 @@ struct MealDetailView: View {
                         if let comments = targetMeal.comments {
                             VStack(alignment: .leading, spacing: 12) {
                                 ForEach(comments, id: \.self) { comment in
-                                    if let user = feedMeals.userList.first { $0.id == comment.userId } {
+                                    if let user = feedMeals.allUsers.first { $0.id == comment.userId } {
                                         CommentView(user: user, comment: comment)
                                     } else {
-                                        Text("NO USER")
+                                        Text("Comment Error")
                                     }
-                                    
                                 }
                             }
                             .padding([.top], 24)
