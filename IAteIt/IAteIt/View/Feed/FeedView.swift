@@ -31,9 +31,9 @@ struct FeedView: View {
                     CameraView(loginState: loginState, feedMeals: feedMeals, viewModel: cameraViewModel)
                 })
                 ForEach(feedMeals.mealList, id: \.self) { eachMeal in
-                    if let indexOfUser = feedMeals.userList.firstIndex(where: { $0.id == eachMeal.userId }) {
+                    if let user = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
                         VStack(spacing: 8) {
-                            FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: feedMeals.userList[indexOfUser])
+                            FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: user)
                                 .padding(.horizontal, .paddingHorizontal)
                             NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: user)) {
                                 TabView {

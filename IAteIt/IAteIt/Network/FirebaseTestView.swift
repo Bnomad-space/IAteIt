@@ -82,7 +82,7 @@ struct FirebaseTestView: View {
                 // meal에 caption 추가/수정
                 Button(action: {
                     let caption = "맥모닝 맛있다"
-                    FirebaseConnector().setMealCaption(mealId: "testMealId1", caption: caption)
+//                    FirebaseConnector().setMealCaption(mealId: "testMealId1", caption: caption)
                 }, label: {
                     Text("Caption")
                 })
@@ -90,7 +90,7 @@ struct FirebaseTestView: View {
                 // meal에 location 추가/수정
                 Button(action: {
                     let location = "맥도날드"
-                    FirebaseConnector().setMealLocation(mealId: "testMealId1", location: location)
+//                    FirebaseConnector().setMealLocation(mealId: "testMealId1", location: location)
                 }, label: {
                     Text("Location")
                 })

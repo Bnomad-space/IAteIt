@@ -51,11 +51,11 @@ struct MealDetailView: View {
                         })
                     }
                     
-                    if let targetMeal = feedMeals.mealList.first { $0.id == meal.id }  {
+                    if let targetMeal = feedMeals.mealList.first(where: { $0.id == meal.id })  {
                         if let comments = targetMeal.comments {
                             VStack(alignment: .leading, spacing: 12) {
                                 ForEach(comments, id: \.self) { comment in
-                                    if let user = feedMeals.allUsers.first { $0.id == comment.userId } {
+                                    if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
                                         CommentView(user: user, comment: comment)
                                     } else {
                                         Text("Comment Error")

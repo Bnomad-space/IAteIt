@@ -83,7 +83,7 @@ struct CameraView: View {
                                 .font(.subheadline)
                             }
                         }
-                        .offset(y: -200)
+                        .offset(y: -290)
                     }
                 
                 
