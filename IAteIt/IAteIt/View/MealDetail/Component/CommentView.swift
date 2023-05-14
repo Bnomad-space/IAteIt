@@ -9,60 +9,56 @@ import SwiftUI
 
 struct CommentView: View {
     let profilePicSize: CGFloat = 36
-    
+    var user: User
     var comment: Comment
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            if let indexOfUser = User.users.firstIndex(where: { $0.id == comment.userId }) {
-                
-                ZStack {
-                    if let userImage = User.users[indexOfUser].profileImageUrl {
-                        Rectangle()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: profilePicSize, height: profilePicSize)
-                        AsyncImage(url: URL(string: userImage)) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .layoutPriority(-1)
-                                .frame(width: profilePicSize, height: profilePicSize)
-                        } placeholder: {
-                            Color(UIColor.systemGray5)
-                        }
+            ZStack {
+                if let userImage = user.profileImageUrl {
+                    Rectangle()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: profilePicSize, height: profilePicSize)
-                    } else {
-                        Image(systemName: "person.crop.circle")
+                    AsyncImage(url: URL(string: userImage)) { image in
+                        image
                             .resizable()
+                            .scaledToFill()
+                            .layoutPriority(-1)
                             .frame(width: profilePicSize, height: profilePicSize)
-                            .foregroundColor(Color(UIColor.systemGray3))
+                    } placeholder: {
+                        Color(UIColor.systemGray5)
                     }
+                    .frame(width: profilePicSize, height: profilePicSize)
+                } else {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .frame(width: profilePicSize, height: profilePicSize)
+                        .foregroundColor(Color(UIColor.systemGray3))
                 }
-                .clipped()
-                .cornerRadius(profilePicSize/2)
-                .padding([.top], 3)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(alignment: .bottom, spacing: 8) {
-                        Text(User.users[indexOfUser].nickname)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                        Text(comment.uploadDate.toTimeString())
-                            .font(.footnote)
-                            .foregroundColor(.gray)
-                    }
-                    Text(comment.comment)
-                        .font(.subheadline)
-                }
-                Spacer()
             }
+            .clipped()
+            .cornerRadius(profilePicSize/2)
+            .padding([.top], 3)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .bottom, spacing: 8) {
+                    Text(user.nickname)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Text(comment.uploadDate.toTimeString())
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+                Text(comment.comment)
+                    .font(.subheadline)
+            }
+            Spacer()
         }
     }
 }
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-//        CommentView(comment: Comment.comments[3], userId: User.users[1].id)
-        CommentView(comment: Comment.comments[3])
+        CommentView(user: User.users[0], comment: Comment.comments[3])
     }
 }
