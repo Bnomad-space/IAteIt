@@ -16,9 +16,9 @@ struct FeedHeaderView: View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 12) {
-                if let indexOfUser = feedMeals.userList.firstIndex(where: { $0.id == meal.userId }) {
+                if let user = feedMeals.allUsers.first { $0.id == meal.userId } {
                     ZStack {
-                        if let userImage = feedMeals.userList[indexOfUser].profileImageUrl {
+                        if let userImage = user.profileImageUrl {
                             Rectangle()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: profilePicSize, height: profilePicSize)
@@ -43,7 +43,7 @@ struct FeedHeaderView: View {
                     .padding([.top], 3)
                     
                     VStack(alignment: .leading) {
-                        Text(feedMeals.userList[indexOfUser].nickname)
+                        Text(user.nickname)
                             .font(.subheadline)
                             .fontWeight(.semibold)
                         

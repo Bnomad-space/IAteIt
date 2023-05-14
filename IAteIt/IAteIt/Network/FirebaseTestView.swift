@@ -118,17 +118,17 @@ struct FirebaseTestView: View {
                 // 새로운 comment 생성
                 Button(action: {
                     let comment = Comment(id: "testCommentId1", userId: "testUser1Id", mealId: "testMealId1", comment: "첫번째 코멘트", uploadDate: Date())
-                    FirebaseConnector().setNewComment(comment: comment)
+//                    FirebaseConnector().setNewComment(comment: comment)
                 }, label: {
                     Text("new comment")
                 })
                 
                 // 특정 meal의 모든 comment 데이터 가져오기
                 Button(action: {
-                    FirebaseConnector().fetchMealComments(mealId: "testMealId1") { comments in
-                        print("number of comments: \(comments.count)")
-                        print(comments[0].comment)
-                    }
+//                    FirebaseConnector().fetchMealComments(mealId: "testMealId1") { comments in
+//                        print("number of comments: \(comments.count)")
+//                        print(comments[0].comment)
+//                    }
                 }, label: {
                     Text("getting all comments for a meal")
                 })

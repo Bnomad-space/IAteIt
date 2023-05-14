@@ -70,6 +70,19 @@ final class FirebaseConnector {
         }
     }
     
+    // 모든 User 가져오기
+    func fetchAllUsers() async throws -> [User] {
+        var users: [User] = []
+
+        let snapshots = try await FirebaseConnector.users.getDocuments()
+        
+        for document in snapshots.documents {
+            let user = try document.data(as: User.self)
+            users.append(user)
+        }
+        return users
+    }
+    
     // 이미 가입된 유저인지 체크
     func checkExistingUser(userUid: String) async throws -> Bool {
         let document = try await FirebaseConnector.users.document(userUid).getDocument()

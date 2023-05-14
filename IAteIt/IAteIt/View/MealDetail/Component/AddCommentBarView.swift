@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct AddCommentBarView: View {
+    @ObservedObject var feedMeals: FeedMealModel
     @ObservedObject var commentBar: CommentBar
     @FocusState var isFocused: Bool
+    
+    var meal: Meal
     
     var body: some View {
         VStack {
@@ -37,6 +40,7 @@ struct AddCommentBarView: View {
                     Spacer()
                     Button(action: {
                         // TODO: commentBar.type에 따라 commentBar.input을 코멘트/캡션/장소에 저장
+                        feedMeals.commentUpload(meal: meal, comment: commentBar.input)
                         isFocused = false
                         commentBar.input = ""
                     }, label: {
@@ -60,6 +64,6 @@ struct AddCommentBarView: View {
 
 struct AddCommentBarView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentBarView(commentBar: CommentBar())
+        AddCommentBarView(feedMeals: FeedMealModel(), commentBar: CommentBar(), meal: Meal.meals[2])
     }
 }
