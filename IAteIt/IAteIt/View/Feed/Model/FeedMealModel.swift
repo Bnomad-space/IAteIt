@@ -43,6 +43,13 @@ final class FeedMealModel: ObservableObject {
             if let current = Auth.auth().currentUser {
                 let uploadComment = Comment(id: UUID().uuidString, userId: current.uid, mealId: meal.id!, comment: comment, uploadDate: Date())
                 await FirebaseConnector.shared.setNewComment(comment: uploadComment)
+                mealList.indices.forEach { index in
+                    if mealList[index].id == meal.id {
+                        DispatchQueue.main.async {
+                            self.mealList[index].comments?.insert(uploadComment, at: 0)
+                        }
+                    }
+                }
             }
         }
     }

@@ -20,12 +20,12 @@ struct FeedFooterView: View {
                         .fontWeight(.semibold)
                 }
                 if meal.comments?.count ?? 0 > 0 {
-                    Text("View all comments \(meal.comments?.count ?? 0)")
+                    Text("View all \(meal.comments?.count ?? 0) comments")
                         .font(.footnote)
                         .fontWeight(.regular)
                         .foregroundColor(.gray)
                 } else {
-                    Text("Write comment First!")
+                    Text("Write first comment!")
                         .font(.footnote)
                         .fontWeight(.regular)
                         .foregroundColor(.gray)
