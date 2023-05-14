@@ -54,7 +54,9 @@ struct FeedView: View {
                         }
                     }
                 default:
+                    Spacer()
                     EmptyMealView()
+                    Spacer()
                 }
             }
         }

@@ -10,10 +10,14 @@ import SwiftUI
 struct EmptyMealView: View {
     var body: some View {
         VStack(alignment: .center) {
-            Image("emptyMealIcon")
+            Image(systemName: "takeoutbag.and.cup.and.straw")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 48)
+                .foregroundColor(.gray)
             Text("Aren't you hungry?")
-                .font(.footnote)
-                .fontWeight(.regular)
+                .font(.body)
+                .fontWeight(.semibold)
                 .foregroundColor(.gray)
         }
     }
