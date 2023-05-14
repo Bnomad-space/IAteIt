@@ -35,7 +35,7 @@ struct FeedView: View {
                         VStack(spacing: 8) {
                             FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: feedMeals.userList[indexOfUser])
                                 .padding(.horizontal, .paddingHorizontal)
-                            NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: feedMeals.userList[indexOfUser])) {
+                            NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: user)) {
                                 TabView {
                                     ForEach(eachMeal.plates, id: \.self) { plate in
                                         PhotoCardView(plate: plate)
@@ -46,7 +46,7 @@ struct FeedView: View {
                             .buttonStyle(PlainButtonStyle())
                             .frame(minHeight: 358)
                             .tabViewStyle(.page)
-                            NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: feedMeals.userList[indexOfUser])) {
+                            NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: user)) {
                                 //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
                                 FeedFooterView(meal: eachMeal)
                                     .padding(.horizontal, .paddingHorizontal)
