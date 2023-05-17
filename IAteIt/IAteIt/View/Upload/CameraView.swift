@@ -22,6 +22,7 @@ struct CameraView: View {
     }()
     
     @State var currentTime = Date()
+    @State private var isButtonDisabled = false
     
     var body: some View {
         VStack {
@@ -114,8 +115,14 @@ struct CameraView: View {
                 } else {
                     VStack {
                         Spacer()
-                        
-                        Button(action: {viewModel.capturePhoto()}, label: {
+
+                        Button(action: {
+                            if !isButtonDisabled {
+                            viewModel.capturePhoto()
+                                isButtonDisabled = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    isButtonDisabled = false }
+                                }}, label: {
                             Circle()
                                 .stroke(.black,lineWidth: 4)
                                 .frame(width: 72, height: 72)
