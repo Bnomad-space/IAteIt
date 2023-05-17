@@ -27,6 +27,7 @@ struct CameraView: View {
         VStack {
             HStack {
                 Button(action: {
+                    viewModel.stopCamera()
                     dismiss()
                 }, label: {
                     Image(systemName: "multiply")
