@@ -102,7 +102,7 @@ class Camera: NSObject, ObservableObject {
         capsuleView.layer.cornerRadius = 38
         
         let timeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 170, height: 80))
-//        timeLabel.text = Date().toTimeString()
+        timeLabel.text = Date().toTimeString()
         timeLabel.font = UIFont.systemFont(ofSize: 38)
         timeLabel.textColor = .white
         timeLabel.textAlignment = .center
