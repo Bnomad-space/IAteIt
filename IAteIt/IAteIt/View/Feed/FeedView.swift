@@ -11,8 +11,8 @@ import FirebaseFirestore
 
 struct FeedView: View {
     @StateObject var cameraViewModel = CameraViewModel()
-    @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
+    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isCameraViewPresented = false
     
     var body: some View {
@@ -28,7 +28,7 @@ struct FeedView: View {
                 })
                 .tint(.black)
                 .fullScreenCover(isPresented: $isCameraViewPresented, content: {
-                    CameraView(loginState: loginState, feedMeals: feedMeals, viewModel: cameraViewModel)
+                    CameraView(viewModel: cameraViewModel)
                 })
                 switch feedMeals.mealList.count != 0 {
                 case true:
@@ -37,7 +37,11 @@ struct FeedView: View {
                             VStack(spacing: 8) {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: user)
                                     .padding(.horizontal, .paddingHorizontal)
-                                NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: user)) {
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
                                     TabView {
                                         ForEach(eachMeal.plates, id: \.self) { plate in
                                             PhotoCardView(plate: plate)
@@ -48,7 +52,11 @@ struct FeedView: View {
                                 .buttonStyle(PlainButtonStyle())
                                 .frame(minHeight: 358)
                                 .tabViewStyle(.page)
-                                NavigationLink(destination: MealDetailView(commentBar: CommentBar(), cameraViewModel: cameraViewModel, loginState: loginState, feedMeals: feedMeals, meal: eachMeal, user: user)) {
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
                                     //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
                                     FeedFooterView(meal: eachMeal)
                                         .padding(.horizontal, .paddingHorizontal)
@@ -87,6 +95,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel(), loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        FeedView(cameraViewModel: CameraViewModel())
     }
 }

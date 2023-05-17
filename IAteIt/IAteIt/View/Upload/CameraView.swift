@@ -10,8 +10,8 @@ import AVFoundation
 
 struct CameraView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
+    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
     @ObservedObject var viewModel: CameraViewModel
     @ObservedObject var model = Camera()
     
@@ -186,6 +186,6 @@ extension CameraView {
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView(loginState: LoginStateModel(), feedMeals: FeedMealModel(), viewModel: CameraViewModel())
+        CameraView(viewModel: CameraViewModel())
     }
 }
