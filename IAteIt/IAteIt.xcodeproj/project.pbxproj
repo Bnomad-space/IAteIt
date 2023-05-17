@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045339E62A0CAE59007F74F0 /* EmptyMealView.swift */; };
 		0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0487509A29B83DBD006836D1 /* FeedFooterView.swift */; };
 		048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A229B8A2D4006836D1 /* AddMealView.swift */; };
 		048750A529B8ABA1006836D1 /* FeedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A429B8ABA1006836D1 /* FeedTitleView.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		045339E62A0CAE59007F74F0 /* EmptyMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMealView.swift; sourceTree = "<group>"; };
 		0487509A29B83DBD006836D1 /* FeedFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFooterView.swift; sourceTree = "<group>"; };
 		048750A229B8A2D4006836D1 /* AddMealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
 		048750A429B8ABA1006836D1 /* FeedTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTitleView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				048750A229B8A2D4006836D1 /* AddMealView.swift */,
 				048750A429B8ABA1006836D1 /* FeedTitleView.swift */,
 				04E9931829B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift */,
+				045339E62A0CAE59007F74F0 /* EmptyMealView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */,
 				DF883D4829B58F430029DC60 /* Comment.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
+				045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */,
 				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,
 				7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */,
 				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,

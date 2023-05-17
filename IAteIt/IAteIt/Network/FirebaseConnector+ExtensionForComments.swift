@@ -13,8 +13,8 @@ extension FirebaseConnector {
     static let comments = Firestore.firestore().collection("comments")
     
     // 새로운 comment 생성
-    func setNewComment(comment: Comment) {
-        FirebaseConnector.comments.document(comment.id).setData([
+    func setNewComment(comment: Comment) async {
+        try? await FirebaseConnector.comments.document(comment.id).setData([
             "id": comment.id,
             "userId": comment.userId,
             "mealId": comment.mealId,
@@ -43,6 +43,7 @@ extension FirebaseConnector {
                     let comment = Comment(id: commentId, userId: userId, mealId: mealId, comment: content, uploadDate: uploadDate)
                     commentList.append(comment)
                 }
+                commentList = commentList.sorted { $0.uploadDate < $1.uploadDate }
                 completion(commentList)
             }
         }
