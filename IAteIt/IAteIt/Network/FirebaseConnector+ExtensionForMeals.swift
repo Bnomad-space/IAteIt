@@ -50,20 +50,20 @@ extension FirebaseConnector {
     }
     
     // 특정 meal에 caption 업데이트
-    func setMealCaption(mealId: String, caption: String) {
-        FirebaseConnector.meals.document(mealId).updateData([
+    func setMealCaption(mealId: String, caption: String) async {
+        try? await FirebaseConnector.meals.document(mealId).updateData([
             "caption": caption as Any
         ])
     }
     
     // 특정 meal에 location 업데이트
-    func setMealLocation(mealId: String, location: String) {
-        FirebaseConnector.meals.document(mealId).updateData([
+    func setMealLocation(mealId: String, location: String) async {
+        try? await FirebaseConnector.meals.document(mealId).updateData([
             "location": location as Any
         ])
     }
     
-    // 특정 user의 모든 meal 데이터 가져오기 (plate는 따로 fetchMealPlates로 가져와야함..)
+    // 특정 user의 모든 meal 데이터 가져오기
     func fetchUserMealHistory(userId: String, completion: @escaping([Meal]) -> Void) {
         var mealHistory: [Meal] = []
         

@@ -10,10 +10,12 @@ import AVFoundation
 
 struct CameraView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
-    @ObservedObject var viewModel = CameraViewModel()
+    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
+    @ObservedObject var viewModel: CameraViewModel
     @ObservedObject var model = Camera()
+    
+    var mealAddPlateTo: Meal?
     
     static let dateFormat: DateFormatter = {
         let formatter = DateFormatter()
@@ -67,7 +69,23 @@ struct CameraView: View {
                                     .foregroundColor(.white)
                             )
                             .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
-                
+                    // TODO: 기존 meal 포스팅의 캡션, 장소 위치잡기
+                    .overlay {
+                        VStack(alignment: .center, spacing: 6) {
+                            if let caption = mealAddPlateTo?.caption {
+                                Text(caption)
+                                    .font(.headline)
+                            }
+                            if let location = mealAddPlateTo?.location {
+                                HStack(alignment: .center, spacing: 4) {
+                                    Image(systemName: "location.fill")
+                                    Text(location)
+                                }
+                                .font(.subheadline)
+                            }
+                        }
+                        .offset(y: -290)
+                    }
                 
                 
                 if viewModel.isTaken {
@@ -92,14 +110,18 @@ struct CameraView: View {
                             Button(action: {
                                 viewModel.upload()
                                 Task {
-                                    saveNewMeal()
+                                    if viewModel.type == .newMeal {
+                                        saveNewMeal()
+                                    } else {
+                                        saveAddPlate()
+                                    }
                                 }
                                 dismiss()
                             }, label: {
                                 Capsule()
                                     .overlay(
                                         HStack {
-                                            Text("Upload  \(Image(systemName: "arrow.right"))")
+                                            Text("\(viewModel.type.setButtonText())  \(Image(systemName: "arrow.right"))")
                                                 .font(.title3)
                                                 .fontWeight(.semibold)
                                                 .foregroundColor(.white)
@@ -149,10 +171,25 @@ extension CameraView {
             try await FirebaseConnector.shared.setNewMeal(meal: meal)
         }
     }
+    func saveAddPlate() {
+        guard let mealId = mealAddPlateTo?.id,
+              let image = viewModel.imageToBeUploaded
+        else { return }
+        
+        var plate = Plate(id: UUID().uuidString, mealId: mealId, imageUrl: "", uploadDate: Date())
+        Task {
+            let plateImageUrl = try await FirebaseConnector.shared.uploadPlateImage(plateId: plate.id, image: image)
+            plate.imageUrl = plateImageUrl
+            if let index = feedMeals.mealList.firstIndex(where: {$0.id == mealId}) {
+                feedMeals.mealList[index].plates.append(plate)
+            }
+            try await FirebaseConnector.shared.addPlateToMeal(mealId: mealId, plate: plate)
+        }
+    }
 }
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        CameraView(viewModel: CameraViewModel())
     }
 }

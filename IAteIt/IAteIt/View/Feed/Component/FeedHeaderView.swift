@@ -12,51 +12,50 @@ struct FeedHeaderView: View {
     let profilePicSize: CGFloat = 36
     
     var meal: Meal
+    var user: User
     
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 12) {
-                if let user = feedMeals.allUsers.first { $0.id == meal.userId } {
-                    ZStack {
-                        if let userImage = user.profileImageUrl {
-                            Rectangle()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: profilePicSize, height: profilePicSize)
-                            AsyncImage(url: URL(string: userImage)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .layoutPriority(-1)
-                            } placeholder: {
-                                Color(UIColor.systemGray5)
-                            }
+                ZStack {
+                    if let userImage = user.profileImageUrl {
+                        Rectangle()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: profilePicSize, height: profilePicSize)
-                        } else {
-                            Image(systemName: "person.crop.circle")
+                        AsyncImage(url: URL(string: userImage)) { image in
+                            image
                                 .resizable()
-                                .frame(width: profilePicSize, height: profilePicSize)
-                                .foregroundColor(Color(UIColor.systemGray3))
+                                .scaledToFill()
+                                .layoutPriority(-1)
+                        } placeholder: {
+                            Color(UIColor.systemGray5)
                         }
+                        .frame(width: profilePicSize, height: profilePicSize)
+                    } else {
+                        Image(systemName: "person.crop.circle")
+                            .resizable()
+                            .frame(width: profilePicSize, height: profilePicSize)
+                            .foregroundColor(Color(UIColor.systemGray3))
                     }
-                    .clipped()
-                    .cornerRadius(profilePicSize/2)
-                    .padding([.top], 3)
-                    
-                    VStack(alignment: .leading) {
-                        Text(user.nickname)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                        
-                        if let location = meal.location {
-                            Text("\(location) • \(meal.uploadDate.timeAgoDisplay())")
-                                .font(.footnote)
-                        } else {
-                            Text(meal.uploadDate.timeAgoDisplay())
-                                .font(.footnote)
-                        }
-                    }
-                    Spacer()
                 }
+                .clipped()
+                .cornerRadius(profilePicSize/2)
+                .padding([.top], 3)
+                
+                VStack(alignment: .leading) {
+                    Text(user.nickname)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    
+                    if let location = meal.location {
+                        Text("\(location) • \(meal.uploadDate.timeAgoDisplay())")
+                            .font(.footnote)
+                    } else {
+                        Text(meal.uploadDate.timeAgoDisplay())
+                            .font(.footnote)
+                    }
+                }
+                Spacer()
             }
         }
     }
@@ -64,6 +63,6 @@ struct FeedHeaderView: View {
 
 struct FeedHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        FeedView(cameraViewModel: CameraViewModel())
     }
 }

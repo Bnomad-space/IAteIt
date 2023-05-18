@@ -18,7 +18,9 @@ struct IAteItApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                FeedView(loginState: loginState, feedMeals: feedMeals)
+                FeedView()
+                    .environmentObject(loginState)
+                    .environmentObject(feedMeals)
             }
             .accentColor(.black)
         }

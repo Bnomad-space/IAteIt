@@ -39,8 +39,13 @@ struct AddCommentBarView: View {
                         }
                     Spacer()
                     Button(action: {
-                        // TODO: commentBar.type에 따라 commentBar.input을 코멘트/캡션/장소에 저장
-                        feedMeals.commentUpload(meal: meal, comment: commentBar.input)
+                        if commentBar.type == .comment {
+                            feedMeals.commentUpload(meal: meal, comment: commentBar.input)
+                        } else if commentBar.type == .caption {
+                            feedMeals.saveCaption(meal: meal, content: commentBar.input)
+                        } else if commentBar.type == .location {
+                            feedMeals.saveLocation(meal: meal, content: commentBar.input)
+                        }
                         isFocused = false
                         commentBar.input = ""
                     }, label: {

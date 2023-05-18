@@ -10,14 +10,16 @@ import Firebase
 import FirebaseFirestore
 
 struct FeedView: View {
-    @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
+    @StateObject var cameraViewModel = CameraViewModel()
+    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isCameraViewPresented = false
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 27) {
                 Button(action: {
+                    cameraViewModel.type = .newMeal
                     isCameraViewPresented.toggle()
                 }, label: {
                     AddMealView()
@@ -26,31 +28,41 @@ struct FeedView: View {
                 })
                 .tint(.black)
                 .fullScreenCover(isPresented: $isCameraViewPresented, content: {
-                    CameraView(loginState: loginState, feedMeals: feedMeals)
+                    CameraView(viewModel: cameraViewModel)
                 })
                 switch feedMeals.mealList.count != 0 {
                 case true:
                     ForEach(feedMeals.mealList, id: \.self) { eachMeal in
-                        VStack(spacing: 8) {
-                            FeedHeaderView(feedMeals: feedMeals, meal: eachMeal)
-                                .padding(.horizontal, .paddingHorizontal)
-                            NavigationLink(destination: MealDetailView(feedMeals: feedMeals, commentBar: CommentBar(), meal: eachMeal)) {
-                                TabView {
-                                    ForEach(eachMeal.plates, id: \.self) { plate in
-                                        PhotoCardView(plate: plate)
-                                            .padding(.horizontal, .paddingHorizontal)
+                        if let user = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
+                            VStack(spacing: 8) {
+                                FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: user)
+                                    .padding(.horizontal, .paddingHorizontal)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
+                                    TabView {
+                                        ForEach(eachMeal.plates, id: \.self) { plate in
+                                            PhotoCardView(plate: plate)
+                                                .padding(.horizontal, .paddingHorizontal)
+                                        }
                                     }
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                                .frame(minHeight: 358)
+                                .tabViewStyle(.page)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
+                                    //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
+                                    FeedFooterView(meal: eachMeal)
+                                        .padding(.horizontal, .paddingHorizontal)
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
-                            .buttonStyle(PlainButtonStyle())
-                            .frame(minHeight: 358)
-                            .tabViewStyle(.page)
-                            NavigationLink(destination: MealDetailView(feedMeals: feedMeals, commentBar: CommentBar(), meal: eachMeal)) {
-                                //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
-                                FeedFooterView(meal: eachMeal)
-                                    .padding(.horizontal, .paddingHorizontal)
-                            }
-                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 default:
@@ -79,6 +91,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        FeedView(cameraViewModel: CameraViewModel())
     }
 }

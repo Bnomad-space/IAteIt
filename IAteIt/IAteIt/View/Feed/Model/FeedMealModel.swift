@@ -55,4 +55,29 @@ final class FeedMealModel: ObservableObject {
         }
     }
     
+    func saveCaption(meal: Meal, content: String) {
+        Task {
+            await FirebaseConnector.shared.setMealCaption(mealId: meal.id!, caption: content)
+            mealList.indices.forEach { index in
+                if mealList[index].id == meal.id {
+                    DispatchQueue.main.async {
+                        self.mealList[index].caption = content
+                    }
+                }
+            }
+        }
+    }
+    
+    func saveLocation(meal: Meal, content: String) {
+        Task {
+            await FirebaseConnector.shared.setMealLocation(mealId: meal.id!, location: content)
+            mealList.indices.forEach { index in
+                if mealList[index].id == meal.id {
+                    DispatchQueue.main.async {
+                        self.mealList[index].location = content
+                    }
+                }
+            }
+        }
+    }
 }

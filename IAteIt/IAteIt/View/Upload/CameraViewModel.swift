@@ -18,6 +18,21 @@ class CameraViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     var imageToBeUploaded: UIImage?
     
+    enum types {
+        case newMeal
+        case addPlate
+        
+        func setButtonText() -> String {
+            switch self {
+            case .newMeal:
+                return "Upload"
+            case .addPlate:
+                return "Add"
+            }
+        }
+    }
+
+    @Published var type = types.newMeal
     @Published var isTaken = false
     @Published var shutterEffect = false
     @Published var isSaved = false

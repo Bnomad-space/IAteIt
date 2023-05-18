@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    @ObservedObject var feedMeals: FeedMealModel
-    @StateObject var commentBar: CommentBar
+    @StateObject var commentBar = CommentBar()
+    @EnvironmentObject var cameraViewModel: CameraViewModel
+    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
+    @State private var navTitleText = ""
+    @State private var isMyMeal = false
+    @State private var isCameraViewPresented = false
     
     var meal: Meal
+    var user: User
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView(commentBar: commentBar, meal: meal)
+                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, meal: meal)
                         .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {
@@ -29,11 +35,29 @@ struct MealDetailView: View {
                     .frame(minHeight: 358)
                     .tabViewStyle(.page)
                     
-                    if let targetMeal = feedMeals.mealList.first { $0.id == meal.id }  {
+                    if isMyMeal {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                cameraViewModel.type = .addPlate
+                                isCameraViewPresented.toggle()
+                            }, label: {
+                                AddPlateButtonView()
+                            })
+                        }
+                        .padding(.horizontal, .paddingHorizontal)
+                        .fullScreenCover(isPresented: $isCameraViewPresented, content: {
+                            CameraView(viewModel: cameraViewModel, mealAddPlateTo: meal)
+                                .environmentObject(loginState)
+                                .environmentObject(feedMeals)
+                        })
+                    }
+                    
+                    if let targetMeal = feedMeals.mealList.first(where: { $0.id == meal.id })  {
                         if let comments = targetMeal.comments {
                             VStack(alignment: .leading, spacing: 12) {
                                 ForEach(comments, id: \.self) { comment in
-                                    if let user = feedMeals.allUsers.first { $0.id == comment.userId } {
+                                    if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
                                         CommentView(user: user, comment: comment)
                                     } else {
                                         Text("Comment Error")
@@ -50,14 +74,30 @@ struct MealDetailView: View {
                 .padding([.bottom], 10)
                 .padding(.horizontal, .paddingHorizontal)
         }
+        .navigationTitle(navTitleText)
         .onTapGesture {
             self.hideKeyboard()
+        }
+        .onAppear {
+            configMyMealUI()
+        }
+    }
+}
+
+extension MealDetailView {
+    func configMyMealUI() {
+        if loginState.user?.id == user.id {
+            isMyMeal = true
+            navTitleText = "I ate it."
+        } else {
+            isMyMeal = false
+            navTitleText = "\(user.nickname) ate it."
         }
     }
 }
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(feedMeals: FeedMealModel(), commentBar: CommentBar(), meal: Meal.meals[2])
+        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0])
     }
 }
