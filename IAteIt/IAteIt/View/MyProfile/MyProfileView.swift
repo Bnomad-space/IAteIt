@@ -18,6 +18,16 @@ struct MyProfileView: View {
                 }
                 .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
             }
+            .navigationTitle("Profile")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                   NavigationLink(destination: {
+                       SettingView()
+                   }, label: {
+                       Image(systemName: "gearshape")
+                   })
+               }
+            }
         }
 
     }

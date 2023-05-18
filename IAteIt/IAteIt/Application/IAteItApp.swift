@@ -22,6 +22,7 @@ struct IAteItApp: App {
                     .environmentObject(loginState)
                     .environmentObject(feedMeals)
             }
+            .accentColor(.black)
         }
     }
 }
