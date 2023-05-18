@@ -68,11 +68,6 @@ struct FeedView: View {
             ProfilePhotoButtonView(loginState: loginState)
         })
         .navigationTitle("")
-        .onAppear {
-            Task {
-                feedMeals.getMealListIn24Hours()
-            }
-        }
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
             LoginView(loginState: loginState)
         })
