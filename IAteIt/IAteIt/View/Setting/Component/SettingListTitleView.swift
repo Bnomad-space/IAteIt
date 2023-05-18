@@ -8,33 +8,22 @@
 import SwiftUI
 
 struct SettingListTitleView: View {
-    var title: SettingTitle
+    var text: String
+    var symbol: String
+    var color: Color
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .frame(height: 44)
-                .foregroundColor(.white)
-                .shadow(color: .black.opacity(0.10), radius: 10, x: 4, y: 4)
-            HStack {
-                Image(systemName: title.symbol)
-                Text(title.text)
-                Spacer()
-                if title.isNavigation {
-                    Image(systemName: "chevron.right")
-                        .font(.subheadline)
-                        .foregroundColor(Color(UIColor.systemGray3))
-                }
-            }
-            .font(.body)
-            .foregroundColor(title.textColor)
-            .padding(.horizontal, .paddingHorizontal)
+        HStack {
+            Image(systemName: symbol)
+            Text(text)
         }
+        .font(.body)
+        .foregroundColor(color)
     }
 }
 
 struct SettingListTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingListTitleView(title: SettingTitleData().list[0])
+        SettingListTitleView(text: "Edit Profile", symbol: "person", color: .black)
     }
 }

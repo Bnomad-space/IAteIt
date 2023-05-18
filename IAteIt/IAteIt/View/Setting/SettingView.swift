@@ -8,28 +8,21 @@
 import SwiftUI
 
 struct SettingView: View {
-    var titleList = SettingTitleData().list
     
     var body: some View {
-        ScrollView {
-            VStack {
+        List {
+            Section {
                 NavigationLink(destination: {
                     EditProfileView()
                 }, label: {
-                    SettingListTitleView(title: titleList[0])
+                    SettingListTitleView(text: "Edit Profile", symbol: "person", color: .black)
                 })
-                .padding(.top, 24)
-                VStack(alignment: .leading) {
-                    Text("DANGEROUS AREA")
-                        .font(.caption)
-                        .foregroundColor(Color(UIColor.systemGray))
-                        .padding(.top)
-                        .padding(.horizontal, .paddingHorizontal)
-                    SettingListTitleView(title: titleList[1])
-                }
             }
-            .padding(.horizontal, .paddingHorizontal)
+            Section(header: Text("Dangerous Area")) {
+                SettingListTitleView(text: "Delete Account", symbol: "trash", color: .red)
+            }
         }
+        .listStyle(.plain)
         .navigationTitle("Settings")
     }
 }
