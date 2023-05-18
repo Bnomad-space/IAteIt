@@ -17,6 +17,7 @@ final class FeedMealModel: ObservableObject {
             let fetchAllUser = try await FirebaseConnector.shared.fetchAllUsers()
             await MainActor.run {
                 self.allUsers = fetchAllUser
+                self.getMealListIn24Hours()
             }
         }
     }
