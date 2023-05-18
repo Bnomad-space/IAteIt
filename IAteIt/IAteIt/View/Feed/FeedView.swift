@@ -67,6 +67,7 @@ struct FeedView: View {
         .navigationBarItems(trailing: NavigationLink(destination: MyProfileView()) {
             ProfilePhotoButtonView(loginState: loginState)
         })
+        .navigationTitle("")
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
             LoginView(loginState: loginState)
         })
