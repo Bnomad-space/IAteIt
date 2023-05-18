@@ -74,7 +74,7 @@ class CameraViewModel: ObservableObject {
         }
         
         DispatchQueue.main.async {
-            withAnimation{self.isTaken = true}
+            withAnimation{self.isTaken.toggle()}
         }
         
     }
@@ -85,7 +85,7 @@ class CameraViewModel: ObservableObject {
             self.session.startRunning()
             
             DispatchQueue.main.async {
-                withAnimation{self.isTaken = false}
+                withAnimation{self.isTaken.toggle()}
                 
                 self.isSaved = false
             }
