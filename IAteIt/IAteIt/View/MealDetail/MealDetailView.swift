@@ -15,6 +15,8 @@ struct MealDetailView: View {
     @State private var navTitleText = ""
     @State private var isMyMeal = false
     @State private var isCameraViewPresented = false
+    @State private var isShowingMealDeleteAlert = false
+    @State private var isShowingPlateDeleteAlert = false
     
     var meal: Meal
     var user: User
@@ -30,6 +32,22 @@ struct MealDetailView: View {
                         ForEach(meal.plates, id: \.self) { plate in
                             PhotoCardView(plate: plate)
                                 .padding(.horizontal, .paddingHorizontal)
+                                .contextMenu {
+                                    Button(role: .destructive, action: {
+                                        isShowingPlateDeleteAlert = true
+                                        print(plate)
+                                    }, label: {
+                                        Label("Delete this plate", systemImage: "trash")
+                                    })
+                                }
+                                .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
+                                    Button("Delete", role: .destructive, action: {
+                                        // TODO: plate 삭제
+                                    })
+                                    Button("Cancel", role: .cancel, action: {})
+                                }, message: {
+                                    Text("This action is irreversible.")
+                                })
                         }
                     }
                     .frame(minHeight: 358)
@@ -75,6 +93,29 @@ struct MealDetailView: View {
                 .padding(.horizontal, .paddingHorizontal)
         }
         .navigationTitle(navTitleText)
+        .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
+            Button("Delete", role: .destructive, action: {
+                // TODO: meal 삭제
+            })
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("This action is irreversible.")
+        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if isMyMeal {
+                    Menu(content: {
+                        Button(role: .destructive, action: {
+                            isShowingMealDeleteAlert = true
+                        }, label: {
+                            Label("Delete this meal", systemImage: "trash")
+                        })
+                    }, label: {
+                        Image(systemName: "ellipsis")
+                    })
+                }
+            }
+        }
         .onTapGesture {
             self.hideKeyboard()
         }
