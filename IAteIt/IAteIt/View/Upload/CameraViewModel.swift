@@ -98,4 +98,8 @@ class CameraViewModel: ObservableObject {
         let overlayImage = model.timestampOverlay(image: croppedImage)
         model.savePhoto(image: overlayImage)
     }
+    
+    func stopCamera() {
+        model.session.stopRunning()
+    }
 }

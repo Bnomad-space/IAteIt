@@ -24,11 +24,13 @@ struct CameraView: View {
     }()
     
     @State var currentTime = Date()
+    @State private var isTaken: Bool = false
     
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
+                    viewModel.stopCamera()
                     dismiss()
                 }, label: {
                     Image(systemName: "multiply")
@@ -136,12 +138,15 @@ struct CameraView: View {
                     VStack {
                         Spacer()
                         
-                        Button(action: {viewModel.capturePhoto()}, label: {
+                        Button(action: {
+                            viewModel.capturePhoto()
+                            self.isTaken.toggle()
+                        }, label: {
                             Circle()
                                 .stroke(.black,lineWidth: 4)
                                 .frame(width: 72, height: 72)
                                 .padding(.bottom, 85)
-                        })
+                        }) .disabled(isTaken)
                     }
                 }
             }
