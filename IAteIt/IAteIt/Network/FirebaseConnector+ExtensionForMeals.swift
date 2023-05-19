@@ -110,4 +110,24 @@ extension FirebaseConnector {
         }
         return meals
     }
+    
+    // plate 이미지 서버에서 삭제
+    func deletePlateImage(plateId: String) async throws {
+        let storageRef = Storage.storage().reference()
+        let imageRef = storageRef.child("plateImage/\(plateId)")
+        
+        try await imageRef.delete()
+    }
+    
+    // 특정 meal 삭제
+    func deleteMeal(mealId: String) async throws {
+        try await FirebaseConnector.meals.document(mealId).delete()
+    }
+    
+    // 특정 plate 삭제
+    func deletePlate(mealId: String, plate: Plate) async throws {
+        try await FirebaseConnector.meals.document(mealId).updateData([
+            "plates": FieldValue.arrayRemove([plate.firebaseData])
+        ])
+    }
 }

@@ -33,12 +33,14 @@ struct MealDetailView: View {
                             PhotoCardView(plate: plate)
                                 .padding(.horizontal, .paddingHorizontal)
                                 .contextMenu {
-                                    Button(role: .destructive, action: {
-                                        isShowingPlateDeleteAlert = true
-                                        print(plate)
-                                    }, label: {
-                                        Label("Delete this plate", systemImage: "trash")
-                                    })
+                                    if isMyMeal {
+                                        Button(role: .destructive, action: {
+                                            isShowingPlateDeleteAlert = true
+                                            print(plate)
+                                        }, label: {
+                                            Label("Delete this plate", systemImage: "trash")
+                                        })
+                                    }
                                 }
                                 .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
                                     Button("Delete", role: .destructive, action: {
