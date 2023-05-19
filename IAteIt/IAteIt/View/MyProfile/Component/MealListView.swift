@@ -11,7 +11,7 @@ struct MealListView: View {
     
     let paddingLR: CGFloat = 16
     let mealsByDateSorted = Dictionary(grouping: Meal.mealsByUser) { $0.uploadDate.toDateString() }
-        .sorted { $0.key < $1.key }
+        .sorted { $0.key > $1.key }
     
     var body: some View {
         List {
