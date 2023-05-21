@@ -24,7 +24,7 @@ struct CameraView: View {
     }()
     
     @State var currentTime = Date()
-    @State private var isTaken: Bool = false
+    @State private var isButtonDisabled = false
     
     var body: some View {
         VStack {
@@ -69,7 +69,7 @@ struct CameraView: View {
                                     .foregroundColor(.white)
                             )
                             .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
-                    // TODO: 기존 meal 포스팅의 캡션, 장소 위치잡기
+                // TODO: 기존 meal 포스팅의 캡션, 장소 위치잡기
                     .overlay {
                         VStack(alignment: .center, spacing: 6) {
                             if let caption = mealAddPlateTo?.caption {
@@ -139,14 +139,19 @@ struct CameraView: View {
                         Spacer()
                         
                         Button(action: {
-                            viewModel.capturePhoto()
-                            self.isTaken.toggle()
+                            if !isButtonDisabled {
+                                viewModel.capturePhoto()
+                                isButtonDisabled = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    isButtonDisabled = false
+                                }
+                            }
                         }, label: {
                             Circle()
                                 .stroke(.black,lineWidth: 4)
                                 .frame(width: 72, height: 72)
                                 .padding(.bottom, 85)
-                        }) .disabled(isTaken)
+                        })
                     }
                 }
             }
