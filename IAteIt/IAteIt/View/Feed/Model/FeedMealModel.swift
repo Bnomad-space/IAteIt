@@ -9,7 +9,11 @@ import SwiftUI
 import FirebaseAuth
 
 final class FeedMealModel: ObservableObject {
-    @Published var mealList: [Meal] = []
+    @Published var mealList: [Meal] = [] {
+        didSet {
+            self.mealList.sorted { $0.uploadDate > $1.uploadDate }
+        }
+    }
     @Published var allUsers: [User] = []
     
     init() {
@@ -47,7 +51,7 @@ final class FeedMealModel: ObservableObject {
                 mealList.indices.forEach { index in
                     if mealList[index].id == meal.id {
                         DispatchQueue.main.async {
-                            self.mealList[index].comments?.insert(uploadComment, at: 0)
+                            self.mealList[index].comments?.append(uploadComment)
                         }
                     }
                 }

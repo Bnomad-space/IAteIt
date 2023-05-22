@@ -19,6 +19,7 @@ struct FeedView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 27) {
                 Button(action: {
+                    cameraViewModel.reset()
                     cameraViewModel.type = .newMeal
                     isCameraViewPresented.toggle()
                 }, label: {

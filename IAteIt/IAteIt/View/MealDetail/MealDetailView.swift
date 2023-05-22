@@ -59,6 +59,7 @@ struct MealDetailView: View {
                         HStack {
                             Spacer()
                             Button(action: {
+                                cameraViewModel.reset()
                                 cameraViewModel.type = .addPlate
                                 isCameraViewPresented.toggle()
                             }, label: {

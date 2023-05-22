@@ -102,4 +102,10 @@ class CameraViewModel: ObservableObject {
     func stopCamera() {
         model.session.stopRunning()
     }
+    
+    func reset() {
+        isTaken = false
+        imageToBeUploaded = nil
+        configure()
+    }
 }
