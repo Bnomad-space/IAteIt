@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MealListView: View {
     
-    let paddingLR: CGFloat = 16
     let mealsByDateSorted = Dictionary(grouping: Meal.mealsByUser) { $0.uploadDate.toDateString() }
         .sorted { $0.key > $1.key }
     
@@ -28,6 +27,7 @@ struct MealListView: View {
             }
         }
         .listStyle(.plain) // row 마다 좌우 margin 다른 부분 수정 필요
+        .padding(.horizontal, 0)
     }
 }
 

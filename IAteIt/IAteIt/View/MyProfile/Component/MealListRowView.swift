@@ -11,36 +11,35 @@ struct MealListRowView: View {
     
     let mealsInADay: [Meal]
     let photoCorner: CGFloat = 20
+    let screenWidth = UIScreen.main.bounds.width
     
     var body: some View {
+
         if mealsInADay.count >= 4 {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .center) {
                     ForEach(mealsInADay, id: \.id) { meal in
-                        ZStack{
-                            Rectangle()
-                            Image("\(meal.plates[0].imageUrl)")
-                                .resizable()
-                                .scaledToFill()
-                        }
-                        .frame(minWidth: 100, idealWidth: 100, maxWidth: 100, minHeight: 125, idealHeight: 125, maxHeight: 125, alignment: .top)
-                        .clipped()
+                        MealTileView(meal: meal, width: 100, height: 125)
                     }
                 }
-            }.frame(height: 128, alignment: .topLeading)
+            }.listRowSeparator(.hidden)
         } else {
             HStack(alignment: .top) {
                 ForEach(mealsInADay, id: \.id) { meal in
-                    ZStack{
-                        Rectangle()
-                        Image("\(meal.plates[0].imageUrl)")
-                            .resizable()
-                            .scaledToFill()
-                    }
-                    .frame(height: 125, alignment: .center)
-                    .clipped()
+//                    MealTileView(meal: meal)
+                    MealTileView(meal: meal, width: 120, height: 125)
+
+//                    ZStack{
+//                        Rectangle()
+//                        Image("\(meal.plates[0].imageUrl)")
+//                            .resizable()
+//                            .scaledToFill()
+//                    }
+//                    .frame(height: 125, alignment: .center)
+//                    .clipped()
                 }
             }
+            .listRowSeparator(.hidden)
         }
     }
 }

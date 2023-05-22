@@ -11,23 +11,32 @@ struct MyProfileView: View {
 
     var body: some View {
         GeometryReader { g in
-            ScrollView {
-                VStack {
-                    ProfileCellView()
-                    MealListView()
+            LazyVStack {
+                ProfileCellView()
+                    .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .top)
+
+                MealListView()
+
+                
+                ScrollView {
+                    VStack {
+                        MealListView()
+                    }
+                    .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
                 }
-                .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
+                .navigationTitle("Profile")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                       NavigationLink(destination: {
+                           SettingView()
+                       }, label: {
+                           Image(systemName: "gearshape")
+                       })
+                   }
+                }
             }
-            .navigationTitle("Profile")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                   NavigationLink(destination: {
-                       SettingView()
-                   }, label: {
-                       Image(systemName: "gearshape")
-                   })
-               }
-            }
+            
+
         }
 
     }
