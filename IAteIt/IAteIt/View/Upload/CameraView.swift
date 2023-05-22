@@ -185,8 +185,10 @@ extension CameraView {
         Task {
             let plateImageUrl = try await FirebaseConnector.shared.uploadPlateImage(plateId: plate.id, image: image)
             plate.imageUrl = plateImageUrl
-            if let index = feedMeals.mealList.firstIndex(where: {$0.id == mealId}) {
-                feedMeals.mealList[index].plates.append(plate)
+            DispatchQueue.main.async {
+                if let index = feedMeals.mealList.firstIndex(where: {$0.id == mealId}) {
+                    feedMeals.mealList[index].plates.append(plate)
+                }
             }
             try await FirebaseConnector.shared.addPlateToMeal(mealId: mealId, plate: plate)
         }
