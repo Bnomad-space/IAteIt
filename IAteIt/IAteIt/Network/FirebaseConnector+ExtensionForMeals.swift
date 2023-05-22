@@ -14,7 +14,7 @@ extension FirebaseConnector {
     static let meals = Firestore.firestore().collection("meals")
     
     // 새로운 meal 생성 (첫번째 plate 생성 포함, 캡션, 장소 없는 상태)
-    func setNewMeal(meal: Meal) async throws {
+    func setNewMeal(meal: Meal) async throws -> String {
         let document = FirebaseConnector.meals.document()
         let documentId = document.documentID
         var plate = meal.plates[0]
@@ -27,6 +27,7 @@ extension FirebaseConnector {
         try await FirebaseConnector.meals.document(documentId).updateData([
             "plates": FieldValue.arrayUnion([plate.firebaseData])
         ])
+        return documentId
     }
     
     // 특정 meal에 새로운 plate 추가

@@ -172,8 +172,10 @@ extension CameraView {
             print(plateImageUrl)
             plate.imageUrl = plateImageUrl
             meal.plates.append(plate)
+            let mealId = try await FirebaseConnector.shared.setNewMeal(meal: meal)
+            meal.id = mealId
+            meal.plates[0].mealId = mealId
             feedMeals.mealList.insert(meal, at: 0)
-            try await FirebaseConnector.shared.setNewMeal(meal: meal)
         }
     }
     func saveAddPlate() {
