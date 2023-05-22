@@ -44,7 +44,7 @@ struct MealDetailView: View {
                                 }
                                 .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
                                     Button("Delete", role: .destructive, action: {
-                                        // TODO: plate 삭제
+                                        feedMeals.deletePlate(mealId: meal.id!, plate: plate)
                                     })
                                     Button("Cancel", role: .cancel, action: {})
                                 }, message: {
@@ -97,7 +97,7 @@ struct MealDetailView: View {
         .navigationTitle(navTitleText)
         .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
             Button("Delete", role: .destructive, action: {
-                // TODO: meal 삭제
+                feedMeals.deleteMeal(mealId: meal.id!)
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {

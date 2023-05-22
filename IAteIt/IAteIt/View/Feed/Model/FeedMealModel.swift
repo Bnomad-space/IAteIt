@@ -80,4 +80,30 @@ final class FeedMealModel: ObservableObject {
             }
         }
     }
+    
+    func deletePlate(mealId: String, plate: Plate) {
+        Task {
+            try await FirebaseConnector.shared.deletePlate(mealId: mealId, plate: plate)
+            try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
+            DispatchQueue.main.async {
+                if let index = self.mealList.firstIndex(where: { $0.id == mealId }) {
+                    self.mealList[index].plates.removeAll(where: { $0.id == plate.id })
+                }
+            }
+        }
+    }
+    
+    func deleteMeal(mealId: String) {
+        Task {
+            try await FirebaseConnector.shared.deleteMeal(mealId: mealId)
+            if let index = self.mealList.firstIndex(where: { $0.id == mealId }) {
+                for plate in self.mealList[index].plates {
+                    try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
+                }
+            }
+            DispatchQueue.main.async {
+                self.mealList.removeAll(where: { $0.id == mealId })
+            }
+        }
+    }
 }
