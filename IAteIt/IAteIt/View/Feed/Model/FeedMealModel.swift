@@ -31,13 +31,12 @@ final class FeedMealModel: ObservableObject {
         Task {
             var localMealList = try await FirebaseConnector.shared.fetchMealIn24Hours(date: Date())
             var tempList: [Meal] = []
-            localMealList = localMealList.sorted { $0.uploadDate < $1.uploadDate }
             for meal in localMealList {
                 FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { comments in
                     var temp = meal
                     temp.comments = comments
                     tempList.append(temp)
-                    self.mealList = tempList
+                    self.mealList = tempList.sorted { $0.uploadDate > $1.uploadDate }
                 }
             }
         }
