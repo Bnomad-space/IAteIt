@@ -33,7 +33,7 @@ struct MealDetailView: View {
                             PhotoCardView(plate: plate)
                                 .padding(.horizontal, .paddingHorizontal)
                                 .contextMenu {
-                                    if isMyMeal {
+                                    if isMyMeal && (meal.plates.count > 1) {
                                         Button(role: .destructive, action: {
                                             isShowingPlateDeleteAlert = true
                                             print(plate)
@@ -44,7 +44,7 @@ struct MealDetailView: View {
                                 }
                                 .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
                                     Button("Delete", role: .destructive, action: {
-                                        feedMeals.deletePlate(mealId: meal.id!, plate: plate)
+                                        feedMeals.deletePlate(meal: meal, plate: plate)
                                     })
                                     Button("Cancel", role: .cancel, action: {})
                                 }, message: {
@@ -98,7 +98,7 @@ struct MealDetailView: View {
         .navigationTitle(navTitleText)
         .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
             Button("Delete", role: .destructive, action: {
-                feedMeals.deleteMeal(mealId: meal.id!)
+                feedMeals.deleteMeal(meal: meal)
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {

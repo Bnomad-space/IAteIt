@@ -85,8 +85,9 @@ final class FeedMealModel: ObservableObject {
         }
     }
     
-    func deletePlate(mealId: String, plate: Plate) {
+    func deletePlate(meal: Meal, plate: Plate) {
         Task {
+            guard let mealId = meal.id else { return }
             try await FirebaseConnector.shared.deletePlate(mealId: mealId, plate: plate)
             try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
             DispatchQueue.main.async {
@@ -97,8 +98,9 @@ final class FeedMealModel: ObservableObject {
         }
     }
     
-    func deleteMeal(mealId: String) {
+    func deleteMeal(meal: Meal) {
         Task {
+            guard let mealId = meal.id else { return }
             try await FirebaseConnector.shared.deleteMeal(mealId: mealId)
             if let index = self.mealList.firstIndex(where: { $0.id == mealId }) {
                 for plate in self.mealList[index].plates {
