@@ -22,12 +22,13 @@ struct MealListRowView: View {
                         MealTileView(meal: meal, width: 100, height: 125)
                     }
                 }
-            }.listRowSeparator(.hidden)
+            }
+            .padding()
+            .listRowSeparator(.hidden)
         } else {
             HStack(alignment: .top) {
                 ForEach(mealsInADay, id: \.id) { meal in
-//                    MealTileView(meal: meal)
-                    MealTileView(meal: meal, width: 120, height: 125)
+                    MealTileView(meal: meal, width: screenWidth/3, height: 125)
 
 //                    ZStack{
 //                        Rectangle()
@@ -35,10 +36,9 @@ struct MealListRowView: View {
 //                            .resizable()
 //                            .scaledToFill()
 //                    }
-//                    .frame(height: 125, alignment: .center)
-//                    .clipped()
                 }
             }
+            .padding(.leading, 40)
             .listRowSeparator(.hidden)
         }
     }

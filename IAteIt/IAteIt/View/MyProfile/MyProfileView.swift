@@ -11,11 +11,10 @@ struct MyProfileView: View {
 
     var body: some View {
         GeometryReader { g in
-            LazyVStack {
+            VStack {
                 ProfileCellView()
-                    .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .top)
 
-                MealListView()
+//                MealListView()
 
                 
                 ScrollView {

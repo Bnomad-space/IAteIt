@@ -13,21 +13,50 @@ struct MealListView: View {
         .sorted { $0.key > $1.key }
     
     var body: some View {
-        List {
-            ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
-                Section {
-                    MealListRowView(mealsInADay: meals)
-                } header: {
+        NavigationView {
+            ScrollView {
+                
+                ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
+                    
                     if date == Date().toDateString() {
                         Text("Today")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
                     } else {
                         Text(date)
+                            .font(.footnote)
                     }
+                    
+                    MealListRowView(mealsInADay: meals)
+                    
+                    //                    Section {
+                    //                    } header: {
+                    //                        if date == Date().toDateString() {
+                    //                            Text("Today")
+                    //                        } else {
+                    //                            Text(date)
+                    //                        }
+                    //                    }
+                    
                 }
+
             }
         }
-        .listStyle(.plain) // row 마다 좌우 margin 다른 부분 수정 필요
-        .padding(.horizontal, 0)
+        
+//        List {
+//            ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
+//                Section {
+//                    MealListRowView(mealsInADay: meals)
+//                } header: {
+//                    if date == Date().toDateString() {
+//                        Text("Today")
+//                    } else {
+//                        Text(date)
+//                    }
+//                }
+//            }
+//        }
+//        .listStyle(.plain) // row 마다 좌우 margin 다른 부분 수정 필요
     }
 }
 
