@@ -54,7 +54,7 @@ struct MealDetailView: View {
                         })
                     }
                     VStack(alignment: .leading, spacing: 12) {
-                        ForEach(feedMeals.commentList[meal.id!] ?? [Comment.comments[0]], id:\.self) { comment in
+                        ForEach(feedMeals.commentList[meal.id!] ?? [], id:\.self) { comment in
                             if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
                                 CommentView(user: user, comment: comment)
                             } else {
