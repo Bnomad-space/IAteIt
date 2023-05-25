@@ -73,22 +73,17 @@ struct MealDetailView: View {
                                 .environmentObject(feedMeals)
                         })
                     }
-                    
-                    if let targetMeal = feedMeals.mealList.first(where: { $0.id == meal.id })  {
-                        if let comments = targetMeal.comments {
-                            VStack(alignment: .leading, spacing: 12) {
-                                ForEach(comments, id: \.self) { comment in
-                                    if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
-                                        CommentView(user: user, comment: comment)
-                                    } else {
-                                        Text("Comment Error")
-                                    }
-                                }
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(feedMeals.commentList[meal.id!] ?? [], id:\.self) { comment in
+                            if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
+                                CommentView(user: user, comment: comment)
+                            } else {
+                                Text("Comment Error")
                             }
-                            .padding([.top], 24)
-                            .padding(.horizontal, .paddingHorizontal)
                         }
                     }
+                    .padding([.top], 24)
+                    .padding(.horizontal, .paddingHorizontal)
                 }
             }
             AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
