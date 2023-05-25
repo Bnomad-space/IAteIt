@@ -14,8 +14,6 @@ struct SignUpSecondView: View {
     @State private var profileImage: Image?
     @State private var isLaterTextPresented = true
     
-//    var user: User?
-    
     let imgSize: CGFloat = 148
     
     var body: some View {
@@ -61,15 +59,7 @@ struct SignUpSecondView: View {
                     .padding(.bottom, 20)
             }
             Button(action: {
-                if let image = selectedImage {
-                    FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image) { url in
-                        let user = User(id: loginState.appleUid, nickname: loginState.username, profileImageUrl: url)
-                        FirebaseConnector.shared.setNewUser(user: user)
-                    }
-                } else {
-                    let user = User(id: loginState.appleUid, nickname: loginState.username)
-                    FirebaseConnector.shared.setNewUser(user: user)
-                }
+                saveAndCompleteSignUp()
                 loginState.isSignUpViewPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
@@ -84,6 +74,19 @@ extension SignUpSecondView {
         guard let selectedImage = selectedImage else { return }
         profileImage = Image(uiImage: selectedImage)
         isLaterTextPresented = false
+    }
+    func saveAndCompleteSignUp() {
+        var user = User(id: loginState.appleUid, nickname: loginState.username)
+        Task {
+            if let image = selectedImage {
+                let imageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image)
+                user.profileImageUrl = imageUrl
+            }
+            DispatchQueue.main.async {
+                loginState.user = user
+            }
+            FirebaseConnector.shared.setNewUser(user: user)
+        }
     }
 }
 
