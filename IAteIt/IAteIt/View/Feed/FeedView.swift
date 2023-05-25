@@ -61,6 +61,7 @@ struct FeedView: View {
                                     //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
                                     FeedFooterView(meal: eachMeal)
                                         .padding(.horizontal, .paddingHorizontal)
+                                        .environmentObject(feedMeals)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }

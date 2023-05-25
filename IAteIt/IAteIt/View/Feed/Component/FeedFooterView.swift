@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FeedFooterView: View {
+    @EnvironmentObject var feedMeals: FeedMealModel
     var meal: Meal
     
     var body: some View {
@@ -19,8 +20,8 @@ struct FeedFooterView: View {
                         .font(.subheadline)
                         .fontWeight(.semibold)
                 }
-                if meal.comments?.count ?? 0 > 0 {
-                    Text("View all \(meal.comments?.count ?? 0) comments")
+                if feedMeals.commentList[meal.id!]?.count ?? 0 > 0 {
+                    Text("View all \(feedMeals.commentList[meal.id!]?.count ?? 0) comments")
                         .font(.footnote)
                         .fontWeight(.regular)
                         .foregroundColor(.gray)
