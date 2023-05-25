@@ -10,6 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var loginState: LoginStateModel
+    @State private var isShowingSaveAlert = false
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
@@ -117,7 +118,7 @@ struct EditProfileView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     saveProfile()
-                    self.presentationMode.wrappedValue.dismiss()
+                    isShowingSaveAlert = true
                 }, label: {
                    Text("Save")
                        .font(.headline)
@@ -127,6 +128,13 @@ struct EditProfileView: View {
                 )
             }
         }
+        .alert("Changes Saved", isPresented: $isShowingSaveAlert, actions: {
+            Button("OK", role: .cancel, action: {
+                self.presentationMode.wrappedValue.dismiss()
+            })
+        }, message: {
+            Text("Your changed have been saved successfully.")
+        })
     }
 }
 
