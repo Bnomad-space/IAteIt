@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditProfileView: View {
+    @EnvironmentObject var loginState: LoginStateModel
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
@@ -25,25 +26,37 @@ struct EditProfileView: View {
                 Button(action: {
                     imagePickerPresented.toggle()
                 }, label: {
-                    if let image = profileImage {
-                        image
+                    if let newImage = profileImage {
+                        newImage
                             .resizable()
                             .scaledToFill()
                             .frame(width: imgSize, height: imgSize)
                             .clipShape(Circle())
                     } else {
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(.white)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: imgSize, height: imgSize)
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: imgSize, height: imgSize)
-                                .foregroundColor(Color(UIColor.systemGray2))
+                        if let oldImageUrl = loginState.user?.profileImageUrl {
+                            AsyncImage(url: URL(string: oldImageUrl)) { oldImage in
+                                oldImage
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: imgSize, height: imgSize)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Color(UIColor.systemGray5)
+                            }
+                        } else {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.white)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: imgSize, height: imgSize)
+                                Image(systemName: "person.crop.circle")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: imgSize, height: imgSize)
+                                    .foregroundColor(Color(UIColor.systemGray2))
+                            }
+                            .clipShape(Circle())
                         }
-                        .clipShape(Circle())
                     }
                 })
                 .sheet(isPresented: $imagePickerPresented,
@@ -60,7 +73,7 @@ struct EditProfileView: View {
                             Spacer()
                         }
                         .frame(width: 112)
-                        // TODO: textField에 본인 username 넣어두기
+                        
                         TextField("username", text: $username)
                             .limitTextLength($username, to: 16)
                             .textCase(.lowercase)
@@ -70,6 +83,8 @@ struct EditProfileView: View {
                             .focused($isFocused)
                             .onAppear {
                                 UITextField.appearance().clearButtonMode = .whileEditing
+                                guard let oldUsername = loginState.user?.nickname else { return }
+                                username = oldUsername
                             }
                             .onChange(of: username) { _ in
                                 username = username.replacingOccurrences(of: " ", with: "")
