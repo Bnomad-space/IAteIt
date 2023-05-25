@@ -102,6 +102,16 @@ struct EditProfileView: View {
                     Rectangle()
                         .frame(height: 0.75)
                         .foregroundColor(Color(UIColor.systemGray3))
+                    if !isUnique {
+                        HStack {
+                            Spacer()
+                            Text("This username is already taken.")
+                                .font(.caption2)
+                                .foregroundColor(Color(UIColor.systemRed))
+                                .padding(.top, 1)
+                                .padding(.trailing, .paddingHorizontal)
+                        }
+                    }
                 }
                 .padding(.top, 64)
                 .padding(.horizontal, .paddingHorizontal)
