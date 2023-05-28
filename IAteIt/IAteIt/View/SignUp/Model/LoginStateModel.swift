@@ -18,6 +18,7 @@ class LoginStateModel: ObservableObject {
     @Published var isAppleLoginRequired: Bool = false
     @Published var isSignUpViewPresent: Bool = false
     @Published var isSignUpRequired: Bool = false
+    @Published var isShowingDeleteAccountCompleteAlert = false
     
     init() {
         self.checkLoginUser()
@@ -105,6 +106,18 @@ class LoginStateModel: ObservableObject {
                 }
             } catch {
                 print("Error: \(error)")
+            }
+        }
+    }
+    
+    func deleteAccount() {
+        Task {
+            guard let userId = user?.id else { return }
+            try await FirebaseConnector.shared.deleteUserAccount(userId: userId)
+            try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
+            // TODO: 유저의 meal history 삭제, storage의 plate 이미지 삭제
+            DispatchQueue.main.async {
+                self.isShowingDeleteAccountCompleteAlert = true
             }
         }
     }

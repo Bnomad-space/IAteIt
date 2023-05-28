@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 import SwiftUI
@@ -140,5 +141,20 @@ final class FirebaseConnector {
                 completion(imageUrl.absoluteString)
             }
         }
+    }
+    
+    // user profile 이미지 storage에서 삭제
+    func deleteProfileImage(userId: String) async throws {
+        let storageRef = Storage.storage().reference()
+        let imageRef = storageRef.child("profileImage/\(userId)")
+        try await imageRef.delete()
+    }
+    
+    // user 계정 삭제
+    func deleteUserAccount(userId: String) async throws {
+        let user = Auth.auth().currentUser
+        
+        try await FirebaseConnector.users.document(userId).delete()
+        try await user?.delete()
     }
 }

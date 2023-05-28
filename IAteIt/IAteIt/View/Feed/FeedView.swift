@@ -78,7 +78,10 @@ struct FeedView: View {
                                 FeedTitleView()
             .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
         )
-        .navigationBarItems(trailing: NavigationLink(destination: MyProfileView()) {
+        .navigationBarItems(trailing: NavigationLink(destination:
+            MyProfileView()
+            .environmentObject(loginState)
+        ) {
             ProfilePhotoButtonView(loginState: loginState)
         })
         .navigationTitle("")
