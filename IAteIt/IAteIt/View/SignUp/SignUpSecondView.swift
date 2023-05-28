@@ -26,10 +26,7 @@ struct SignUpSecondView: View {
             }, label: {
                 if let image = profileImage {
                     image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: imgSize, height: imgSize)
-                        .clipShape(Circle())
+                        .circleImage(imageSize: imgSize)
                 } else {
                     ZStack {
                         Rectangle()

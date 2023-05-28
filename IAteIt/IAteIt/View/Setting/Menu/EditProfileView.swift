@@ -30,25 +30,16 @@ struct EditProfileView: View {
                 }, label: {
                     if let newImage = profileImage {
                         newImage
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: imgSize, height: imgSize)
-                            .clipShape(Circle())
+                            .circleImage(imageSize: imgSize)
                     } else {
                         if let oldImageUrl = loginState.user?.profileImageUrl {
                             AsyncImage(url: URL(string: oldImageUrl)) { oldImage in
                                 oldImage
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: imgSize, height: imgSize)
-                                    .clipShape(Circle())
+                                    .circleImage(imageSize: imgSize)
                             } placeholder: {
                                 Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: imgSize, height: imgSize)
+                                    .circleImage(imageSize: imgSize)
                                     .foregroundColor(Color(UIColor.systemGray2))
-                                    .clipShape(Circle())
                             }
                         } else {
                             ZStack {
