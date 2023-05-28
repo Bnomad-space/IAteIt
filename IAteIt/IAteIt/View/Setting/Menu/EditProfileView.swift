@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct EditProfileView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var loginState: LoginStateModel
+    @State private var isShowingSaveAlert = false
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
@@ -25,25 +28,33 @@ struct EditProfileView: View {
                 Button(action: {
                     imagePickerPresented.toggle()
                 }, label: {
-                    if let image = profileImage {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: imgSize, height: imgSize)
-                            .clipShape(Circle())
+                    if let newImage = profileImage {
+                        newImage
+                            .circleImage(imageSize: imgSize)
                     } else {
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(.white)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: imgSize, height: imgSize)
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: imgSize, height: imgSize)
-                                .foregroundColor(Color(UIColor.systemGray2))
+                        if let oldImageUrl = loginState.user?.profileImageUrl {
+                            AsyncImage(url: URL(string: oldImageUrl)) { oldImage in
+                                oldImage
+                                    .circleImage(imageSize: imgSize)
+                            } placeholder: {
+                                Image(systemName: "person.crop.circle")
+                                    .circleImage(imageSize: imgSize)
+                                    .foregroundColor(Color(UIColor.systemGray2))
+                            }
+                        } else {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.white)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: imgSize, height: imgSize)
+                                Image(systemName: "person.crop.circle")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: imgSize, height: imgSize)
+                                    .foregroundColor(Color(UIColor.systemGray2))
+                            }
+                            .clipShape(Circle())
                         }
-                        .clipShape(Circle())
                     }
                 })
                 .sheet(isPresented: $imagePickerPresented,
@@ -60,7 +71,7 @@ struct EditProfileView: View {
                             Spacer()
                         }
                         .frame(width: 112)
-                        // TODO: textField에 본인 username 넣어두기
+                        
                         TextField("username", text: $username)
                             .limitTextLength($username, to: 16)
                             .textCase(.lowercase)
@@ -70,6 +81,8 @@ struct EditProfileView: View {
                             .focused($isFocused)
                             .onAppear {
                                 UITextField.appearance().clearButtonMode = .whileEditing
+                                guard let oldUsername = loginState.user?.nickname else { return }
+                                username = oldUsername
                             }
                             .onChange(of: username) { _ in
                                 username = username.replacingOccurrences(of: " ", with: "")
@@ -80,6 +93,16 @@ struct EditProfileView: View {
                     Rectangle()
                         .frame(height: 0.75)
                         .foregroundColor(Color(UIColor.systemGray3))
+                    if !isUnique {
+                        HStack {
+                            Spacer()
+                            Text("This username is already taken.")
+                                .font(.caption2)
+                                .foregroundColor(Color(UIColor.systemRed))
+                                .padding(.top, 1)
+                                .padding(.trailing, .paddingHorizontal)
+                        }
+                    }
                 }
                 .padding(.top, 64)
                 .padding(.horizontal, .paddingHorizontal)
@@ -88,11 +111,15 @@ struct EditProfileView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
+        .onAppear {
+            getAllUsernames()
+        }
         .navigationTitle("Edit Profile")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                   // TODO: 프로필 수정 내용 저장
+                    saveProfile()
+                    isShowingSaveAlert = true
                 }, label: {
                    Text("Save")
                        .font(.headline)
@@ -102,6 +129,13 @@ struct EditProfileView: View {
                 )
             }
         }
+        .alert("Changes Saved", isPresented: $isShowingSaveAlert, actions: {
+            Button("OK", role: .cancel, action: {
+                self.presentationMode.wrappedValue.dismiss()
+            })
+        }, message: {
+            Text("Your changed have been saved successfully.")
+        })
     }
 }
 
@@ -116,8 +150,9 @@ extension EditProfileView {
         return usernameTest.evaluate(with: testString)
     }
     func testUnique(testString: String) -> Bool {
-        if usernameList.contains(testString) {
-            // TODO: usernameList에서 본인 username은 빼고 체크
+        var takenUsernameList = usernameList
+        takenUsernameList.removeAll(where: { $0 == loginState.user?.nickname })
+        if takenUsernameList.contains(testString) {
             return false
         } else {
             return true
@@ -126,6 +161,20 @@ extension EditProfileView {
     func getAllUsernames() {
         FirebaseConnector.shared.fetchAllUsernames { list in
             self.usernameList = list
+        }
+    }
+    func saveProfile() {
+        guard let userId = loginState.user?.id else { return }
+        var user = User(id: userId, nickname: self.username, profileImageUrl: loginState.user?.profileImageUrl)
+        Task {
+            if let image = selectedImage {
+                let newProfileImageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: userId, image: image)
+                user.profileImageUrl = newProfileImageUrl
+            }
+            DispatchQueue.main.async {
+                loginState.user = user
+            }
+            try await FirebaseConnector.shared.updateUser(user: user)
         }
     }
 }

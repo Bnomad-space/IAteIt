@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyProfileView: View {
+    @EnvironmentObject var loginState: LoginStateModel
 
     var body: some View {
         GeometryReader { g in
@@ -23,6 +24,7 @@ struct MyProfileView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                    NavigationLink(destination: {
                        SettingView()
+                           .environmentObject(loginState)
                    }, label: {
                        Image(systemName: "gearshape")
                    })

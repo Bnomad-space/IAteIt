@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct SettingView: View {
+    @EnvironmentObject var loginState: LoginStateModel
     
     var body: some View {
         List {
             Section {
                 NavigationLink(destination: {
                     EditProfileView()
+                        .environmentObject(loginState)
                 }, label: {
                     SettingListTitleView(text: "Edit Profile", symbol: "person", color: .black)
                 })
