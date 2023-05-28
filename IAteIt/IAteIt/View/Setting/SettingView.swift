@@ -18,6 +18,7 @@ struct SettingView: View {
             Section {
                 NavigationLink(destination: {
                     EditProfileView()
+                        .environmentObject(loginState)
                 }, label: {
                     SettingListTitleView(text: "Edit Profile", symbol: "person", color: .black)
                 })

@@ -26,10 +26,7 @@ struct SignUpSecondView: View {
             }, label: {
                 if let image = profileImage {
                     image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: imgSize, height: imgSize)
-                        .clipShape(Circle())
+                        .circleImage(imageSize: imgSize)
                 } else {
                     ZStack {
                         Rectangle()
@@ -59,17 +56,7 @@ struct SignUpSecondView: View {
                     .padding(.bottom, 20)
             }
             Button(action: {
-                if let image = selectedImage {
-                    FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image) { url in
-                        let user = User(id: loginState.appleUid, nickname: loginState.username, profileImageUrl: url)
-                        FirebaseConnector.shared.setNewUser(user: user)
-                        loginState.user = user
-                    }
-                } else {
-                    let user = User(id: loginState.appleUid, nickname: loginState.username)
-                    FirebaseConnector.shared.setNewUser(user: user)
-                    loginState.user = user
-                }
+                saveAndCompleteSignUp()
                 loginState.isSignUpViewPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
@@ -84,6 +71,19 @@ extension SignUpSecondView {
         guard let selectedImage = selectedImage else { return }
         profileImage = Image(uiImage: selectedImage)
         isLaterTextPresented = false
+    }
+    func saveAndCompleteSignUp() {
+        var user = User(id: loginState.appleUid, nickname: loginState.username)
+        Task {
+            if let image = selectedImage {
+                let imageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image)
+                user.profileImageUrl = imageUrl
+            }
+            DispatchQueue.main.async {
+                loginState.user = user
+            }
+            FirebaseConnector.shared.setNewUser(user: user)
+        }
     }
 }
 

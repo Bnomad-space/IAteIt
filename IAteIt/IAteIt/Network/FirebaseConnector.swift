@@ -97,8 +97,8 @@ final class FirebaseConnector {
     }
     
     // user 정보 업데이트(프로필 수정)
-    func updateUser(user: User) {
-        FirebaseConnector.users.document(user.id)
+    func updateUser(user: User) async throws {
+        try await FirebaseConnector.users.document(user.id)
             .updateData([
             "id": user.id,
             "nickname": user.nickname,
@@ -119,28 +119,16 @@ final class FirebaseConnector {
     }
     
     // user profile 이미지 업로드
-    func uploadProfileImage(userId: String, image: UIImage, completion: @escaping(String) -> Void) {
+    func uploadProfileImage(userId: String, image: UIImage) async throws -> String {
         let storageRef = Storage.storage().reference()
-        let imageRef = storageRef.child("profileImage/\(userId)")
+        let imageRef = storageRef.child("profileImage/\(userId)/")
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
-            print("DEBUG - fail compression")
-            return
+            throw URLError(.badServerResponse)
         }
-        imageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if let error = error {
-                print("DEBUG \(error.localizedDescription)")
-                return
-            }
-            imageRef.downloadURL { (url, error) in
-                if let error = error {
-                    print("DEBUG \(error.localizedDescription)")
-                    return
-                }
-                guard let imageUrl = url else { return }
-                
-                completion(imageUrl.absoluteString)
-            }
-        }
+        let returnedMetaData = try await imageRef.putDataAsync(imageData, metadata: nil)
+        let imageUrl: URL = try await imageRef.downloadURL()
+        
+        return imageUrl.absoluteString
     }
     
     // user profile 이미지 storage에서 삭제
