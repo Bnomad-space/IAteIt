@@ -14,6 +14,7 @@ struct FeedView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isCameraViewPresented = false
+    @Binding var isActive: Bool
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -78,12 +79,16 @@ struct FeedView: View {
                                 FeedTitleView()
             .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
         )
-        .navigationBarItems(trailing: NavigationLink(destination:
-            MyProfileView()
-            .environmentObject(loginState)
-        ) {
-            ProfilePhotoButtonView(loginState: loginState)
-        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(
+                    destination: MyProfileView().environmentObject(loginState),
+                    isActive: $isActive,
+                    label: { ProfilePhotoButtonView(loginState: loginState) }
+                )
+                .isDetailLink(false)
+            }
+        }
         .navigationTitle("")
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
             LoginView(loginState: loginState)
@@ -96,6 +101,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel())
+        FeedView(cameraViewModel: CameraViewModel(), isActive: .constant(false))
     }
 }

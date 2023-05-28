@@ -9,6 +9,9 @@ import SwiftUI
 
 struct MyProfileView: View {
     @EnvironmentObject var loginState: LoginStateModel
+    @State private var isActive: Bool = false
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
 
     var body: some View {
         GeometryReader { g in
@@ -22,12 +25,12 @@ struct MyProfileView: View {
             .navigationTitle("Profile")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                   NavigationLink(destination: {
-                       SettingView()
-                           .environmentObject(loginState)
-                   }, label: {
-                       Image(systemName: "gearshape")
-                   })
+                    NavigationLink(
+                        destination: SettingView().environmentObject(loginState),
+                        isActive: self.$isActive,
+                        label: { Image(systemName: "gearshape") }
+                    )
+                    .isDetailLink(false)
                }
             }
         }

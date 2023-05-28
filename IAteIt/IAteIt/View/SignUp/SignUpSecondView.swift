@@ -14,8 +14,6 @@ struct SignUpSecondView: View {
     @State private var profileImage: Image?
     @State private var isLaterTextPresented = true
     
-//    var user: User?
-    
     let imgSize: CGFloat = 148
     
     var body: some View {
@@ -65,10 +63,12 @@ struct SignUpSecondView: View {
                     FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image) { url in
                         let user = User(id: loginState.appleUid, nickname: loginState.username, profileImageUrl: url)
                         FirebaseConnector.shared.setNewUser(user: user)
+                        loginState.user = user
                     }
                 } else {
                     let user = User(id: loginState.appleUid, nickname: loginState.username)
                     FirebaseConnector.shared.setNewUser(user: user)
+                    loginState.user = user
                 }
                 loginState.isSignUpViewPresent = false
             }, label: {

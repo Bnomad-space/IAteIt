@@ -151,10 +151,14 @@ final class FirebaseConnector {
     }
     
     // user 계정 삭제
-    func deleteUserAccount(userId: String) async throws {
-        let user = Auth.auth().currentUser
-        
+    func deleteUser(userId: String) async throws {
         try await FirebaseConnector.users.document(userId).delete()
-        try await user?.delete()
+    }
+    
+    func deleteUserFromAuth() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badURL)
+        }
+        try await user.delete()
     }
 }

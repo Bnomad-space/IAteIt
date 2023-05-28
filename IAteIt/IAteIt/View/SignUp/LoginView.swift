@@ -11,16 +11,17 @@ import FirebaseAuth
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var loginState: LoginStateModel
     @State var currentNonce: String?
     
     var body: some View {
         VStack {
-            Text("Sign in required!")
+            Text(loginState.type.setLoginViewTitle())
                 .font(.title)
                 .fontWeight(.bold)
                 .padding([.bottom], 26)
-            Text("Please sign in\nto share what you eat in a day.")
+            Text(loginState.type.setLoginViewContent())
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .padding([.bottom], 44)
@@ -41,17 +42,20 @@ struct LoginView: View {
             )
             .padding([.bottom], 32)
             
-            Button(action: {
-                // TODO: 액션 추가
-            }, label: {
-                Text("I'll sign in next time.")
-                    .font(.body)
-                    .foregroundColor(.gray)
-                    .underline()
-            })
+            if loginState.type == .createAccount {
+                Button(action: {
+                    // TODO: 액션 추가
+                }, label: {
+                    Text("I'll sign in next time.")
+                        .font(.body)
+                        .foregroundColor(.gray)
+                        .underline()
+                })
+            }
         }
         .onDisappear {
             loginState.isSignUpViewPresent = loginState.isSignUpRequired
+            loginState.isShowingDeleteAccountCompleteAlert = loginState.isDeleteAccountCompleteAlertRequired
         }
     }
 }

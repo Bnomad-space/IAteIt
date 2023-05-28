@@ -10,6 +10,8 @@ import SwiftUI
 struct SettingView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @State private var isShowingDeleteAccountAlert = false
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     
     var body: some View {
         List {
@@ -30,17 +32,21 @@ struct SettingView: View {
         }
         .listStyle(.plain)
         .navigationTitle("Settings")
+        .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
+            LoginView(loginState: loginState)
+        })
         .alert("Delete Account", isPresented: $isShowingDeleteAccountAlert, actions: {
             Button("Delete", role: .destructive, action: {
-                loginState.deleteAccount()
+                loginState.type = .deleteAccount
+                loginState.isAppleLoginRequired = true
             })
         }, message: {
             Text("Are you sure you want to permanently delete your account and all your data?\nIf you wish to continue with your account deletion, please click “Delete” below. This action is irreversible.")
         })
         .alert("Account Deletion Completed", isPresented: self.$loginState.isShowingDeleteAccountCompleteAlert, actions: {
             Button("OK", role: .cancel, action: {
-                // TODO: feed로 나가기
                 loginState.checkLoginUser()
+                self.rootPresentationMode.wrappedValue.dismiss()
             })
         }, message: {
             Text("Your account have been deleted successfully.")
