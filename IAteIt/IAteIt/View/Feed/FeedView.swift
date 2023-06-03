@@ -58,7 +58,6 @@ struct FeedView: View {
                                     .environmentObject(loginState)
                                     .environmentObject(feedMeals)
                                 ) {
-                                    //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
                                     FeedFooterView(meal: eachMeal)
                                         .padding(.horizontal, .paddingHorizontal)
                                         .environmentObject(feedMeals)
@@ -73,6 +72,12 @@ struct FeedView: View {
                     Spacer()
                 }
             }
+        }
+        .refreshable {
+          do {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            feedMeals.getMealListIn24Hours()
+          } catch {print("Error refreshing data: \(error)")}
         }
         .navigationBarItems(leading:
                                 FeedTitleView()
