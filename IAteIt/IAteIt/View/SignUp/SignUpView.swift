@@ -16,62 +16,61 @@ struct SignUpView: View {
     @State var usernameList: [String] = []
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Please create your username.")
-                    .font(.headline)
-                    .padding(.top, 60)
-                TextField("username", text: $username)
-                    .limitTextLength($username, to: 16)
-                    .textCase(.lowercase)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .focused($isFocused)
-                    .onAppear() {
-                        isFocused = true
-                    }
-                    .onChange(of: username) { _ in
-                        username = username.replacingOccurrences(of: " ", with: "")
-                        isValidFormat = testValidUsername(testString: username)
-                        isUnique = testUnique(testString: username)
-                    }
-                    .font(Font.title2.weight(.bold))
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 40)
-                Text("\(username.count) / 16")
+        VStack {
+            Text("Please create your username.")
+                .font(.headline)
+                .padding(.top, 60)
+            TextField("username", text: $username)
+                .limitTextLength($username, to: 16)
+                .textCase(.lowercase)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .focused($isFocused)
+                .onAppear() {
+                    isFocused = true
+                }
+                .onChange(of: username) { _ in
+                    username = username.replacingOccurrences(of: " ", with: "")
+                    isValidFormat = testValidUsername(testString: username)
+                    isUnique = testUnique(testString: username)
+                }
+                .font(Font.title2.weight(.bold))
+                .multilineTextAlignment(.center)
+                .padding(.top, 40)
+            Text("\(username.count) / 16")
+                .font(.caption2)
+                .foregroundColor(.gray)
+            if !isUnique {
+                Text("This username is already taken.")
                     .font(.caption2)
-                    .foregroundColor(.gray)
-                if !isUnique {
-                    Text("This username is already taken.")
-                        .font(.caption2)
-                        .foregroundColor(Color(UIColor.systemRed))
-                        .padding(.top, 1)
-                }
+                    .foregroundColor(Color(UIColor.systemRed))
+                    .padding(.top, 1)
+            }
+            Spacer()
+        }
+        .navigationBarHidden(true)
+        .overlay {
+            VStack {
                 Spacer()
+                Text("Username must be 4 to 16 alphanumeric characters.\nThe first character must be a letter.")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(UIColor.systemGray))
+                    .padding(.bottom, 20)
+                NavigationLink(destination: SignUpSecondView(loginState: loginState),
+                    label: {
+                    BottomButtonView(label: "Next")
+                })
+                .disabled(
+                    !isValidFormat || !isUnique
+                )
+                .simultaneousGesture(TapGesture().onEnded {
+                    loginState.username = username
+                })
             }
-            .overlay {
-                VStack {
-                    Spacer()
-                    Text("Username must be 4 to 16 alphanumeric characters.\nThe first character must be a letter.")
-                        .font(.subheadline)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color(UIColor.systemGray))
-                        .padding(.bottom, 20)
-                    NavigationLink(destination: SignUpSecondView(loginState: loginState),
-                        label: {
-                        BottomButtonView(label: "Next")
-                    })
-                    .disabled(
-                        !isValidFormat || !isUnique
-                    )
-                    .simultaneousGesture(TapGesture().onEnded {
-                        loginState.username = username
-                    })
-                }
-            }
-            .onAppear {
-                getAllUsernames()
-            }
+        }
+        .onAppear {
+            getAllUsernames()
         }
     }
 }

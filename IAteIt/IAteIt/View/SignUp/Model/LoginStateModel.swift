@@ -16,7 +16,6 @@ class LoginStateModel: ObservableObject {
     @Published var username: String = ""
     @Published var user: User?
     @Published var isAppleLoginRequired: Bool = false
-    @Published var isSignUpViewPresent: Bool = false
     @Published var isSignUpRequired: Bool = false
     @Published var isDeleteAccountCompleteAlertRequired = false
     @Published var isShowingDeleteAccountCompleteAlert = false
@@ -96,7 +95,7 @@ class LoginStateModel: ObservableObject {
                 let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
                 if self.type == .createAccount {
                     signInComplete(credential: credential)
-                } else {
+                } else if self.type == .deleteAccount {
                     deleteAccount(credential: credential)
                 }
                 print("\(String(describing: Auth.auth().currentUser?.uid))")
@@ -131,7 +130,6 @@ class LoginStateModel: ObservableObject {
                 } else {
                     await MainActor.run {
                         self.appleUid = userUid
-                        self.isAppleLoginRequired = false
                         self.isSignUpRequired = true
                     }
                 }
@@ -148,10 +146,13 @@ class LoginStateModel: ObservableObject {
                 let userId = returnedUserData.uid
                 print("애플 로그인 결과: \(userId), \(returnedUserData.email)")
                 try await FirebaseConnector.shared.deleteUserFromAuth()
-                try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
+                if let imageUrl = user?.profileImageUrl {
+                    try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
+                }
                 try await FirebaseConnector.shared.deleteUser(userId: userId)
                 // TODO: 유저의 meal history 삭제, storage의 plate 이미지 삭제
                 await MainActor.run {
+                    self.user = nil
                     self.isAppleLoginRequired = false
                     self.isDeleteAccountCompleteAlertRequired = true
                 }

@@ -33,7 +33,10 @@ struct SettingView: View {
         }
         .listStyle(.plain)
         .navigationTitle("Settings")
-        .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
+        .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired,
+            onDismiss: {
+                loginState.isShowingDeleteAccountCompleteAlert = loginState.isDeleteAccountCompleteAlertRequired
+            }, content: {
             LoginView(loginState: loginState)
         })
         .alert("Delete Account", isPresented: $isShowingDeleteAccountAlert, actions: {

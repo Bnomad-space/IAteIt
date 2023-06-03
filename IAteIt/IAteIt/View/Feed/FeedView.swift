@@ -93,9 +93,6 @@ struct FeedView: View {
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
             LoginView(loginState: loginState)
         })
-        .fullScreenCover(isPresented: self.$loginState.isSignUpViewPresent, content: {
-            SignUpView(loginState: loginState)
-        })
     }
 }
 

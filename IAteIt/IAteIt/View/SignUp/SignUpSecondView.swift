@@ -57,7 +57,6 @@ struct SignUpSecondView: View {
             }
             Button(action: {
                 saveAndCompleteSignUp()
-                loginState.isSignUpViewPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
             })
@@ -79,10 +78,12 @@ extension SignUpSecondView {
                 let imageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image)
                 user.profileImageUrl = imageUrl
             }
+            FirebaseConnector.shared.setNewUser(user: user)
             DispatchQueue.main.async {
                 loginState.user = user
+                loginState.isSignUpRequired = false
+                loginState.isAppleLoginRequired = false
             }
-            FirebaseConnector.shared.setNewUser(user: user)
         }
     }
 }
