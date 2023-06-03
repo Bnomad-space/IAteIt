@@ -81,10 +81,24 @@ struct MealDetailView: View {
                                 Text("Comment Error")
                             }
                         }
+                        Rectangle()
+                            .fill(Color.white.opacity(0))
+                            .frame(height: 100)
                     }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
                 }
+            }
+            VStack {
+                Spacer()
+                Rectangle()
+                    .fill(
+                        LinearGradient(gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
+                                       startPoint: UnitPoint(x: 0.5, y: 1-100/200),
+                                       endPoint: .top)
+                    )
+                    .ignoresSafeArea()
+                    .frame(height: 150)
             }
             AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
                 .padding([.bottom], 10)
