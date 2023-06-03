@@ -18,13 +18,7 @@ final class FeedMealModel: ObservableObject {
     @Published var commentList: [String: [Comment]] = [:]
     
     init() {
-        Task {
-            let fetchAllUser = try await FirebaseConnector.shared.fetchAllUsers()
-            await MainActor.run {
-                self.allUsers = fetchAllUser
-                self.getMealListIn24Hours()
-            }
-        }
+        self.refreshMealsAndUsers()
     }
     
     @MainActor
@@ -101,6 +95,16 @@ final class FeedMealModel: ObservableObject {
             }
             DispatchQueue.main.async {
                 self.mealList.removeAll(where: { $0.id == mealId })
+            }
+        }
+    }
+    
+    func refreshMealsAndUsers() {
+        Task {
+            let fetchAllUser = try await FirebaseConnector.shared.fetchAllUsers()
+            await MainActor.run {
+                self.allUsers = fetchAllUser
+                self.getMealListIn24Hours()
             }
         }
     }

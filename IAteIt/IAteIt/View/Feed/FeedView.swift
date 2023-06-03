@@ -76,7 +76,7 @@ struct FeedView: View {
         .refreshable {
           do {
             try await Task.sleep(nanoseconds: 1_000_000_000)
-            feedMeals.getMealListIn24Hours()
+              feedMeals.refreshMealsAndUsers()
           } catch {print("Error refreshing data: \(error)")}
         }
         .navigationBarItems(leading:
@@ -94,7 +94,7 @@ struct FeedView: View {
             LoginView(loginState: loginState)
         })
         .fullScreenCover(isPresented: self.$loginState.isSignUpViewPresent, content: {
-            SignUpView(loginState: loginState)
+            SignUpView(loginState: loginState, feedMeals: feedMeals)
         })
     }
 }
