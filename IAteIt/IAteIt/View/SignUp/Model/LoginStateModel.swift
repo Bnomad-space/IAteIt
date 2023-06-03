@@ -94,8 +94,10 @@ class LoginStateModel: ObservableObject {
                 let isExist = try await FirebaseConnector.shared.checkExistingUser(userUid: userUid)
                 if isExist {
                     let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: userUid)
-                    self.user = fetchedUser
-                    self.isAppleLoginRequired = false
+                    await MainActor.run {
+                        self.user = fetchedUser
+                        self.isAppleLoginRequired = false
+                    }
                 } else {
                     await MainActor.run {
                         self.appleUid = userUid
