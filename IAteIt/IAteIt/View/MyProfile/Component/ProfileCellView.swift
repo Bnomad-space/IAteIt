@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProfileCellView: View {
     
-    let paddingLR: CGFloat = 16
     let profileImgSize: CGFloat = 120
     
     var body: some View {
@@ -25,8 +24,10 @@ struct ProfileCellView: View {
             }
             .clipped()
             .cornerRadius(profileImgSize/2)
+            .shadow(color: .gray, radius: 15, x: 5, y: 5)
             
             Text("\(User.users[0].nickname)")
+                .font(.headline)
             
         }
 

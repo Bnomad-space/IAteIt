@@ -26,11 +26,11 @@ extension Meal {
         Meal(id: "meal4", userId: "user2", uploadDate: Date()-60*60*12, plates: [Plate.plates[5]])
     ]
     
-    static let meal1 = Meal(id: "meal1", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -3600), plates: [Plate.plate2], comments: [])
+    static let meal1 = Meal(id: "meal1", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -173600), plates: [Plate.plate2], comments: [])
     
-    static let meal1a = Meal(id: "meal1a", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -3600), plates: [Plate.plate1], comments: [])
+    static let meal1a = Meal(id: "meal1a", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -293600), plates: [Plate.plate1], comments: [])
 
-    static let meal1b = Meal(id: "meal1b", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -3600), plates: [Plate.plate2], comments: [])
+    static let meal1b = Meal(id: "meal1b", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -3600), plates: [Plate.plate2, Plate.plate4, Plate.plate5, Plate.plate6], comments: [])
 
     static let meal1c = Meal(id: "meal1c", userId: "user1", location: "New York", caption: "A tasty dinner", uploadDate: Date(timeIntervalSinceNow: -3600), plates: [Plate.plate1], comments: [])
 

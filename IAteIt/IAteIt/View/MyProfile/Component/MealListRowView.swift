@@ -10,36 +10,32 @@ import SwiftUI
 struct MealListRowView: View {
     
     let mealsInADay: [Meal]
-    let photoCorner: CGFloat = 20
-    let screenWidth = UIScreen.main.bounds.width
     
     var body: some View {
-
         if mealsInADay.count >= 4 {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .center) {
-                    ForEach(mealsInADay, id: \.id) { meal in
-                        MealTileView(meal: meal, width: 100, height: 125)
+                    ForEach(mealsInADay, id: \.uploadDate) { meal in
+                        MealTileView(meal: meal)
+                            .frame(width: 100, height: 125)
+                            .cornerRadius(15)
                     }
                 }
+                .padding(.horizontal)
+                .padding(.bottom, 15)
             }
-            .padding()
-            .listRowSeparator(.hidden)
         } else {
-            HStack(alignment: .top) {
-                ForEach(mealsInADay, id: \.id) { meal in
-                    MealTileView(meal: meal, width: screenWidth/3, height: 125)
-
-//                    ZStack{
-//                        Rectangle()
-//                        Image("\(meal.plates[0].imageUrl)")
-//                            .resizable()
-//                            .scaledToFill()
-//                    }
+            HStack(alignment: .center) {
+                ForEach(mealsInADay, id: \.uploadDate) { meal in
+                    MealTileView(meal: meal)
+                        .frame(height: 125)
+                        .cornerRadius(15)
+                        .clipped()
                 }
             }
-            .padding(.leading, 40)
-            .listRowSeparator(.hidden)
+            .padding(.horizontal)
+            .padding(.bottom, 15)
+
         }
     }
 }
@@ -47,6 +43,6 @@ struct MealListRowView: View {
 
 struct MealListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        MealListView()
+        MyProfileView()
     }
 }

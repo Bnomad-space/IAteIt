@@ -375,12 +375,12 @@
 			isa = PBXGroup;
 			children = (
 				7E9198A429CF591200044815 /* IAteIt.entitlements */,
+				7E6069DD29A5CB9E00284CBD /* Application */,
+				7E6069D629A5CAFF00284CBD /* Model */,
 				DF2213A329BB3215000134FC /* Network */,
+				7EFFE28D29A5228F0021B9FE /* Preview Content */,
 				7E6069D929A5CB1E00284CBD /* Utility */,
 				7E6069C629A5CA6900284CBD /* View */,
-				7E6069D629A5CAFF00284CBD /* Model */,
-				7E6069DD29A5CB9E00284CBD /* Application */,
-				7EFFE28D29A5228F0021B9FE /* Preview Content */,
 			);
 			path = IAteIt;
 			sourceTree = "<group>";

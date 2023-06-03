@@ -10,58 +10,44 @@ import SwiftUI
 struct MealListView: View {
     
     let mealsByDateSorted = Dictionary(grouping: Meal.mealsByUser) { $0.uploadDate.toDateString() }
-        .sorted { $0.key > $1.key }
+        .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
+    
+    let mealsByUserSorted = Meal.mealsByUser.sorted
+    
     
     var body: some View {
-        NavigationView {
-            ScrollView {
+        VStack(spacing: 0) {
+            ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
                 
-                ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
-                    
-                    if date == Date().toDateString() {
+                if date == Date().toDateString() {
+                    HStack {
                         Text("Today")
                             .font(.footnote)
                             .fontWeight(.semibold)
-                    } else {
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+                } else {
+                    HStack {
                         Text(date)
                             .font(.footnote)
+                        Spacer()
                     }
-                    
-                    MealListRowView(mealsInADay: meals)
-                    
-                    //                    Section {
-                    //                    } header: {
-                    //                        if date == Date().toDateString() {
-                    //                            Text("Today")
-                    //                        } else {
-                    //                            Text(date)
-                    //                        }
-                    //                    }
-                    
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
                 }
+                
+                MealListRowView(mealsInADay: meals)
+                    .padding(.bottom, 15)
 
             }
         }
-        
-//        List {
-//            ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
-//                Section {
-//                    MealListRowView(mealsInADay: meals)
-//                } header: {
-//                    if date == Date().toDateString() {
-//                        Text("Today")
-//                    } else {
-//                        Text(date)
-//                    }
-//                }
-//            }
-//        }
-//        .listStyle(.plain) // row 마다 좌우 margin 다른 부분 수정 필요
     }
 }
 
 struct DailyMealCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MealListView()
+        MyProfileView()
     }
 }

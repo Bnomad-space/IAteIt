@@ -10,34 +10,23 @@ import SwiftUI
 struct MyProfileView: View {
 
     var body: some View {
-        GeometryReader { g in
+        ScrollView {
             VStack {
                 ProfileCellView()
-
-//                MealListView()
-
-                
-                ScrollView {
-                    VStack {
-                        MealListView()
-                    }
-                    .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
-                }
-                .navigationTitle("Profile")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                       NavigationLink(destination: {
-                           SettingView()
-                       }, label: {
-                           Image(systemName: "gearshape")
-                       })
-                   }
-                }
+                MealListView()
             }
-            
-
         }
-
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+               NavigationLink(destination: {
+                   SettingView()
+               }, label: {
+                   Image(systemName: "gearshape")
+               })
+            }
+        }
     }
 }
 
