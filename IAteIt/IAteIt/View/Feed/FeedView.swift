@@ -19,6 +19,7 @@ struct FeedView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 27) {
                 Button(action: {
+                    cameraViewModel.reset()
                     cameraViewModel.type = .newMeal
                     isCameraViewPresented.toggle()
                 }, label: {
@@ -57,9 +58,9 @@ struct FeedView: View {
                                     .environmentObject(loginState)
                                     .environmentObject(feedMeals)
                                 ) {
-                                    //위 링크랑 다르게, 비리얼처럼 댓글창에 포커싱되어서 넘어가는 건 어떨지 해서 분리
                                     FeedFooterView(meal: eachMeal)
                                         .padding(.horizontal, .paddingHorizontal)
+                                        .environmentObject(feedMeals)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
@@ -72,11 +73,20 @@ struct FeedView: View {
                 }
             }
         }
+        .refreshable {
+          do {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            feedMeals.getMealListIn24Hours()
+          } catch {print("Error refreshing data: \(error)")}
+        }
         .navigationBarItems(leading:
                                 FeedTitleView()
             .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
         )
-        .navigationBarItems(trailing: NavigationLink(destination: MyProfileView()) {
+        .navigationBarItems(trailing: NavigationLink(destination:
+            MyProfileView()
+            .environmentObject(loginState)
+        ) {
             ProfilePhotoButtonView(loginState: loginState)
         })
         .navigationTitle("")

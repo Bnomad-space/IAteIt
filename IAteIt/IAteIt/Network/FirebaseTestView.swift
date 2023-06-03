@@ -13,23 +13,23 @@ struct FirebaseTestView: View {
         VStack {
             VStack {
                 // 프로필이미지 업로드, 회원가입
-                Button(action: {
-                    var user = User(id: "testUser2Id", nickname: "testUser2Nickname")
-                    let image = UIImage(named: "Sample_Profile2")
-                    if let image = image {
-                        FirebaseConnector().uploadProfileImage(userId: user.id, image: image) { url in
-                            user.profileImageUrl = url
-                            FirebaseConnector().setNewUser(user: user)
-                        }
-                    }
-                }, label: {
-                    Text("Sign up")
-                })
+//                Button(action: {
+//                    var user = User(id: "testUser2Id", nickname: "testUser2Nickname")
+//                    let image = UIImage(named: "Sample_Profile2")
+//                    if let image = image {
+//                        FirebaseConnector().uploadProfileImage(userId: user.id, image: image) { url in
+//                            user.profileImageUrl = url
+//                            FirebaseConnector().setNewUser(user: user)
+//                        }
+//                    }
+//                }, label: {
+//                    Text("Sign up")
+//                })
                 
                 // 프로필 정보 수정
                 Button(action: {
                     let user = User(id: "testUser1Id", nickname: "testUser1NicknameEdited", profileImageUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80")
-                    FirebaseConnector().updateUser(user: user)
+//                    FirebaseConnector().updateUser(user: user)
                 }, label: {
                     Text("Edit User")
                 })

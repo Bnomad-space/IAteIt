@@ -15,6 +15,8 @@ struct MealDetailView: View {
     @State private var navTitleText = ""
     @State private var isMyMeal = false
     @State private var isCameraViewPresented = false
+    @State private var isShowingMealDeleteAlert = false
+    @State private var isShowingPlateDeleteAlert = false
     
     var meal: Meal
     var user: User
@@ -30,6 +32,24 @@ struct MealDetailView: View {
                         ForEach(meal.plates, id: \.self) { plate in
                             PhotoCardView(plate: plate)
                                 .padding(.horizontal, .paddingHorizontal)
+                                .contextMenu {
+                                    if isMyMeal && (meal.plates.count > 1) {
+                                        Button(role: .destructive, action: {
+                                            isShowingPlateDeleteAlert = true
+                                            print(plate)
+                                        }, label: {
+                                            Label("Delete this plate", systemImage: "trash")
+                                        })
+                                    }
+                                }
+                                .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
+                                    Button("Delete", role: .destructive, action: {
+                                        feedMeals.deletePlate(meal: meal, plate: plate)
+                                    })
+                                    Button("Cancel", role: .cancel, action: {})
+                                }, message: {
+                                    Text("This action is irreversible.")
+                                })
                         }
                     }
                     .frame(minHeight: 358)
@@ -39,6 +59,7 @@ struct MealDetailView: View {
                         HStack {
                             Spacer()
                             Button(action: {
+                                cameraViewModel.reset()
                                 cameraViewModel.type = .addPlate
                                 isCameraViewPresented.toggle()
                             }, label: {
@@ -52,22 +73,17 @@ struct MealDetailView: View {
                                 .environmentObject(feedMeals)
                         })
                     }
-                    
-                    if let targetMeal = feedMeals.mealList.first(where: { $0.id == meal.id })  {
-                        if let comments = targetMeal.comments {
-                            VStack(alignment: .leading, spacing: 12) {
-                                ForEach(comments, id: \.self) { comment in
-                                    if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
-                                        CommentView(user: user, comment: comment)
-                                    } else {
-                                        Text("Comment Error")
-                                    }
-                                }
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(feedMeals.commentList[meal.id!] ?? [], id:\.self) { comment in
+                            if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
+                                CommentView(user: user, comment: comment)
+                            } else {
+                                Text("Comment Error")
                             }
-                            .padding([.top], 24)
-                            .padding(.horizontal, .paddingHorizontal)
                         }
                     }
+                    .padding([.top], 24)
+                    .padding(.horizontal, .paddingHorizontal)
                 }
             }
             AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
@@ -75,6 +91,29 @@ struct MealDetailView: View {
                 .padding(.horizontal, .paddingHorizontal)
         }
         .navigationTitle(navTitleText)
+        .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
+            Button("Delete", role: .destructive, action: {
+                feedMeals.deleteMeal(meal: meal)
+            })
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("This action is irreversible.")
+        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if isMyMeal {
+                    Menu(content: {
+                        Button(role: .destructive, action: {
+                            isShowingMealDeleteAlert = true
+                        }, label: {
+                            Label("Delete this meal", systemImage: "trash")
+                        })
+                    }, label: {
+                        Image(systemName: "ellipsis")
+                    })
+                }
+            }
+        }
         .onTapGesture {
             self.hideKeyboard()
         }

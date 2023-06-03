@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyProfileView: View {
+    @EnvironmentObject var loginState: LoginStateModel
 
     var body: some View {
         ScrollView {
@@ -25,6 +26,7 @@ struct MyProfileView: View {
                }, label: {
                    Image(systemName: "gearshape")
                })
+
             }
         }
     }
