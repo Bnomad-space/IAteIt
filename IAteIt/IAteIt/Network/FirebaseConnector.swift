@@ -24,8 +24,8 @@ final class FirebaseConnector {
     static let users = Firestore.firestore().collection("users")
     
     // 새로운 user 생성(회원가입)
-    func setNewUser(user: User) {
-        FirebaseConnector.users.document(user.id).setData([
+    func setNewUser(user: User) async throws {
+        try await FirebaseConnector.users.document(user.id).setData([
             "id": user.id,
             "nickname": user.nickname,
             "profileImageUrl": user.profileImageUrl as Any
