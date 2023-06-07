@@ -48,4 +48,11 @@ extension FirebaseConnector {
             }
         }
     }
+    
+    //특정 comment 삭제
+    func deleteComment(commentId: String) {
+        Task {
+            try await FirebaseConnector.comments.document(commentId).delete()
+        }
+    }
 }

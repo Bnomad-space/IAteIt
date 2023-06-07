@@ -108,4 +108,15 @@ final class FeedMealModel: ObservableObject {
             }
         }
     }
+
+    func deleteComment(meal: Meal, comment: Comment) {
+        Task {
+            guard let mealId = meal.id else { return }
+            let commentId = comment.id
+            try await FirebaseConnector.shared.deleteComment(commentId: commentId)
+            DispatchQueue.main.async {
+                self.commentList[mealId]?.removeAll(where: {$0.id == commentId})
+            }
+        }
+    }
 }

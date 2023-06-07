@@ -76,12 +76,28 @@ struct MealDetailView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         ForEach(feedMeals.commentList[meal.id!] ?? [], id:\.self) { comment in
                             if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
-                                CommentView(user: user, comment: comment)
+                                let isMyComment = loginState.user?.id == comment.userId
+                                ZStack {
+                                    CommentView(user: user, comment: comment)
+                                    HStack {
+                                        Spacer()
+                                        if isMyComment {
+                                            Menu(content: {
+                                                Button(role: .destructive, action: {
+                                                    feedMeals.deleteComment(meal: meal, comment: comment)
+                                                }, label: {
+                                                    Label("Delete this comment", systemImage: "trash")
+                                                })
+                                            }, label: {
+                                                Image(systemName: "ellipsis")
+                                            })
+                                        }
+                                    }
+                                }
                             } else {
                                 Text("Comment Error")
                             }
-                        }
-                    }
+                        }                    }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
                 }
