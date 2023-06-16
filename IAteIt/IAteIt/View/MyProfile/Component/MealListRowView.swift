@@ -18,23 +18,27 @@ struct MealListRowView: View {
                     ForEach(mealsInADay, id: \.uploadDate) { meal in
                         MealTileView(meal: meal)
                             .frame(width: 100, height: 125)
+                            .contentShape(Rectangle())
                             .cornerRadius(15)
                     }
                 }
+                .contentShape(Rectangle())
                 .padding(.horizontal)
-                .padding(.bottom, 15)
-            }
+                Spacer(minLength: 0)
+            }.frame(minHeight: 125, idealHeight: 250)
         } else {
             HStack(alignment: .center) {
                 ForEach(mealsInADay, id: \.uploadDate) { meal in
                     MealTileView(meal: meal)
                         .frame(height: 125)
+                        .contentShape(Rectangle())
                         .cornerRadius(15)
-                        .clipped()
                 }
             }
             .padding(.horizontal)
-            .padding(.bottom, 15)
+            .padding(.bottom, 20)
+            
+            Spacer(minLength: 0)
 
         }
     }

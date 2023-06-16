@@ -13,27 +13,31 @@ struct MealTileView: View {
     var body: some View {
         ZStack {
             Button {
-                print("dd")
+                print("\(meal.plates[0].imageUrl)")
             } label: {
-                Image("\(meal.plates[0].imageUrl)")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 125)
-                    .clipped()
-                    .overlay(alignment: .bottomTrailing) {
-                        if meal.plates.count >= 4 {
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(width: 30, height: 30, alignment: .bottomTrailing)
-                                .foregroundColor(.black)
-                                .opacity(0.6)
-                                .padding()
-                            Text("+\(meal.plates.count - 1)")
-                                .font(.footnote)
-                                .foregroundColor(.white)
-                        }
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .contentShape(Rectangle())
+                    .overlay {
+                        Image("\(meal.plates[0].imageUrl)")
+                            .resizable()
+                            .scaledToFill()
+                            .clipShape(Rectangle())
+                            .overlay(alignment: .bottomTrailing) {
+                                if meal.plates.count > 1 {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .frame(width: 30, height: 30, alignment: .bottomTrailing)
+                                        .foregroundColor(.black)
+                                        .opacity(0.6)
+                                        .padding()
+                                    Text("+\(meal.plates.count - 1)")
+                                        .font(.footnote)
+                                        .foregroundColor(.white)
+                                }
+                            }
                     }
-            }
 
+            }
         }
     }
 }

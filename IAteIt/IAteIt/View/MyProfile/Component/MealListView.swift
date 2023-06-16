@@ -39,8 +39,9 @@ struct MealListView: View {
                 }
                 
                 MealListRowView(mealsInADay: meals)
-                    .padding(.bottom, 15)
-
+                
+                
+                
             }
         }
     }
@@ -48,6 +49,6 @@ struct MealListView: View {
 
 struct DailyMealCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MyProfileView()
+        MealListView()
     }
 }
