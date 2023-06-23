@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingView: View {
     @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isShowingDeleteAccountAlert = false
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
@@ -37,7 +38,7 @@ struct SettingView: View {
             onDismiss: {
                 loginState.isShowingDeleteAccountCompleteAlert = loginState.isDeleteAccountCompleteAlertRequired
             }, content: {
-            LoginView(loginState: loginState)
+                LoginView(loginState: loginState)
         })
         .alert("Delete Account", isPresented: $isShowingDeleteAccountAlert, actions: {
             Button("Delete", role: .destructive, action: {

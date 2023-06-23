@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SignUpView: View {
     @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
     @FocusState private var isFocused: Bool
     @State var username = ""
     @State var isValidFormat: Bool = false
@@ -98,6 +97,6 @@ extension SignUpView {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        SignUpView(loginState: LoginStateModel())
     }
 }
