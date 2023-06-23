@@ -152,7 +152,8 @@ class LoginStateModel: ObservableObject {
                     try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
                 }
                 try await FirebaseConnector.shared.deleteUser(userId: userId)
-                // TODO: 유저의 meal history 삭제, storage의 plate 이미지 삭제
+                try await FirebaseConnector.shared.deleteCommentsByUser(userId: userId)
+                // TODO: 유저의 meal history 삭제
                 await MainActor.run {
                     self.user = nil
                     self.isAppleLoginRequired = false

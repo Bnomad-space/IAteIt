@@ -87,7 +87,10 @@ struct FeedView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(
-                    destination: MyProfileView().environmentObject(loginState),
+                    destination:
+                        MyProfileView()
+                            .environmentObject(loginState)
+                            .environmentObject(feedMeals),
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
@@ -96,7 +99,7 @@ struct FeedView: View {
         }
         .navigationTitle("")
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
-            LoginView(loginState: loginState)
+            LoginView(loginState: loginState, feedMeals: feedMeals)
         })
     }
 }

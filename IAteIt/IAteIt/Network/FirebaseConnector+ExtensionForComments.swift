@@ -55,4 +55,13 @@ extension FirebaseConnector {
             try await FirebaseConnector.comments.document(commentId).delete()
         }
     }
+    
+    // 특정 user의 모든 comment 삭제
+    func deleteCommentsByUser(userId: String) async throws {
+        let snapshots = try await FirebaseConnector.comments.whereField("userId", isEqualTo: userId).getDocuments()
+        
+        for document in snapshots.documents {
+            try await FirebaseConnector.comments.document(document.documentID).delete()
+        }
+    }
 }

@@ -38,7 +38,7 @@ struct SettingView: View {
             onDismiss: {
                 loginState.isShowingDeleteAccountCompleteAlert = loginState.isDeleteAccountCompleteAlertRequired
             }, content: {
-                LoginView(loginState: loginState)
+                LoginView(loginState: loginState, feedMeals: feedMeals)
         })
         .alert("Delete Account", isPresented: $isShowingDeleteAccountAlert, actions: {
             Button("Delete", role: .destructive, action: {

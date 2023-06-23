@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MyProfileView: View {
     @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isActive: Bool = false
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
@@ -26,7 +27,10 @@ struct MyProfileView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(
-                        destination: SettingView().environmentObject(loginState),
+                        destination:
+                            SettingView()
+                                .environmentObject(loginState)
+                                .environmentObject(feedMeals),
                         isActive: self.$isActive,
                         label: { Image(systemName: "gearshape") }
                     )
