@@ -11,15 +11,9 @@ struct MealListView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
     
-    let mealsByDateSorted = Dictionary(grouping: Meal.mealsByUser) { $0.uploadDate.toDateString() }
-        .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
-    
-    let mealsByUserSorted = Meal.mealsByUser.sorted
-    
-    
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
+            ForEach(feedMeals.myMealHistorySorted, id: \.key) { (date, meals) in
                 
                 if date == Date().toDateString() {
                     HStack {
@@ -41,9 +35,7 @@ struct MealListView: View {
                 }
                 
                 MealListRowView(mealsInADay: meals)
-                
-                
-                
+                    .environmentObject(loginState)
             }
         }
     }

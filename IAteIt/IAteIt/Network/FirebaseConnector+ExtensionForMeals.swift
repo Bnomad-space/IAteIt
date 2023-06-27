@@ -69,7 +69,7 @@ extension FirebaseConnector {
         var mealHistory: [Meal] = []
         
         let snapshots = try await FirebaseConnector.meals
-            .order(by: "uploadDate", descending: true)
+//            .order(by: "uploadDate", descending: true)
             .whereField("userId", isEqualTo: userId)
             .getDocuments()
                 

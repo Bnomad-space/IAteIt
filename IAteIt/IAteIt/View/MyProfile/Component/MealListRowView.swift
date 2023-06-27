@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MealListRowView: View {
+    @EnvironmentObject var loginState: LoginStateModel
     
     let mealsInADay: [Meal]
     
@@ -20,6 +21,7 @@ struct MealListRowView: View {
                             .frame(width: 100, height: 125)
                             .contentShape(Rectangle())
                             .cornerRadius(15)
+                            .environmentObject(loginState)
                     }
                 }
                 .contentShape(Rectangle())
@@ -33,6 +35,7 @@ struct MealListRowView: View {
                         .frame(height: 125)
                         .contentShape(Rectangle())
                         .cornerRadius(15)
+                        .environmentObject(loginState)
                 }
             }
             .padding(.horizontal)

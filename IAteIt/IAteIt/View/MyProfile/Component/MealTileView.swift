@@ -8,37 +8,29 @@
 import SwiftUI
 
 struct MealTileView: View {
+    @EnvironmentObject var loginState: LoginStateModel
+    
     let meal: Meal
     
     var body: some View {
-        ZStack {
+//        ZStack {
             Button {
                 print("\(meal.plates[0].imageUrl)")
             } label: {
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .contentShape(Rectangle())
-                    .overlay {
-                        Image("\(meal.plates[0].imageUrl)")
-                            .resizable()
-                            .scaledToFill()
-                            .clipShape(Rectangle())
-                            .overlay(alignment: .bottomTrailing) {
-                                if meal.plates.count > 1 {
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .frame(width: 30, height: 30, alignment: .bottomTrailing)
-                                        .foregroundColor(.black)
-                                        .opacity(0.6)
-                                        .padding()
-                                    Text("+\(meal.plates.count - 1)")
-                                        .font(.footnote)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                    }
-
+                AsyncImage(url: URL(string: meal.plates[0].imageUrl)) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 128)
+                        .clipped()
+                        .overlay(alignment: .bottomTrailing) {
+                            PlateCountView(plates: meal.plates)
+                        }
+                } placeholder: {
+                    Color(UIColor.systemGray5)
+                }
             }
-        }
+//        }
     }
 }
 

@@ -18,9 +18,15 @@ struct MyProfileView: View {
         ScrollView {
             VStack {
                 ProfileCellView()
-                MealListView()
                     .environmentObject(loginState)
-                    .environmentObject(feedMeals)
+                if feedMeals.myMealHistory.count > 0 {
+                    MealListView()
+                        .environmentObject(loginState)
+                        .environmentObject(feedMeals)
+                } else {
+                    EmptyMealView()
+                        .padding(.top, 100)
+                }
             }
         }
         .navigationTitle("Profile")

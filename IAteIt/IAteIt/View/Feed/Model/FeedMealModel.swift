@@ -37,6 +37,7 @@ final class FeedMealModel: ObservableObject {
         }
     }
     
+    @MainActor
     func getUserMealHistory(user: User) {
         Task {
             self.myMealHistory = try await FirebaseConnector.shared.fetchUserMealHistory(userId: user.id)
