@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MealListView: View {
+    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var feedMeals: FeedMealModel
     
     let paddingLR: CGFloat = 16
     let mealsByDateSorted = Dictionary(grouping: Meal.mealsByUser) { $0.uploadDate.toDateString() }

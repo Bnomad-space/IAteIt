@@ -17,6 +17,10 @@ final class FeedMealModel: ObservableObject {
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
     
+    @Published var myMealHistory: [Meal] = []
+    @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
+    @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
+
     init() {
         self.refreshMealsAndUsers()
     }
@@ -30,6 +34,19 @@ final class FeedMealModel: ObservableObject {
                     self.commentList[meal.id!] = comments
                 }
             }
+        }
+    }
+    
+    func getUserMealHistory(user: User) {
+        Task {
+            self.myMealHistory = try await FirebaseConnector.shared.fetchUserMealHistory(userId: user.id)
+            for meal in self.myMealHistory {
+                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { comments in
+                    self.myMealHistoryCommentList[meal.id!] = comments
+                }
+            }
+            myMealHistorySorted = Dictionary(grouping: myMealHistory) { $0.uploadDate.toDateString() }
+                .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
         }
     }
     

@@ -20,6 +20,8 @@ struct MyProfileView: View {
                 VStack {
                     ProfileCellView()
                     MealListView()
+                        .environmentObject(loginState)
+                        .environmentObject(feedMeals)
                 }
                 .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
             }

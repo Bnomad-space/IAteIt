@@ -95,6 +95,11 @@ struct FeedView: View {
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
                 .isDetailLink(false)
+                .simultaneousGesture(TapGesture().onEnded {
+                    if let user = loginState.user {
+                        feedMeals.getUserMealHistory(user: user)
+                    }
+                })
             }
         }
         .navigationTitle("")
