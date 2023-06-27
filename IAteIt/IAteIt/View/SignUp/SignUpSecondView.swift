@@ -58,7 +58,6 @@ struct SignUpSecondView: View {
             }
             Button(action: {
                 saveAndCompleteSignUp()
-                loginState.isSignUpViewPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
             })
@@ -83,6 +82,8 @@ extension SignUpSecondView {
             try await FirebaseConnector.shared.setNewUser(user: user)
             await MainActor.run {
                 loginState.user = user
+                loginState.isSignUpRequired = false
+                loginState.isAppleLoginRequired = false
                 feedMeals.refreshMealsAndUsers()
             }
         }
