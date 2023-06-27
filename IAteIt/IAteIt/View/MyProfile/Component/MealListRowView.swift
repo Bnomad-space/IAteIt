@@ -10,37 +10,36 @@ import SwiftUI
 struct MealListRowView: View {
     
     let mealsInADay: [Meal]
-    let photoCorner: CGFloat = 20
     
     var body: some View {
         if mealsInADay.count >= 4 {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .center) {
-                    ForEach(mealsInADay, id: \.id) { meal in
-                        ZStack{
-                            Rectangle()
-                            Image("\(meal.plates[0].imageUrl)")
-                                .resizable()
-                                .scaledToFill()
-                        }
-                        .frame(minWidth: 100, idealWidth: 100, maxWidth: 100, minHeight: 125, idealHeight: 125, maxHeight: 125, alignment: .top)
-                        .clipped()
+                    ForEach(mealsInADay, id: \.uploadDate) { meal in
+                        MealTileView(meal: meal)
+                            .frame(width: 100, height: 125)
+                            .contentShape(Rectangle())
+                            .cornerRadius(15)
                     }
                 }
-            }.frame(height: 128, alignment: .topLeading)
+                .contentShape(Rectangle())
+                .padding(.horizontal)
+                Spacer(minLength: 0)
+            }.frame(minHeight: 125, idealHeight: 250)
         } else {
-            HStack(alignment: .top) {
-                ForEach(mealsInADay, id: \.id) { meal in
-                    ZStack{
-                        Rectangle()
-                        Image("\(meal.plates[0].imageUrl)")
-                            .resizable()
-                            .scaledToFill()
-                    }
-                    .frame(height: 125, alignment: .center)
-                    .clipped()
+            HStack(alignment: .center) {
+                ForEach(mealsInADay, id: \.uploadDate) { meal in
+                    MealTileView(meal: meal)
+                        .frame(height: 125)
+                        .contentShape(Rectangle())
+                        .cornerRadius(15)
                 }
             }
+            .padding(.horizontal)
+            .padding(.bottom, 20)
+            
+            Spacer(minLength: 0)
+
         }
     }
 }
@@ -48,6 +47,6 @@ struct MealListRowView: View {
 
 struct MealListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        MealListView()
+        MyProfileView()
     }
 }

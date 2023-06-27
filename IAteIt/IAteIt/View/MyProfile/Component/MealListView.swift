@@ -11,25 +11,41 @@ struct MealListView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
     
-    let paddingLR: CGFloat = 16
     let mealsByDateSorted = Dictionary(grouping: Meal.mealsByUser) { $0.uploadDate.toDateString() }
-        .sorted { $0.key < $1.key }
+        .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
+    
+    let mealsByUserSorted = Meal.mealsByUser.sorted
+    
     
     var body: some View {
-        List {
+        VStack(spacing: 0) {
             ForEach(mealsByDateSorted, id: \.key) { (date, meals) in
-                Section {
-                    MealListRowView(mealsInADay: meals)
-                } header: {
-                    if date == Date().toDateString() {
+                
+                if date == Date().toDateString() {
+                    HStack {
                         Text("Today")
-                    } else {
-                        Text(date)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                        Spacer()
                     }
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+                } else {
+                    HStack {
+                        Text(date)
+                            .font(.footnote)
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
                 }
+                
+                MealListRowView(mealsInADay: meals)
+                
+                
+                
             }
         }
-        .listStyle(.plain) // row 마다 좌우 margin 다른 부분 수정 필요
     }
 }
 

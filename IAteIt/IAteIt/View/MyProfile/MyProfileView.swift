@@ -15,32 +15,29 @@ struct MyProfileView: View {
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
 
     var body: some View {
-        GeometryReader { g in
-            ScrollView {
-                VStack {
-                    ProfileCellView()
-                    MealListView()
-                        .environmentObject(loginState)
-                        .environmentObject(feedMeals)
-                }
-                .frame(width: g.size.width - 5, height: g.size.height - 5, alignment: .center)
-            }
-            .navigationTitle("Profile")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(
-                        destination:
-                            SettingView()
-                                .environmentObject(loginState)
-                                .environmentObject(feedMeals),
-                        isActive: self.$isActive,
-                        label: { Image(systemName: "gearshape") }
-                    )
-                    .isDetailLink(false)
-               }
+        ScrollView {
+            VStack {
+                ProfileCellView()
+                MealListView()
+                    .environmentObject(loginState)
+                    .environmentObject(feedMeals)
             }
         }
-
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(
+                    destination:
+                        SettingView()
+                            .environmentObject(loginState)
+                            .environmentObject(feedMeals),
+                    isActive: self.$isActive,
+                    label: { Image(systemName: "gearshape") }
+                )
+                .isDetailLink(false)
+           }
+        }
     }
 }
 
