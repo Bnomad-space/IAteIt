@@ -10,6 +10,7 @@ import SwiftUI
 struct MyProfileView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
+    @EnvironmentObject var cameraViewModel: CameraViewModel
     @State private var isActive: Bool = false
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
@@ -25,6 +26,7 @@ struct MyProfileView: View {
                     MealListView(date: date, meals: meals)
                         .environmentObject(loginState)
                         .environmentObject(feedMeals)
+                        .environmentObject(cameraViewModel)
                 }
                 .configSimpleListRow()
             } else {

@@ -90,7 +90,8 @@ struct FeedView: View {
                     destination:
                         MyProfileView()
                             .environmentObject(loginState)
-                            .environmentObject(feedMeals),
+                            .environmentObject(feedMeals)
+                            .environmentObject(cameraViewModel),
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
