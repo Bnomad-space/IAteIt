@@ -107,6 +107,7 @@ struct MealDetailView: View {
                 .padding(.horizontal, .paddingHorizontal)
         }
         .navigationTitle(navTitleText)
+        .navigationBarTitleDisplayMode(.inline)
         .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
             Button("Delete", role: .destructive, action: {
                 feedMeals.deleteMeal(meal: meal)

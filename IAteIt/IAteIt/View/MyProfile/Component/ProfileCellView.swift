@@ -8,29 +8,36 @@
 import SwiftUI
 
 struct ProfileCellView: View {
+    @EnvironmentObject var loginState: LoginStateModel
     
     let profileImgSize: CGFloat = 120
     
     var body: some View {
-        
-        VStack {
-            ZStack {
-                Circle()
-                    .frame(width: profileImgSize, height: profileImgSize)
-                Image("Sample_Profile1")
-                    .resizable()
-                    .scaledToFill()
-                    .layoutPriority(-1)
+        HStack {
+            Spacer()
+            VStack(spacing: 18) {
+                if let imageUrl = loginState.user?.profileImageUrl {
+                    AsyncImage(url: URL(string: imageUrl)) { image in
+                        image
+                            .circleImage(imageSize: profileImgSize)
+                    } placeholder: {
+                        Image(systemName: "person.crop.circle")
+                            .circleImage(imageSize: profileImgSize)
+                            .foregroundColor(Color(UIColor.systemGray2))
+                    }
+                    .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
+                } else {
+                    Image(systemName: "person.crop.circle")
+                        .circleImage(imageSize: profileImgSize)
+                        .foregroundColor(Color(UIColor.systemGray2))
+                        .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
+                }
+                
+                Text(loginState.user?.nickname ?? "")
+                    .font(.headline)
             }
-            .clipped()
-            .cornerRadius(profileImgSize/2)
-            .shadow(color: .gray, radius: 15, x: 5, y: 5)
-            
-            Text("\(User.users[0].nickname)")
-                .font(.headline)
-            
+            Spacer()
         }
-
     }
 }
 

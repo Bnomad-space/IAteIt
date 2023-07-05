@@ -13,24 +13,23 @@ struct MealTileView: View {
     let meal: Meal
     
     var body: some View {
-//        ZStack {
-            Button {
-                print("\(meal.plates[0].imageUrl)")
-            } label: {
-                AsyncImage(url: URL(string: meal.plates[0].imageUrl)) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 128)
-                        .clipped()
-                        .overlay(alignment: .bottomTrailing) {
-                            PlateCountView(plates: meal.plates)
-                        }
-                } placeholder: {
-                    Color(UIColor.systemGray5)
-                }
+        Button {
+            print("\(meal.plates[0].imageUrl)")
+        } label: {
+            AsyncImage(url: URL(string: meal.plates[0].imageUrl)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 128)
+                    .clipped()
+            } placeholder: {
+                Color(UIColor.systemGray5)
+                    .frame(height: 128)
             }
-//        }
+        }
+        .overlay(alignment: .bottomTrailing) {
+            PlateCountView(plates: meal.plates)
+        }
     }
 }
 

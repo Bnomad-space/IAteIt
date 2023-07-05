@@ -11,38 +11,39 @@ struct MealListView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
     
+    var date: String
+    var meals: [Meal]
+    
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(feedMeals.myMealHistorySorted, id: \.key) { (date, meals) in
-                
-                if date == Date().toDateString() {
-                    HStack {
-                        Text("Today")
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
-                } else {
-                    HStack {
-                        Text(date)
-                            .font(.footnote)
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
+            if date == Date().toDateString() {
+                HStack {
+                    Text("Today")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                    Spacer()
                 }
-                
-                MealListRowView(mealsInADay: meals)
-                    .environmentObject(loginState)
+                .padding(.horizontal, .paddingHorizontal)
+                .padding(.bottom, 10)
+            } else {
+                HStack {
+                    Text(date)
+                        .font(.footnote)
+                    Spacer()
+                }
+                .padding(.horizontal, .paddingHorizontal)
+                .padding(.bottom, 10)
             }
+            
+            MealListRowView(mealsInADay: meals)
+                .environmentObject(loginState)
         }
+        .padding(.bottom, 18)
     }
 }
 
 struct DailyMealCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MealListView()
+        MyProfileView()
     }
 }

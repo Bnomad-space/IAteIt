@@ -14,4 +14,11 @@ extension View {
             to: nil, from: nil, for: nil
         )
     }
+    
+    func configSimpleListRow() -> some View {
+        self
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+    }
 }

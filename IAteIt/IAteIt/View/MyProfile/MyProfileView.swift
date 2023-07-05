@@ -15,20 +15,29 @@ struct MyProfileView: View {
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
 
     var body: some View {
-        ScrollView {
-            VStack {
-                ProfileCellView()
-                    .environmentObject(loginState)
-                if feedMeals.myMealHistory.count > 0 {
-                    MealListView()
+        List {
+            ProfileCellView()
+                .padding([.top, .bottom], 16)
+                .environmentObject(loginState)
+                .listRowSeparator(.hidden)
+            if feedMeals.myMealHistory.count > 0 {
+                ForEach(feedMeals.myMealHistorySorted, id:\.key) { (date, meals) in
+                    MealListView(date: date, meals: meals)
                         .environmentObject(loginState)
                         .environmentObject(feedMeals)
-                } else {
+                }
+                .configSimpleListRow()
+            } else {
+                HStack {
+                    Spacer()
                     EmptyMealView()
                         .padding(.top, 100)
+                    Spacer()
                 }
+                .listRowSeparator(.hidden)
             }
         }
+        .listStyle(.plain)
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
