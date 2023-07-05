@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MessageUI
 
 struct MealDetailView: View {
     @StateObject var commentBar = CommentBar()
@@ -17,6 +18,8 @@ struct MealDetailView: View {
     @State private var isCameraViewPresented = false
     @State private var isShowingMealDeleteAlert = false
     @State private var isShowingPlateDeleteAlert = false
+    @State private var isReportPresented = false
+    
     
     var meal: Meal
     var user: User
@@ -127,6 +130,16 @@ struct MealDetailView: View {
                     }, label: {
                         Image(systemName: "ellipsis")
                     })
+                } else {
+                    Button(action: {
+                        isReportPresented = true
+                    }, label: {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                    })
+                    .sheet(isPresented: $isReportPresented) {
+                        ReportView(meal: meal, isReportPresented: $isReportPresented)
+                            .environmentObject(loginState)
+                            }
                 }
             }
         }
@@ -150,6 +163,7 @@ extension MealDetailView {
         }
     }
 }
+
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {

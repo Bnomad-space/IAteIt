@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040EB7312A5563B500E20A4D /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB7302A5563B500E20A4D /* Report.swift */; };
+		040EB7332A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */; };
+		040EB7352A55675600E20A4D /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB7342A55675600E20A4D /* ReportView.swift */; };
 		045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045339E62A0CAE59007F74F0 /* EmptyMealView.swift */; };
 		0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0487509A29B83DBD006836D1 /* FeedFooterView.swift */; };
 		048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A229B8A2D4006836D1 /* AddMealView.swift */; };
@@ -72,6 +75,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040EB7302A5563B500E20A4D /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForReports.swift"; sourceTree = "<group>"; };
+		040EB7342A55675600E20A4D /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		045339E62A0CAE59007F74F0 /* EmptyMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMealView.swift; sourceTree = "<group>"; };
 		0487509A29B83DBD006836D1 /* FeedFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFooterView.swift; sourceTree = "<group>"; };
 		048750A229B8A2D4006836D1 /* AddMealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
@@ -289,6 +295,7 @@
 				7E1F719329A90449005A7B56 /* TempPlate.swift */,
 				04C1189429B74DD60073EDB7 /* TempFeedHeader.swift */,
 				DFD52CE329CB127D00E86F9F /* Meal.swift */,
+				040EB7302A5563B500E20A4D /* Report.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -335,6 +342,7 @@
 				7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */,
 				7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */,
 				7E407CD12A0BEBEF001CAFBF /* AddPlateButtonView.swift */,
+				040EB7342A55675600E20A4D /* ReportView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -411,6 +419,7 @@
 				7EDF91AD29EEC62800FB23A8 /* FirebaseTestView.swift */,
 				7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */,
 				7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */,
+				040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -506,6 +515,8 @@
 				DFD52CE429CB127D00E86F9F /* Meal.swift in Sources */,
 				7E6069D829A5CB1000284CBD /* TempModel.swift in Sources */,
 				04C1189529B74DD60073EDB7 /* TempFeedHeader.swift in Sources */,
+				040EB7312A5563B500E20A4D /* Report.swift in Sources */,
+				040EB7352A55675600E20A4D /* ReportView.swift in Sources */,
 				7E6069DC29A5CB3A00284CBD /* TempExtension.swift in Sources */,
 				7EFFE28A29A5228D0021B9FE /* ContentView.swift in Sources */,
 				8C73F00529BDDAE6007D1A1E /* DateFormatter.swift in Sources */,
@@ -519,6 +530,7 @@
 				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,
 				7E48DC2529F93E1F0079E896 /* LoginStateModel.swift in Sources */,
 				7E407CD52A0E5DA4001CAFBF /* SettingView.swift in Sources */,
+				040EB7332A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift in Sources */,
 				7EDF91AB29E989BD00FB23A8 /* View+Extension.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				DF883D4229B58F2C0029DC60 /* User.swift in Sources */,
