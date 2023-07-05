@@ -6,7 +6,6 @@
 //
 
 import Firebase
-import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 import SwiftUI
@@ -25,8 +24,8 @@ final class FirebaseConnector {
     static let users = Firestore.firestore().collection("users")
     
     // 새로운 user 생성(회원가입)
-    func setNewUser(user: User) async throws {
-        try await FirebaseConnector.users.document(user.id).setData([
+    func setNewUser(user: User) {
+        FirebaseConnector.users.document(user.id).setData([
             "id": user.id,
             "nickname": user.nickname,
             "profileImageUrl": user.profileImageUrl as Any
@@ -129,24 +128,5 @@ final class FirebaseConnector {
         let imageUrl: URL = try await imageRef.downloadURL()
         
         return imageUrl.absoluteString
-    }
-    
-    // user profile 이미지 storage에서 삭제
-    func deleteProfileImage(userId: String) async throws {
-        let storageRef = Storage.storage().reference()
-        let imageRef = storageRef.child("profileImage/\(userId)")
-        try await imageRef.delete()
-    }
-    
-    // user 계정 삭제
-    func deleteUser(userId: String) async throws {
-        try await FirebaseConnector.users.document(userId).delete()
-    }
-    
-    func deleteUserFromAuth() async throws {
-        guard let user = Auth.auth().currentUser else {
-            throw URLError(.badURL)
-        }
-        try await user.delete()
     }
 }

@@ -14,7 +14,6 @@ struct FeedView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isCameraViewPresented = false
-    @Binding var isActive: Bool
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -77,35 +76,31 @@ struct FeedView: View {
         .refreshable {
           do {
             try await Task.sleep(nanoseconds: 1_000_000_000)
-              feedMeals.refreshMealsAndUsers()
+            feedMeals.getMealListIn24Hours()
           } catch {print("Error refreshing data: \(error)")}
         }
         .navigationBarItems(leading:
                                 FeedTitleView()
             .padding([.leading], UIScreen.main.bounds.size.width/2-50) //TODO: 정렬다시
         )
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(
-                    destination:
-                        MyProfileView()
-                            .environmentObject(loginState)
-                            .environmentObject(feedMeals),
-                    isActive: $isActive,
-                    label: { ProfilePhotoButtonView(loginState: loginState) }
-                )
-                .isDetailLink(false)
-            }
-        }
+        .navigationBarItems(trailing: NavigationLink(destination:
+            MyProfileView()
+            .environmentObject(loginState)
+        ) {
+            ProfilePhotoButtonView(loginState: loginState)
+        })
         .navigationTitle("")
         .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
-            LoginView(loginState: loginState, feedMeals: feedMeals)
+            LoginView(loginState: loginState)
+        })
+        .fullScreenCover(isPresented: self.$loginState.isSignUpViewPresent, content: {
+            SignUpView(loginState: loginState)
         })
     }
 }
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel(), isActive: .constant(false))
+        FeedView(cameraViewModel: CameraViewModel())
     }
 }

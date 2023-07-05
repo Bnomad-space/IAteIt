@@ -20,7 +20,6 @@
 		630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6C129AF57F700019F2E /* CameraViewModel.swift */; };
 		6366BA1E29B613C1004374BE /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6366BA1D29B613C1004374BE /* CameraPreviewView.swift */; };
 		7E047E4C2A232EC700B29760 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E047E4B2A232EC700B29760 /* Image+Extension.swift */; };
-		7E047E4E2A233C4800B29760 /* EnvironmentValues+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */; };
 		7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */; };
 		7E1F719429A90449005A7B56 /* TempPlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719329A90449005A7B56 /* TempPlate.swift */; };
 		7E2B2DAD29DE9304009EC0ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2B2DAC29DE9304009EC0ED /* Constants.swift */; };
@@ -87,7 +86,6 @@
 		630BA6C129AF57F700019F2E /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		6366BA1D29B613C1004374BE /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		7E047E4B2A232EC700B29760 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
-		7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Extension.swift"; sourceTree = "<group>"; };
 		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
 		7E1F719329A90449005A7B56 /* TempPlate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPlate.swift; sourceTree = "<group>"; };
 		7E2B2DAC29DE9304009EC0ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -315,7 +313,6 @@
 				7E9FEF3129DE9BFA002E7211 /* TextField+Extension.swift */,
 				7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */,
 				7E047E4B2A232EC700B29760 /* Image+Extension.swift */,
-				7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -542,7 +539,6 @@
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				7EFFE28829A5228D0021B9FE /* IAteItApp.swift in Sources */,
 				048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */,
-				7E047E4E2A233C4800B29760 /* EnvironmentValues+Extension.swift in Sources */,
 				7E9198A329CF56B400044815 /* LoginView.swift in Sources */,
 				DF2213A229BB2ADC000134FC /* AppDelegate.swift in Sources */,
 				7E48DC1E29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift in Sources */,

@@ -63,6 +63,6 @@ struct FeedHeaderView: View {
 
 struct FeedHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel(), isActive: .constant(false))
+        FeedView(cameraViewModel: CameraViewModel())
     }
 }
