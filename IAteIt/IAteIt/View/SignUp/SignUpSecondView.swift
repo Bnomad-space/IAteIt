@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpSecondView: View {
     @ObservedObject var loginState: LoginStateModel
+    @ObservedObject var feedMeals: FeedMealModel
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
@@ -57,7 +58,6 @@ struct SignUpSecondView: View {
             }
             Button(action: {
                 saveAndCompleteSignUp()
-                loginState.isSignUpViewPresent = false
             }, label: {
                 BottomButtonView(label: "Done")
             })
@@ -79,16 +79,19 @@ extension SignUpSecondView {
                 let imageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image)
                 user.profileImageUrl = imageUrl
             }
-            DispatchQueue.main.async {
+            try await FirebaseConnector.shared.setNewUser(user: user)
+            await MainActor.run {
                 loginState.user = user
+                loginState.isSignUpRequired = false
+                loginState.isAppleLoginRequired = false
+                feedMeals.refreshMealsAndUsers()
             }
-            FirebaseConnector.shared.setNewUser(user: user)
         }
     }
 }
 
 struct SignUpSecondView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpSecondView(loginState: LoginStateModel())
+        SignUpSecondView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
     }
 }

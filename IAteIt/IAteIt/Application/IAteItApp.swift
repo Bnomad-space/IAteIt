@@ -14,15 +14,18 @@ struct IAteItApp: App {
     
     @StateObject var loginState: LoginStateModel = LoginStateModel()
     @StateObject var feedMeals: FeedMealModel = FeedMealModel()
+    @State private var isActive: Bool = false
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                FeedView()
+                FeedView(isActive: $isActive)
                     .environmentObject(loginState)
                     .environmentObject(feedMeals)
             }
             .accentColor(.black)
+            .navigationViewStyle(StackNavigationViewStyle())
+            .environment(\.rootPresentationMode, self.$isActive)
         }
     }
 }

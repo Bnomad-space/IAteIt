@@ -16,8 +16,33 @@ class LoginStateModel: ObservableObject {
     @Published var username: String = ""
     @Published var user: User?
     @Published var isAppleLoginRequired: Bool = false
-    @Published var isSignUpViewPresent: Bool = false
     @Published var isSignUpRequired: Bool = false
+    @Published var isDeleteAccountCompleteAlertRequired = false
+    @Published var isShowingDeleteAccountCompleteAlert = false
+    @Published var type = types.createAccount
+    
+    enum types {
+        case createAccount
+        case deleteAccount
+        
+        func setLoginViewTitle() -> String {
+            switch self {
+            case .createAccount:
+                return "Sign in required!"
+            case .deleteAccount:
+                return "Delete your account"
+            }
+        }
+        
+        func setLoginViewContent() -> String {
+            switch self {
+            case .createAccount:
+                return "Please sign in\nto share what you eat in a day."
+            case .deleteAccount:
+                return "Confirm account deletion by sign in again."
+            }
+        }
+    }
     
     init() {
         self.checkLoginUser()
@@ -37,11 +62,13 @@ class LoginStateModel: ObservableObject {
                     }
                 } else {
                     await MainActor.run {
+                        self.type = .createAccount
                         self.isAppleLoginRequired = true
                     }
                 }
             } else {
                 await MainActor.run {
+                    self.type = .createAccount
                     self.isAppleLoginRequired = true
                 }
             }
@@ -66,7 +93,11 @@ class LoginStateModel: ObservableObject {
                     return
                 }
                 let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-                signInComplete(credential: credential)
+                if self.type == .createAccount {
+                    signInComplete(credential: credential)
+                } else if self.type == .deleteAccount {
+                    deleteAccount(credential: credential)
+                }
                 print("\(String(describing: Auth.auth().currentUser?.uid))")
                 
             default:
@@ -94,17 +125,42 @@ class LoginStateModel: ObservableObject {
                 let isExist = try await FirebaseConnector.shared.checkExistingUser(userUid: userUid)
                 if isExist {
                     let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: userUid)
-                    self.user = fetchedUser
-                    self.isAppleLoginRequired = false
+                    await MainActor.run {
+                        self.user = fetchedUser
+                        self.isAppleLoginRequired = false
+                    }
                 } else {
                     await MainActor.run {
                         self.appleUid = userUid
-                        self.isAppleLoginRequired = false
                         self.isSignUpRequired = true
                     }
                 }
             } catch {
                 print("Error: \(error)")
+            }
+        }
+    }
+    
+    func deleteAccount(credential: AuthCredential) {
+        Task {
+            do {
+                let returnedUserData = try await signInToFirebase(credential: credential)
+                let userId = returnedUserData.uid
+                print("애플 로그인 결과: \(userId), \(returnedUserData.email)")
+                try await FirebaseConnector.shared.deleteUserFromAuth()
+                if let imageUrl = user?.profileImageUrl {
+                    try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
+                }
+                try await FirebaseConnector.shared.deleteUser(userId: userId)
+                try await FirebaseConnector.shared.deleteCommentsByUser(userId: userId)
+                try await FirebaseConnector.shared.deleteMealsByUser(userId: userId)
+                await MainActor.run {
+                    self.user = nil
+                    self.isAppleLoginRequired = false
+                    self.isDeleteAccountCompleteAlertRequired = true
+                }
+            } catch {
+                print("error deleting user: \(error)")
             }
         }
     }

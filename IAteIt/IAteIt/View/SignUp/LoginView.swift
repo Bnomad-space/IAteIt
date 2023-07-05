@@ -11,47 +11,54 @@ import FirebaseAuth
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var loginState: LoginStateModel
+    @ObservedObject var feedMeals: FeedMealModel
     @State var currentNonce: String?
     
     var body: some View {
-        VStack {
-            Text("Sign in required!")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding([.bottom], 26)
-            Text("Please sign in\nto share what you eat in a day.")
-                .font(.body)
-                .multilineTextAlignment(.center)
-                .padding([.bottom], 44)
-            
-            SignInWithAppleButton(.signIn) { request in
-                let nonce = randomNonceString()
-                currentNonce = nonce
-                request.requestedScopes = [.fullName, .email]
-                request.nonce = sha256(nonce)
-            } onCompletion: { result in
-                loginState.getResultOfAppleLogin(result: result, currentNonce: currentNonce)
-            }
-            .signInWithAppleButtonStyle(.white)
-            .frame(width: 268, height: 50, alignment: .center)
-            .overlay(
+        NavigationView {
+            VStack {
+                Text(loginState.type.setLoginViewTitle())
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding([.bottom], 26)
+                Text(loginState.type.setLoginViewContent())
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .padding([.bottom], 44)
+                
+                SignInWithAppleButton(.signIn) { request in
+                    let nonce = randomNonceString()
+                    currentNonce = nonce
+                    request.requestedScopes = [.fullName, .email]
+                    request.nonce = sha256(nonce)
+                } onCompletion: { result in
+                    loginState.getResultOfAppleLogin(result: result, currentNonce: currentNonce)
+                }
+                .signInWithAppleButtonStyle(.white)
+                .frame(width: 268, height: 50, alignment: .center)
+                .overlay(
                     RoundedRectangle(cornerRadius: 25)
                         .stroke(.black, lineWidth: 1)
-            )
-            .padding([.bottom], 32)
-            
-            Button(action: {
-                // TODO: 액션 추가
-            }, label: {
-                Text("I'll sign in next time.")
-                    .font(.body)
-                    .foregroundColor(.gray)
-                    .underline()
-            })
-        }
-        .onDisappear {
-            loginState.isSignUpViewPresent = loginState.isSignUpRequired
+                )
+                .padding([.bottom], 32)
+                
+                if loginState.type == .createAccount {
+                    Button(action: {
+                        // TODO: 액션 추가
+                    }, label: {
+                        Text("I'll sign in next time.")
+                            .font(.body)
+                            .foregroundColor(.gray)
+                            .underline()
+                    })
+                }
+                NavigationLink(
+                    destination: SignUpView(loginState: loginState, feedMeals: feedMeals),
+                    isActive: self.$loginState.isSignUpRequired
+                ) {}
+            }
         }
     }
 }
@@ -93,6 +100,6 @@ extension LoginView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginState: LoginStateModel())
+        LoginView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
     }
 }

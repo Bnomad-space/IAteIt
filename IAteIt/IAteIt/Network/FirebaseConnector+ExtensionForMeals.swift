@@ -131,4 +131,18 @@ extension FirebaseConnector {
             "plates": FieldValue.arrayRemove([plate.firebaseData])
         ])
     }
+    
+    // 특정 user의 모든 meal 삭제(회원탈퇴)
+    func deleteMealsByUser(userId: String) async throws {
+        let snapshots = try await FirebaseConnector.meals.whereField("userId", isEqualTo: userId).getDocuments()
+        
+        for document in snapshots.documents {
+            let meal = try document.data(as: Meal.self)
+            
+            for plate in meal.plates {
+                try await deletePlateImage(plateId: plate.id)
+            }
+            try await FirebaseConnector.meals.document(document.documentID).delete()
+        }
+    }
 }
