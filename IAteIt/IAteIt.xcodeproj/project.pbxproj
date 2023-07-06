@@ -689,6 +689,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 44Q9HUN6LA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IAteIt/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "이 앱은 사진을 촬영하기 위해 카메라를 사용합니다. 카메라 접근 권한을 허용해 주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "이 앱은 사진을 촬영 후 저장합니다. 앨범 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -696,6 +697,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -727,6 +729,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 44Q9HUN6LA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IAteIt/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "이 앱은 사진을 촬영하기 위해 카메라를 사용합니다. 카메라 접근 권한을 허용해 주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "이 앱은 사진을 촬영 후 저장합니다. 앨범 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -734,6 +737,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
