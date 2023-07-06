@@ -17,6 +17,7 @@ struct FeedFooterView: View {
             VStack(alignment: .leading) {
                 if let caption = meal.caption {
                     Text(caption)
+                        .foregroundColor(Color.black)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                 }
@@ -34,11 +35,5 @@ struct FeedFooterView: View {
             }
             Spacer()
         }
-    }
-}
-
-struct FeedFooterView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedFooterView(meal: Meal.meals[2])
     }
 }

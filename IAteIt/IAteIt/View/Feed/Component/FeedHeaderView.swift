@@ -44,25 +44,22 @@ struct FeedHeaderView: View {
                 
                 VStack(alignment: .leading) {
                     Text(user.nickname)
+                        .foregroundColor(Color.black)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                     
                     if let location = meal.location {
                         Text("\(location) • \(meal.uploadDate.timeAgoDisplay())")
+                            .foregroundColor(Color.black)
                             .font(.footnote)
                     } else {
                         Text(meal.uploadDate.timeAgoDisplay())
+                            .foregroundColor(Color.black)
                             .font(.footnote)
                     }
                 }
                 Spacer()
             }
         }
-    }
-}
-
-struct FeedHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel())
     }
 }

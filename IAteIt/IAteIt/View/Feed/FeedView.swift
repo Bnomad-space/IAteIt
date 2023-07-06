@@ -73,6 +73,7 @@ struct FeedView: View {
                 }
             }
         }
+        .background(Color.white)
         .refreshable {
           do {
             try await Task.sleep(nanoseconds: 1_000_000_000)
@@ -96,11 +97,5 @@ struct FeedView: View {
         .fullScreenCover(isPresented: self.$loginState.isSignUpViewPresent, content: {
             SignUpView(loginState: loginState, feedMeals: feedMeals)
         })
-    }
-}
-
-struct FeedView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel())
     }
 }

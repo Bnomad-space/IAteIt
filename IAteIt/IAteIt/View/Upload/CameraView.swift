@@ -41,6 +41,7 @@ struct CameraView: View {
                 
                 Spacer()
                 Text("I'm eating it.")
+                    .foregroundColor(Color.black)
                     .frame(width: 240, height: 49, alignment: .center)
                     .font(.headline)
                 
@@ -156,6 +157,7 @@ struct CameraView: View {
                 }
             }
         }
+        .background(Color.white)
     }
 }
 

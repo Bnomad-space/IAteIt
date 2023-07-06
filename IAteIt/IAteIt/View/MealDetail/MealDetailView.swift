@@ -106,6 +106,7 @@ struct MealDetailView: View {
                 .padding([.bottom], 10)
                 .padding(.horizontal, .paddingHorizontal)
         }
+        .background(Color.white)
         .navigationTitle(navTitleText)
         .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
             Button("Delete", role: .destructive, action: {
@@ -148,11 +149,5 @@ extension MealDetailView {
             isMyMeal = false
             navTitleText = "\(user.nickname) ate it."
         }
-    }
-}
-
-struct MealDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0])
     }
 }

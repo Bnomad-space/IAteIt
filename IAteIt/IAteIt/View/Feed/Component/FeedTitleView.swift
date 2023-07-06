@@ -12,7 +12,9 @@ struct FeedTitleView: View {
         HStack(alignment: .center) {
             Text("I ate It ")
                 .fontWeight(.semibold)
+                .foregroundColor(Color.black)
             Image(systemName: "fork.knife")
+                .foregroundColor(Color.black)
                 .tint(.black)
                 .font(.body)
         }

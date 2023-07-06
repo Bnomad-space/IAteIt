@@ -43,22 +43,19 @@ struct CommentView: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .bottom, spacing: 8) {
                     Text(user.nickname)
+                        .foregroundColor(Color.black)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                     Text(comment.uploadDate.toTimeString())
+                        .foregroundColor(Color.black)
                         .font(.footnote)
                         .foregroundColor(.gray)
                 }
                 Text(comment.comment)
+                    .foregroundColor(Color.black)
                     .font(.subheadline)
             }
             Spacer()
         }
-    }
-}
-
-struct CommentView_Previews: PreviewProvider {
-    static var previews: some View {
-        CommentView(user: User.users[0], comment: Comment.comments[3])
     }
 }
