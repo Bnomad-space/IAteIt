@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct ProfileCellView: View {
-    @EnvironmentObject var loginState: LoginStateModel
-    
     let profileImgSize: CGFloat = 120
+    var user: User
     
     var body: some View {
         HStack {
             Spacer()
             VStack(spacing: 18) {
-                if let imageUrl = loginState.user?.profileImageUrl {
+                if let imageUrl = user.profileImageUrl {
                     AsyncImage(url: URL(string: imageUrl)) { image in
                         image
                             .circleImage(imageSize: profileImgSize)
@@ -33,7 +32,7 @@ struct ProfileCellView: View {
                         .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
                 }
                 
-                Text(loginState.user?.nickname ?? "")
+                Text(user.nickname)
                     .font(.headline)
             }
             Spacer()
@@ -43,6 +42,6 @@ struct ProfileCellView: View {
 
 struct ProfileCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileCellView()
+        ProfileCellView(user: User.users[0])
     }
 }

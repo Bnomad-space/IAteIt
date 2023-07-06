@@ -17,26 +17,27 @@ struct MyProfileView: View {
 
     var body: some View {
         List {
-            ProfileCellView()
-                .padding([.top, .bottom], 16)
-                .environmentObject(loginState)
-                .listRowSeparator(.hidden)
-            if feedMeals.myMealHistory.count > 0 {
-                ForEach(feedMeals.myMealHistorySorted, id:\.key) { (date, meals) in
-                    MealListView(date: date, meals: meals)
-                        .environmentObject(loginState)
-                        .environmentObject(feedMeals)
-                        .environmentObject(cameraViewModel)
+            if let user = loginState.user {
+                ProfileCellView(user: user)
+                    .padding([.top, .bottom], 16)
+                    .configSimpleListRow()
+                if feedMeals.myMealHistory.count > 0 {
+                    ForEach(feedMeals.myMealHistorySorted, id:\.key) { (date, meals) in
+                        MealListView(date: date, meals: meals, user: user)
+                            .environmentObject(loginState)
+                            .environmentObject(feedMeals)
+                            .environmentObject(cameraViewModel)
+                    }
+                    .configSimpleListRow()
+                } else {
+                    HStack {
+                        Spacer()
+                        EmptyMealView()
+                            .padding(.top, 100)
+                        Spacer()
+                    }
+                    .configSimpleListRow()
                 }
-                .configSimpleListRow()
-            } else {
-                HStack {
-                    Spacer()
-                    EmptyMealView()
-                        .padding(.top, 100)
-                    Spacer()
-                }
-                .listRowSeparator(.hidden)
             }
         }
         .listStyle(.plain)
