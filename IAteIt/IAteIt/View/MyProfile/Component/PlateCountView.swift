@@ -14,7 +14,7 @@ struct PlateCountView: View {
         if plates.count > 1 {
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .frame(width: 30, height: 30/*, alignment: .bottomTrailing*/)
+                    .frame(width: 30, height: 30)
                     .foregroundColor(.black)
                     .opacity(0.6)
                     .padding()
@@ -22,8 +22,6 @@ struct PlateCountView: View {
                     .font(.footnote)
                     .foregroundColor(.white)
             }
-            .padding(.bottom, 6)
-            .padding(.trailing, 6)
         }
     }
 }

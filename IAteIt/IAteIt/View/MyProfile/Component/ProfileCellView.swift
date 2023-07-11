@@ -16,13 +16,22 @@ struct ProfileCellView: View {
             Spacer()
             VStack(spacing: 18) {
                 if let imageUrl = user.profileImageUrl {
-                    AsyncImage(url: URL(string: imageUrl)) { image in
-                        image
-                            .circleImage(imageSize: profileImgSize)
-                    } placeholder: {
-                        Image(systemName: "person.crop.circle")
-                            .circleImage(imageSize: profileImgSize)
-                            .foregroundColor(Color(UIColor.systemGray2))
+                    CacheAsyncImage(url: URL(string: imageUrl)!) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .circleImage(imageSize: profileImgSize)
+                        case .failure(_):
+                            Image(systemName: "exclamationmark.circle")
+                                .circleImage(imageSize: profileImgSize)
+                                .foregroundColor(Color(UIColor.systemGray2))
+                        case .empty:
+                            Color(UIColor.systemGray6)
+                        @unknown default:
+                            Image(systemName: "person.crop.circle")
+                                .circleImage(imageSize: profileImgSize)
+                                .foregroundColor(Color(UIColor.systemGray2))
+                        }
                     }
                     .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
                 } else {

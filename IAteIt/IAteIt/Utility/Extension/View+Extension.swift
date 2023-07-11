@@ -21,4 +21,8 @@ extension View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
     }
+    
+    func innerShadow(cornerRadius: CGFloat, shadowRadius: CGFloat) -> some View {
+        modifier(InnerShadowModifier(cornerRadius: cornerRadius, shadowRadius: shadowRadius))
+    }
 }

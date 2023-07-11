@@ -22,13 +22,27 @@ struct FeedHeaderView: View {
                         Rectangle()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: profilePicSize, height: profilePicSize)
-                        AsyncImage(url: URL(string: userImage)) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .layoutPriority(-1)
-                        } placeholder: {
-                            Color(UIColor.systemGray5)
+                            .foregroundColor(.white)
+                        CacheAsyncImage(url: URL(string: userImage)!) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .layoutPriority(-1)
+                            case .failure(_):
+                                Image(systemName: "exclamationmark.circle")
+                                    .resizable()
+                                    .frame(width: profilePicSize, height: profilePicSize)
+                                    .foregroundColor(Color(UIColor.systemGray3))
+                            case .empty:
+                                Color(UIColor.systemGray6)
+                            @unknown default:
+                                Image(systemName: "person.crop.circle")
+                                    .resizable()
+                                    .frame(width: profilePicSize, height: profilePicSize)
+                                    .foregroundColor(Color(UIColor.systemGray3))
+                            }
                         }
                         .frame(width: profilePicSize, height: profilePicSize)
                     } else {

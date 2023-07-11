@@ -24,6 +24,9 @@
 		7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */; };
 		7E1F719429A90449005A7B56 /* TempPlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719329A90449005A7B56 /* TempPlate.swift */; };
 		7E229BCD2A4AC31F009020BB /* PlateCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BCC2A4AC31F009020BB /* PlateCountView.swift */; };
+		7E229BCF2A5D4B8E009020BB /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BCE2A5D4B8E009020BB /* CacheAsyncImage.swift */; };
+		7E229BD12A5DC414009020BB /* InnerShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BD02A5DC414009020BB /* InnerShadowModifier.swift */; };
+		7E229BD32A5DCA45009020BB /* PlateImageErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */; };
 		7E2B2DAD29DE9304009EC0ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2B2DAC29DE9304009EC0ED /* Constants.swift */; };
 		7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */; };
 		7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */; };
@@ -91,6 +94,9 @@
 		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
 		7E1F719329A90449005A7B56 /* TempPlate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPlate.swift; sourceTree = "<group>"; };
 		7E229BCC2A4AC31F009020BB /* PlateCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCountView.swift; sourceTree = "<group>"; };
+		7E229BCE2A5D4B8E009020BB /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
+		7E229BD02A5DC414009020BB /* InnerShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerShadowModifier.swift; sourceTree = "<group>"; };
+		7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageErrorView.swift; sourceTree = "<group>"; };
 		7E2B2DAC29DE9304009EC0ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMealModel.swift; sourceTree = "<group>"; };
 		7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataResultModel.swift; sourceTree = "<group>"; };
@@ -303,6 +309,8 @@
 				7E6069DA29A5CB2800284CBD /* Extension */,
 				7E9FEF3829DF12EF002E7211 /* ImagePicker.swift */,
 				7E2B2DAC29DE9304009EC0ED /* Constants.swift */,
+				7E229BCE2A5D4B8E009020BB /* CacheAsyncImage.swift */,
+				7E229BD02A5DC414009020BB /* InnerShadowModifier.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -406,6 +414,7 @@
 				46F06E3E2A176357009E3603 /* MealTileView.swift */,
 				8C73F00D29E1291A007D1A1E /* ProfileCellView.swift */,
 				7E229BCC2A4AC31F009020BB /* PlateCountView.swift */,
+				7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -546,12 +555,15 @@
 				DF2213A229BB2ADC000134FC /* AppDelegate.swift in Sources */,
 				7E48DC1E29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift in Sources */,
 				7E48DC1C29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift in Sources */,
+				7E229BCF2A5D4B8E009020BB /* CacheAsyncImage.swift in Sources */,
 				7E4B1AA129A8E58900DDC65B /* TempComment.swift in Sources */,
 				7E407CDB2A0E6608001CAFBF /* EditProfileView.swift in Sources */,
 				7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
+				7E229BD32A5DCA45009020BB /* PlateImageErrorView.swift in Sources */,
 				7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */,
 				7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */,
+				7E229BD12A5DC414009020BB /* InnerShadowModifier.swift in Sources */,
 				7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */,
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,

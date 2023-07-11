@@ -61,9 +61,22 @@ struct MealListView: View {
                                         .environmentObject(loginState)
                                         .environmentObject(feedMeals)
                                 } label: {
-                                    MealTileView(meal: meal)
-                                        .frame(width: 100, height: 128)
-                                        .cornerRadius(15)
+                                    ZStack {
+                                        Rectangle()
+                                            .cornerRadius(15)
+                                            .foregroundColor(.white)
+                                            .innerShadow(cornerRadius: 15, shadowRadius: 5)
+                                        MealTileView(meal: meal)
+                                            .frame(width: 100, height: 128)
+                                            .cornerRadius(15)
+                                        VStack {
+                                            Spacer()
+                                            HStack {
+                                                Spacer()
+                                                PlateCountView(plates: meal.plates)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -73,6 +86,10 @@ struct MealListView: View {
                     HStack(alignment: .center, spacing: 6) {
                         ForEach(meals, id: \.uploadDate) { meal in
                             ZStack {
+                                Rectangle()
+                                    .cornerRadius(15)
+                                    .foregroundColor(.white)
+                                    .innerShadow(cornerRadius: 15, shadowRadius: 5)
                                 MealTileView(meal: meal)
                                     .frame(minWidth: 0, maxWidth: .infinity)
                                     .frame(height: 128)
@@ -81,6 +98,13 @@ struct MealListView: View {
                                         selectedMeal = meal
                                         isActive = true
                                     }
+                                VStack {
+                                    Spacer()
+                                    HStack {
+                                        Spacer()
+                                        PlateCountView(plates: meal.plates)
+                                    }
+                                }
                             }
                         }
                     }
