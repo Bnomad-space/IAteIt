@@ -65,30 +65,19 @@ extension FirebaseConnector {
     }
     
     // 특정 user의 모든 meal 데이터 가져오기
-    func fetchUserMealHistory(userId: String, completion: @escaping([Meal]) -> Void) {
+    func fetchUserMealHistory(userId: String) async throws -> [Meal] {
         var mealHistory: [Meal] = []
         
-        FirebaseConnector.meals.whereField("userId", isEqualTo: userId).getDocuments() { (mealSnapshot, mealErr) in
-            if let mealErr = mealErr {
-                print("Error getting documents: \(mealErr.localizedDescription)")
-            } else {
-                for mealDocument in mealSnapshot!.documents {
-                    print("\(mealDocument.documentID) => \(mealDocument.data())")
-                    
-                    let mealDictionary = mealDocument.data()
-                    guard let mealId = mealDictionary["id"] as? String,
-                          let mealUploadTimestamp = mealDictionary["uploadDate"] as? Timestamp
-                    else { return }
-                    let mealUploadDate = mealUploadTimestamp.dateValue()
-                    let caption = mealDictionary["caption"] as? String
-                    let location = mealDictionary["location"] as? String
-
-                    let meal = Meal(id: mealId, userId: userId, location: location, caption: caption, uploadDate: mealUploadDate, plates: [])
-                    mealHistory.append(meal)
-                }
-                completion(mealHistory)
-            }
+        let snapshots = try await FirebaseConnector.meals
+//            .order(by: "uploadDate", descending: true)
+            .whereField("userId", isEqualTo: userId)
+            .getDocuments()
+                
+        for document in snapshots.documents {
+            let meal = try document.data(as: Meal.self)
+            mealHistory.append(meal)
         }
+        return mealHistory
     }
     
     // 24시간 이내 업로드된 모든 meal 데이터 가져오기

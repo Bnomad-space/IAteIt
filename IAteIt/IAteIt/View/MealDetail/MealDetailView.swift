@@ -15,6 +15,7 @@ struct MealDetailView: View {
     @EnvironmentObject var feedMeals: FeedMealModel
     @State private var navTitleText = ""
     @State private var isMyMeal = false
+    @State private var isTodayMeal = false
     @State private var isCameraViewPresented = false
     @State private var isShowingMealDeleteAlert = false
     @State private var isShowingPlateDeleteAlert = false
@@ -23,12 +24,13 @@ struct MealDetailView: View {
     
     var meal: Meal
     var user: User
+    var commentList: [String: [Comment]]
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, meal: meal)
+                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, isTodayMeal: $isTodayMeal, meal: meal)
                         .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {
@@ -58,7 +60,7 @@ struct MealDetailView: View {
                     .frame(minHeight: 358)
                     .tabViewStyle(.page)
                     
-                    if isMyMeal {
+                    if isMyMeal && isTodayMeal {
                         HStack {
                             Spacer()
                             Button(action: {
@@ -77,7 +79,7 @@ struct MealDetailView: View {
                         })
                     }
                     VStack(alignment: .leading, spacing: 12) {
-                        ForEach(feedMeals.commentList[meal.id!] ?? [], id:\.self) { comment in
+                        ForEach(commentList[meal.id!] ?? [], id:\.self) { comment in
                             if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
                                 let isMyComment = loginState.user?.id == comment.userId
                                 ZStack {
@@ -100,16 +102,21 @@ struct MealDetailView: View {
                             } else {
                                 Text("Comment Error")
                             }
-                        }                    }
+                        }
+                    }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
+
                 }
             }
-            AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
-                .padding([.bottom], 10)
-                .padding(.horizontal, .paddingHorizontal)
+            if isTodayMeal {
+                AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
+                    .padding([.bottom], 10)
+                    .padding(.horizontal, .paddingHorizontal)
+            }
         }
         .navigationTitle(navTitleText)
+        .navigationBarTitleDisplayMode(.inline)
         .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
             Button("Delete", role: .destructive, action: {
                 feedMeals.deleteMeal(meal: meal)
@@ -148,6 +155,7 @@ struct MealDetailView: View {
         }
         .onAppear {
             configMyMealUI()
+            configTodayMealUI()
         }
     }
 }
@@ -162,11 +170,20 @@ extension MealDetailView {
             navTitleText = "\(user.nickname) ate it."
         }
     }
+    func configTodayMealUI() {
+        let timeDiff = Int(Date().timeIntervalSince(meal.uploadDate))
+        
+        if timeDiff < 86400 {
+            isTodayMeal = true
+        } else {
+            isTodayMeal = false
+        }
+    }
 }
 
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0])
+        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0], commentList: [:])
     }
 }

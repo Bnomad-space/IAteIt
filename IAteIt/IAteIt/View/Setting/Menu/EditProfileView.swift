@@ -33,13 +33,22 @@ struct EditProfileView: View {
                             .circleImage(imageSize: imgSize)
                     } else {
                         if let oldImageUrl = loginState.user?.profileImageUrl {
-                            AsyncImage(url: URL(string: oldImageUrl)) { oldImage in
-                                oldImage
-                                    .circleImage(imageSize: imgSize)
-                            } placeholder: {
-                                Image(systemName: "person.crop.circle")
-                                    .circleImage(imageSize: imgSize)
-                                    .foregroundColor(Color(UIColor.systemGray2))
+                            CacheAsyncImage(url: URL(string: oldImageUrl)!) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .circleImage(imageSize: imgSize)
+                                case .failure(_):
+                                    Image(systemName: "exclamationmark.circle")
+                                        .circleImage(imageSize: imgSize)
+                                        .foregroundColor(Color(UIColor.systemGray2))
+                                case .empty:
+                                    Color(UIColor.systemGray6)
+                                @unknown default:
+                                    Image(systemName: "person.crop.circle")
+                                        .circleImage(imageSize: imgSize)
+                                        .foregroundColor(Color(UIColor.systemGray2))
+                                }
                             }
                         } else {
                             ZStack {

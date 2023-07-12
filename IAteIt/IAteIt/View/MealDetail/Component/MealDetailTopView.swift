@@ -10,6 +10,7 @@ import SwiftUI
 struct MealDetailTopView: View {
     @ObservedObject var commentBar: CommentBar
     @Binding var isMyMeal: Bool
+    @Binding var isTodayMeal: Bool
     
     var meal: Meal
     
@@ -21,7 +22,7 @@ struct MealDetailTopView: View {
                     .font(.footnote)
                     .foregroundColor(Color(UIColor.systemGray))
             }
-            if isMyMeal {
+            if isMyMeal && isTodayMeal {
                 Button(action: {
                     commentBar.type = .caption
                     commentBar.input = meal.caption ?? ""
@@ -43,7 +44,7 @@ struct MealDetailTopView: View {
                         .foregroundColor(.black)
                 }
             }
-            if isMyMeal {
+            if isMyMeal && isTodayMeal {
                 Button(action: {
                     commentBar.type = .location
                     commentBar.input = meal.location ?? ""

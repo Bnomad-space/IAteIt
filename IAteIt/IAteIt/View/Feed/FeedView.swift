@@ -39,7 +39,7 @@ struct FeedView: View {
                             VStack(spacing: 8) {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: user)
                                     .padding(.horizontal, .paddingHorizontal)
-                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user, commentList: feedMeals.commentList)
                                     .environmentObject(cameraViewModel)
                                     .environmentObject(loginState)
                                     .environmentObject(feedMeals)
@@ -54,7 +54,7 @@ struct FeedView: View {
                                 .buttonStyle(PlainButtonStyle())
                                 .frame(minHeight: 358)
                                 .tabViewStyle(.page)
-                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: user, commentList: feedMeals.commentList)
                                     .environmentObject(cameraViewModel)
                                     .environmentObject(loginState)
                                     .environmentObject(feedMeals)
@@ -90,11 +90,17 @@ struct FeedView: View {
                     destination:
                         MyProfileView()
                             .environmentObject(loginState)
-                            .environmentObject(feedMeals),
+                            .environmentObject(feedMeals)
+                            .environmentObject(cameraViewModel),
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
                 .isDetailLink(false)
+                .simultaneousGesture(TapGesture().onEnded {
+                    if let user = loginState.user {
+                        feedMeals.getUserMealHistory(user: user)
+                    }
+                })
             }
         }
         .navigationTitle("")

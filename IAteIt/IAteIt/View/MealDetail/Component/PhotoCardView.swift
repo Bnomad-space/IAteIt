@@ -11,6 +11,7 @@ struct PhotoCardView: View {
     var plate: Plate
     
     let photoCorner: CGFloat = 20
+    let iconSize: CGFloat = 48
     
     var body: some View {
         ZStack {
@@ -18,15 +19,26 @@ struct PhotoCardView: View {
                 Rectangle()
                     .aspectRatio(1, contentMode: .fit)
                     .cornerRadius(photoCorner)
+                    .foregroundColor(.white)
+                    .innerShadow(cornerRadius: photoCorner, shadowRadius: 10)
                 
-                AsyncImage(url: URL(string: plate.imageUrl)) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .layoutPriority(-1)
-                        .cornerRadius(photoCorner)
-                } placeholder: {
-                    Color(UIColor.systemGray5)
+                if let url = URL(string: plate.imageUrl) {
+                    CacheAsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .layoutPriority(-1)
+                                .cornerRadius(photoCorner)
+                        case .failure(_):
+                            PlateImageErrorView(iconSize: iconSize)
+                        case .empty:
+                            Color(UIColor.systemGray6)
+                        @unknown default:
+                            PlateImageErrorView(iconSize: iconSize)
+                        }
+                    }
                 }
             }
             .clipped()

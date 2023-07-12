@@ -96,13 +96,13 @@ struct FirebaseTestView: View {
                 })
                 
                 // 특정 user의 모든 meal 데이터 가져오기
-                Button(action: {
-                    FirebaseConnector().fetchUserMealHistory(userId: "testUser1Id") { meals in
-                        print("number of meals: \(meals.count)")
-                    }
-                }, label: {
-                    Text("Getting meal history of a user")
-                })
+//                Button(action: {
+//                    FirebaseConnector().fetchUserMealHistory(userId: "testUser1Id") { meals in
+//                        print("number of meals: \(meals.count)")
+//                    }
+//                }, label: {
+//                    Text("Getting meal history of a user")
+//                })
                 
                 // 24시간 이내 모든 meal 데이터 가져오기
 //                Button(action: {
