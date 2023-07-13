@@ -109,6 +109,9 @@ struct MealDetailView: View {
 
                 }
             }
+            .onTapGesture {
+                self.hideKeyboard()
+            }
             if isTodayMeal {
                 AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
                     .padding([.bottom], 10)
@@ -149,9 +152,6 @@ struct MealDetailView: View {
                             }
                 }
             }
-        }
-        .onTapGesture {
-            self.hideKeyboard()
         }
         .onAppear {
             configMyMealUI()
