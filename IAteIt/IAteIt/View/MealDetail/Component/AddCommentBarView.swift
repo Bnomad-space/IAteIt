@@ -12,7 +12,7 @@ struct AddCommentBarView: View {
     @ObservedObject var commentBar: CommentBar
     @FocusState var isFocused: Bool
     
-    var meal: Meal
+    @State var meal: Meal
     
     var body: some View {
         VStack {
@@ -42,8 +42,10 @@ struct AddCommentBarView: View {
                         if commentBar.type == .comment {
                             feedMeals.commentUpload(meal: meal, comment: commentBar.input)
                         } else if commentBar.type == .caption {
+                            meal.caption = commentBar.input
                             feedMeals.saveCaption(meal: meal, content: commentBar.input)
                         } else if commentBar.type == .location {
+                            meal.location = commentBar.input
                             feedMeals.saveLocation(meal: meal, content: commentBar.input)
                         }
                         isFocused = false

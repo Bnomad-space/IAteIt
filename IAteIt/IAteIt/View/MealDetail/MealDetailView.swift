@@ -34,7 +34,7 @@ struct MealDetailView: View {
                         .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {
-                        ForEach(meal.plates, id: \.self) { plate in
+                        ForEach(meal.plates, id: \.id) { plate in
                             PhotoCardView(plate: plate)
                                 .padding(.horizontal, .paddingHorizontal)
                                 .contextMenu {
