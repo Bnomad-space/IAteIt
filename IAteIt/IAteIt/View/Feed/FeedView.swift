@@ -34,7 +34,7 @@ struct FeedView: View {
                 })
                 switch feedMeals.mealList.count != 0 {
                 case true:
-                    ForEach(feedMeals.mealList, id: \.self) { eachMeal in
+                    ForEach(feedMeals.mealList, id: \.id) { eachMeal in
                         if let user = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
                             VStack(spacing: 8) {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: user)
