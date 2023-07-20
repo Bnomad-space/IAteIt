@@ -87,11 +87,21 @@ extension FirebaseConnector {
             .whereField("userId", isEqualTo: userId)
             .order(by: "uploadDate", descending: true)
             .getDocuments()
+        
+        let oldsnapshots = try await FirebaseConnector.meals
+            .whereField("userId", isEqualTo: userId)
+            .getDocuments()
                 
         for document in snapshots.documents {
             let meal = try document.data(as: Meal.self)
             mealHistory.append(meal)
         }
+        
+        for document in oldsnapshots.documents {
+            let meal = try document.data(as: Meal.self)
+            mealHistory.append(meal)
+        }
+        
         return mealHistory
     }
     
