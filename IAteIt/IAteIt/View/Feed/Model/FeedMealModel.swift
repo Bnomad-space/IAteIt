@@ -65,7 +65,7 @@ final class FeedMealModel: ObservableObject {
     
     func saveCaption(meal: Meal, content: String) {
         Task {
-            await FirebaseConnector.shared.setMealCaption(mealId: meal.id!, caption: content)
+            await FirebaseConnector.shared.setMealCaption(meal: meal, caption: content)
             mealList.indices.forEach { index in
                 if mealList[index].id == meal.id {
                     DispatchQueue.main.async {
@@ -78,7 +78,7 @@ final class FeedMealModel: ObservableObject {
     
     func saveLocation(meal: Meal, content: String) {
         Task {
-            await FirebaseConnector.shared.setMealLocation(mealId: meal.id!, location: content)
+            await FirebaseConnector.shared.setMealLocation(meal: meal, location: content)
             mealList.indices.forEach { index in
                 if mealList[index].id == meal.id {
                     DispatchQueue.main.async {
@@ -92,7 +92,7 @@ final class FeedMealModel: ObservableObject {
     func deletePlate(meal: Meal, plate: Plate) {
         Task {
             guard let mealId = meal.id else { return }
-            try await FirebaseConnector.shared.deletePlate(mealId: mealId, plate: plate)
+            try await FirebaseConnector.shared.deletePlate(meal: meal, plate: plate)
             try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
             DispatchQueue.main.async {
                 if let index = self.mealList.firstIndex(where: { $0.id == mealId }) {
@@ -105,7 +105,7 @@ final class FeedMealModel: ObservableObject {
     func deleteMeal(meal: Meal) {
         Task {
             guard let mealId = meal.id else { return }
-            try await FirebaseConnector.shared.deleteMeal(mealId: mealId)
+            try await FirebaseConnector.shared.deleteMeal(meal: meal)
             if let index = self.mealList.firstIndex(where: { $0.id == mealId }) {
                 for plate in self.mealList[index].plates {
                     try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
