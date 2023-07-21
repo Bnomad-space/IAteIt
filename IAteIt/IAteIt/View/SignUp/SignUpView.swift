@@ -33,7 +33,7 @@ struct SignUpView: View {
                 .onChange(of: username) { _ in
                     username = username.replacingOccurrences(of: " ", with: "")
                     isValidFormat = testValidUsername(testString: username)
-                    isUnique = testUnique(testString: username)
+                    isUnique = testUnique(testString: username.lowercased())
                 }
                 .font(Font.title2.weight(.bold))
                 .multilineTextAlignment(.center)
@@ -66,7 +66,7 @@ struct SignUpView: View {
                     !isValidFormat || !isUnique
                 )
                 .simultaneousGesture(TapGesture().onEnded {
-                    loginState.username = username
+                    loginState.username = username.lowercased()
                 })
             }
         }

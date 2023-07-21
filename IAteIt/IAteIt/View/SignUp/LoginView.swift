@@ -44,16 +44,16 @@ struct LoginView: View {
                 )
                 .padding([.bottom], 32)
                 
-                if loginState.type == .createAccount {
-                    Button(action: {
-                        // TODO: 액션 추가
-                    }, label: {
-                        Text("I'll sign in next time.")
-                            .font(.body)
-                            .foregroundColor(.gray)
-                            .underline()
-                    })
-                }
+//                if loginState.type == .createAccount {
+//                    Button(action: {
+//                        // TODO: 액션 추가
+//                    }, label: {
+//                        Text("I'll sign in next time.")
+//                            .font(.body)
+//                            .foregroundColor(.gray)
+//                            .underline()
+//                    })
+//                }
                 NavigationLink(
                     destination: SignUpView(loginState: loginState, feedMeals: feedMeals),
                     isActive: self.$loginState.isSignUpRequired
