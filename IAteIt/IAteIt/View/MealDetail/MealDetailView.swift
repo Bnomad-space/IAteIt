@@ -130,7 +130,7 @@ struct MealDetailView: View {
         })
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if isMyMeal {
+                if loginState.user?.id == user.id {
                     Menu(content: {
                         Button(role: .destructive, action: {
                             isShowingMealDeleteAlert = true
@@ -162,22 +162,13 @@ struct MealDetailView: View {
 
 extension MealDetailView {
     func configMyMealUI() {
-        if loginState.user?.id == user.id {
-            isMyMeal = true
-            navTitleText = "I ate it."
-        } else {
-            isMyMeal = false
-            navTitleText = "\(user.nickname) ate it."
-        }
+        navTitleText = loginState.user?.id == user.id ? "I ate it." : "\(user.nickname) ate it."
+        isMyMeal = loginState.user?.id == user.id ? true : false
     }
+    
     func configTodayMealUI() {
         let timeDiff = Int(Date().timeIntervalSince(meal.uploadDate))
-        
-        if timeDiff < 86400 {
-            isTodayMeal = true
-        } else {
-            isTodayMeal = false
-        }
+        isTodayMeal = timeDiff < 86400 ? true : false
     }
 }
 
