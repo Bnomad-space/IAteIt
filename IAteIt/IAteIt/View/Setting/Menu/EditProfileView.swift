@@ -96,7 +96,7 @@ struct EditProfileView: View {
                             .onChange(of: username) { _ in
                                 username = username.replacingOccurrences(of: " ", with: "")
                                 isValidFormat = testValidUsername(testString: username)
-                                isUnique = testUnique(testString: username)
+                                isUnique = testUnique(testString: username.lowercased())
                             }
                     }
                     Rectangle()
@@ -174,7 +174,7 @@ extension EditProfileView {
     }
     func saveProfile() {
         guard let userId = loginState.user?.id else { return }
-        var user = User(id: userId, nickname: self.username, profileImageUrl: loginState.user?.profileImageUrl)
+        var user = User(id: userId, nickname: self.username.lowercased(), profileImageUrl: loginState.user?.profileImageUrl)
         Task {
             if let image = selectedImage {
                 let newProfileImageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: userId, image: image)
