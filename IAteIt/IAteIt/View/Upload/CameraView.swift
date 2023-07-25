@@ -176,6 +176,7 @@ extension CameraView {
             meal.id = mealId
             meal.plates[0].mealId = mealId
             feedMeals.mealList.insert(meal, at: 0)
+            feedMeals.commentList[mealId] = []
         }
     }
     func saveAddPlate() {

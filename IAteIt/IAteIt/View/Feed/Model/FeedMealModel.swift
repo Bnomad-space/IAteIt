@@ -110,9 +110,20 @@ final class FeedMealModel: ObservableObject {
                 for plate in self.mealList[index].plates {
                     try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
                 }
+                if let commentList = self.commentList[mealId] {
+                    for comment in commentList {
+                        FirebaseConnector.shared.deleteComment(commentId: comment.id)
+                    }
+                } else if let commentList = self.myMealHistoryCommentList[mealId] {
+                    for comment in commentList {
+                        FirebaseConnector.shared.deleteComment(commentId: comment.id)
+                    }
+                }
             }
             DispatchQueue.main.async {
                 self.mealList.removeAll(where: { $0.id == mealId })
+                self.commentList[mealId]?.removeAll()
+                self.myMealHistoryCommentList[mealId]?.removeAll()
             }
         }
     }
