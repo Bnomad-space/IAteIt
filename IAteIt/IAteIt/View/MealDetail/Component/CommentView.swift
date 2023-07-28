@@ -58,7 +58,7 @@ struct CommentView: View {
                     Text(user.nickname)
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                    Text(comment.uploadDate.toTimeString())
+                    Text(comment.uploadDate.timeAgoDisplay())
                         .font(.footnote)
                         .foregroundColor(.gray)
                 }

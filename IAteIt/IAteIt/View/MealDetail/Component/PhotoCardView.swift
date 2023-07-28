@@ -43,16 +43,6 @@ struct PhotoCardView: View {
             }
             .clipped()
             .cornerRadius(photoCorner)
-            
-            VStack {
-                HStack {
-                    Spacer()
-                    TagOnPhotoView(tagText: plate.uploadDate.toTimeString())
-                }
-                .padding()
-                
-                Spacer()
-            }
         }
     }
 }
