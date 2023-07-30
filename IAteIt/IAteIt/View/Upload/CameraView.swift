@@ -59,16 +59,6 @@ struct CameraView: View {
                         }
                     }
                     .padding(.bottom, 120)
-                    .overlay(
-                        Capsule()
-                            .foregroundColor(Color.black.opacity(0.6))
-                            .frame(width: 60, height: 28)
-                            .overlay(
-                                Text("\(currentTime, formatter: CameraView.dateFormat)")
-                                    .font(.footnote)
-                                    .foregroundColor(.white)
-                            )
-                            .padding(EdgeInsets(top: -230, leading: 290, bottom: 0, trailing: 0)))
                 // TODO: 기존 meal 포스팅의 캡션, 장소 위치잡기
                     .overlay {
                         VStack(alignment: .center, spacing: 6) {
