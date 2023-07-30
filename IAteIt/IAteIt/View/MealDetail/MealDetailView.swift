@@ -102,6 +102,9 @@ struct MealDetailView: View {
                                 Text("Comment Error")
                             }
                         }
+                        Rectangle()
+                            .fill(Color.white.opacity(0))
+                            .frame(height: 100)
                     }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
@@ -112,6 +115,19 @@ struct MealDetailView: View {
                 self.hideKeyboard()
             }
             if isTodayMeal {
+                ZStack {
+                    VStack {
+                        Spacer()
+                        Rectangle()
+                            .fill(
+                                LinearGradient(gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
+                                               startPoint: UnitPoint(x: 0.5, y: 1-100/200),
+                                               endPoint: .top)
+                            )
+                            .ignoresSafeArea()
+                            .frame(height: 150)
+                    }
+                }
                 AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
                     .padding([.bottom], 10)
                     .padding(.horizontal, .paddingHorizontal)
@@ -161,22 +177,13 @@ struct MealDetailView: View {
 
 extension MealDetailView {
     func configMyMealUI() {
-        if loginState.user?.id == user.id {
-            isMyMeal = true
-            navTitleText = "I ate it."
-        } else {
-            isMyMeal = false
-            navTitleText = "\(user.nickname) ate it."
-        }
+        navTitleText = loginState.user?.id == user.id ? "I ate it." : "\(user.nickname) ate it."
+        isMyMeal = loginState.user?.id == user.id ? true : false
     }
+    
     func configTodayMealUI() {
         let timeDiff = Int(Date().timeIntervalSince(meal.uploadDate))
-        
-        if timeDiff < 86400 {
-            isTodayMeal = true
-        } else {
-            isTodayMeal = false
-        }
+        isTodayMeal = timeDiff < 86400 ? true : false
     }
 }
 

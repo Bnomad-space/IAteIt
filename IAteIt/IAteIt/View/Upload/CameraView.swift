@@ -176,9 +176,11 @@ extension CameraView {
             meal.id = mealId
             meal.plates[0].mealId = mealId
             feedMeals.mealList.insert(meal, at: 0)
+            feedMeals.commentList[mealId] = []
         }
     }
     func saveAddPlate() {
+        guard let meal = mealAddPlateTo else { return }
         guard let mealId = mealAddPlateTo?.id,
               let image = viewModel.imageToBeUploaded
         else { return }
@@ -188,11 +190,11 @@ extension CameraView {
             let plateImageUrl = try await FirebaseConnector.shared.uploadPlateImage(plateId: plate.id, image: image)
             plate.imageUrl = plateImageUrl
             DispatchQueue.main.async {
-                if let index = feedMeals.mealList.firstIndex(where: {$0.id == mealId}) {
+                if let index = feedMeals.mealList.firstIndex(where: {$0.id == meal.id}) {
                     feedMeals.mealList[index].plates.append(plate)
                 }
             }
-            try await FirebaseConnector.shared.addPlateToMeal(mealId: mealId, plate: plate)
+            try await FirebaseConnector.shared.addPlateToMeal(meal: meal, plate: plate)
         }
     }
 }

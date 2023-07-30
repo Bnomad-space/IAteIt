@@ -64,7 +64,7 @@ final class FirebaseConnector {
                 for document in snapshot!.documents {
                     let dict = document.data()
                     guard let username = dict["nickname"] as? String else { return }
-                    usernameList.append(username)
+                    usernameList.append(username.lowercased())
                 }
                 completion(usernameList)
             }

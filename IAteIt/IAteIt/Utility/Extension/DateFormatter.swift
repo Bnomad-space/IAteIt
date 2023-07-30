@@ -16,6 +16,14 @@ extension Date {
         let date_string = formatter.string(from: self)
         return date_string
     }
+    
+    func toDateString2() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let date_string = formatter.string(from: self)
+        return date_string
+    }
+    
     /// dateFormat = "yyyy-MM-dd HH:mm:ss" ex) 2021-10-18 12:00:00
     func toDateTimeString() -> String {
         let formatter = DateFormatter()

@@ -70,19 +70,22 @@ struct ReportView: View {
                                     }),
                                     trailing:
                                         Button(action: {
-                                            FirebaseConnector().sendReport(reporterId: loginState.user?.id ?? "", reportedTime: Date(), mealId: meal.id ?? "", reason: text)
+                                            
                                             isAlertPresented = true
                                         }, label: {
                                             Image(systemName: "paperplane.fill")
                                                 .foregroundColor(.black)
                                         })
                                 )
-            .alert("Report Completed", isPresented: $isAlertPresented, actions: {
-                Button("OK", role: .cancel, action: {
+            .alert("Submit Report", isPresented: $isAlertPresented, actions: {
+                Button("Cancel", role: .cancel, action: {
+                })
+                Button("Submit", role: .destructive, action: {
+                    FirebaseConnector().sendReport(reporterId: loginState.user?.id ?? "", reportedTime: Date(), mealId: meal.id ?? "", reason: text)
                     isReportPresented = false
                 })
             }, message: {
-                Text("Your report has been submitted successfully.")
+                Text("Are you sure you want to submit this report?")
             })
         }
     }
