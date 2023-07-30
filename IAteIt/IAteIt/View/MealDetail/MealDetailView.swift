@@ -21,7 +21,6 @@ struct MealDetailView: View {
     @State private var isShowingPlateDeleteAlert = false
     @State private var isReportPresented = false
     
-    
     var meal: Meal
     var user: User
     var commentList: [String: [Comment]]
@@ -144,29 +143,29 @@ struct MealDetailView: View {
         }, message: {
             Text("This action is irreversible.")
         })
+        .sheet(isPresented: $isReportPresented) {
+            ReportView(meal: meal, user: user, isReportPresented: $isReportPresented)
+                    .environmentObject(loginState)
+                }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if loginState.user?.id == user.id {
                     Menu(content: {
-                        Button(role: .destructive, action: {
-                            isShowingMealDeleteAlert = true
-                        }, label: {
-                            Label("Delete this meal", systemImage: "trash")
-                        })
+                        if isMyMeal {
+                            Button(role: .destructive, action: {
+                                isShowingMealDeleteAlert = true
+                            }, label: {
+                                Label("Delete this meal", systemImage: "trash")
+                            })
+                        } else {
+                                Button(role: .destructive, action: {
+                                    isReportPresented = true
+                                }, label: {
+                                    Label("Report this meal", systemImage: "exclamationmark.triangle")
+                                })
+                        }
                     }, label: {
                         Image(systemName: "ellipsis")
                     })
-                } else {
-                    Button(action: {
-                        isReportPresented = true
-                    }, label: {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                    })
-                    .sheet(isPresented: $isReportPresented) {
-                        ReportView(meal: meal, isReportPresented: $isReportPresented)
-                            .environmentObject(loginState)
-                            }
-                }
             }
         }
         .onAppear {
