@@ -104,7 +104,7 @@ struct MealDetailView: View {
                         }
                         Rectangle()
                             .fill(Color.white.opacity(0))
-                            .frame(height: 100)
+                            .frame(height: 80)
                     }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
@@ -125,7 +125,7 @@ struct MealDetailView: View {
                                                endPoint: .top)
                             )
                             .ignoresSafeArea()
-                            .frame(height: 150)
+                            .frame(height: 115)
                     }
                 }
                 AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)

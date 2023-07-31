@@ -9,12 +9,12 @@ import SwiftUI
 
 struct FeedTitleView: View {
     var body: some View {
-        HStack(alignment: .center) {
-            Text("I ate It ")
+        HStack(alignment: .center, spacing: 8) {
+            Image(uiImage: UIImage(named: "AppLogo80x80")!)
+                .resizable()
+                .frame(width: 24, height: 24)
+            Text("I ate it.")
                 .fontWeight(.semibold)
-            Image(systemName: "fork.knife")
-                .tint(.black)
-                .font(.body)
         }
     }
 }
