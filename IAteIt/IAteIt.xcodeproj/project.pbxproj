@@ -11,6 +11,8 @@
 		040EB7332A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */; };
 		040EB7352A55675600E20A4D /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB7342A55675600E20A4D /* ReportView.swift */; };
 		045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045339E62A0CAE59007F74F0 /* EmptyMealView.swift */; };
+		047121CD2A7D38E0004DCFC0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047121CC2A7D38E0004DCFC0 /* Block.swift */; };
+		047121CF2A7D396E004DCFC0 /* FirebaseConnector+ExtensionForBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047121CE2A7D396E004DCFC0 /* FirebaseConnector+ExtensionForBlocks.swift */; };
 		0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0487509A29B83DBD006836D1 /* FeedFooterView.swift */; };
 		048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A229B8A2D4006836D1 /* AddMealView.swift */; };
 		048750A529B8ABA1006836D1 /* FeedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048750A429B8ABA1006836D1 /* FeedTitleView.swift */; };
@@ -80,6 +82,8 @@
 		040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForReports.swift"; sourceTree = "<group>"; };
 		040EB7342A55675600E20A4D /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		045339E62A0CAE59007F74F0 /* EmptyMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMealView.swift; sourceTree = "<group>"; };
+		047121CC2A7D38E0004DCFC0 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		047121CE2A7D396E004DCFC0 /* FirebaseConnector+ExtensionForBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForBlocks.swift"; sourceTree = "<group>"; };
 		0487509A29B83DBD006836D1 /* FeedFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFooterView.swift; sourceTree = "<group>"; };
 		048750A229B8A2D4006836D1 /* AddMealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
 		048750A429B8ABA1006836D1 /* FeedTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTitleView.swift; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 				DF883D4729B58F430029DC60 /* Comment.swift */,
 				DFD52CE329CB127D00E86F9F /* Meal.swift */,
 				040EB7302A5563B500E20A4D /* Report.swift */,
+				047121CC2A7D38E0004DCFC0 /* Block.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -423,6 +428,7 @@
 				7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */,
 				7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */,
 				040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */,
+				047121CE2A7D396E004DCFC0 /* FirebaseConnector+ExtensionForBlocks.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -523,6 +529,7 @@
 				8C73F00529BDDAE6007D1A1E /* DateFormatter.swift in Sources */,
 				04C1189329B74D6C0073EDB7 /* FeedHeaderView.swift in Sources */,
 				7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */,
+				047121CD2A7D38E0004DCFC0 /* Block.swift in Sources */,
 				DF883D4829B58F430029DC60 /* Comment.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */,
@@ -569,6 +576,7 @@
 				7E9FEF3929DF12EF002E7211 /* ImagePicker.swift in Sources */,
 				7E229BCD2A4AC31F009020BB /* PlateCountView.swift in Sources */,
 				DF2213A529BB324F000134FC /* FirebaseConnector.swift in Sources */,
+				047121CF2A7D396E004DCFC0 /* FirebaseConnector+ExtensionForBlocks.swift in Sources */,
 				7E6069CF29A5CAE500284CBD /* CameraView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

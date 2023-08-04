@@ -16,6 +16,7 @@ final class FeedMealModel: ObservableObject {
     }
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
+    @Published var blockedUserList: [String] = []
     
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
@@ -23,6 +24,12 @@ final class FeedMealModel: ObservableObject {
 
     init() {
         self.refreshMealsAndUsers()
+    }
+    
+    func getBlockedUserId(user: User) {
+        Task {
+            self.blockedUserList = try await FirebaseConnector().fetchBlocksByBlockerId(blockerId: user.id)
+        }
     }
     
     @MainActor

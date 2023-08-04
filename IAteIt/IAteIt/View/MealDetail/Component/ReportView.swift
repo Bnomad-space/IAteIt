@@ -55,7 +55,7 @@ struct ReportView: View {
                 .clipped()
                 .cornerRadius(photoCorner)
                 
-                TextField("Please tell us why you are reporting this meal.", text: $text)
+                TextField("Please provide the reason for reporting.", text: $text)
                     .frame(height: 100)
                     .textFieldStyle(.plain)
                     .padding(.horizontal)
