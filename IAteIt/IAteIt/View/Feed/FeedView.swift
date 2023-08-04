@@ -77,6 +77,9 @@ struct FeedView: View {
         .refreshable {
           do {
             try await Task.sleep(nanoseconds: 1_000_000_000)
+              if let user = loginState.user {
+                  feedMeals.getBlockedUserId(user: user)
+              }
               feedMeals.refreshMealsAndUsers()
           } catch {print("Error refreshing data: \(error)")}
         }

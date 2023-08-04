@@ -32,47 +32,24 @@ extension FirebaseConnector {
             print("Error encoding block: \(error.localizedDescription)")
         }
     }
-
-//    func fetchBlocksByBlockerId(blockerId: String, completion: @escaping ([Block]?, Error?) -> Void) {
-//        FirebaseConnector.blocks
-//            .whereField("blocker_id", isEqualTo: blockerId)
-//            .getDocuments { snapshot, error in
-//                if let error = error {
-//                    completion(nil, error)
-//                    return
-//                }
-//
-//                var blocks: [Block] = []
-//                for document in snapshot?.documents ?? [] {
-//                    do {
-//                        let blockData = try document.data(as: Block.self)
-//                        blocks.append(blockData)
-//                    } catch {
-//                        completion(nil, error)
-//                        return
-//                    }
-//                }
-//
-//                completion(blocks, nil)
-//            }
-//    }
     
     func fetchBlocksByBlockerId(blockerId: String) async throws -> [String] {
         var blocks: [String] = []
         
-        FirebaseConnector.blocks.whereField("blocker_id", isEqualTo: blockerId)
-            .getDocuments() { (snapshot, error) in
-                if let error = error {
-                    print("Error getting documents: \(error)")
-                } else {
-                    for document in snapshot?.documents ?? [] {
-                        let blockData = document.data()
-                        guard let blocked_id = blockData["blocked_id"] as? String else {return}
-                        blocks.append(blocked_id)
-                    }
+        do {
+            let querySnapshot = try await FirebaseConnector.blocks.whereField("Blocker_id", isEqualTo: blockerId).getDocuments()
+            
+            for document in querySnapshot.documents {
+                let blockData = document.data()
+                if let blockedId = blockData["Blocked_id"] as? String {
+                    blocks.append(blockedId)
                 }
             }
-        return blocks
+            
+            print("DEBUG at fetch: ", blocks)
+            return blocks
+        } catch {
+            throw error
+        }
     }
-    
 }

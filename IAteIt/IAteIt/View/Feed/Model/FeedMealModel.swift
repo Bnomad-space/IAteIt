@@ -23,12 +23,15 @@ final class FeedMealModel: ObservableObject {
     @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
 
     init() {
+        print("DEBUGG at init:", self.blockedUserList)
         self.refreshMealsAndUsers()
     }
     
+    @MainActor
     func getBlockedUserId(user: User) {
         Task {
             self.blockedUserList = try await FirebaseConnector().fetchBlocksByBlockerId(blockerId: user.id)
+            print("DEBUG at getBlockedUserId:", self.blockedUserList)
         }
     }
     
@@ -141,6 +144,13 @@ final class FeedMealModel: ObservableObject {
             await MainActor.run {
                 self.allUsers = fetchAllUser
                 self.getMealListIn24Hours()
+                print("DEBUG at regrashfunc:", self.blockedUserList)
+                for i in stride(from: self.mealList.count - 1, through: 0, by: -1) {
+                    let eachMeal = self.mealList[i]
+                    if blockedUserList.contains(eachMeal.userId) {
+                        self.mealList.remove(at: i)
+                    }
+                }
             }
         }
     }

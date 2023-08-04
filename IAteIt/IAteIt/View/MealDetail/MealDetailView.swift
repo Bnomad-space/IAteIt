@@ -146,7 +146,9 @@ struct MealDetailView: View {
         })
         .alert("Blocking this user", isPresented: $isBlockingAlertPresented, actions: {
             Button("Block", role: .destructive, action: {
-                FirebaseConnector().setBlock(Blocker_id: user.id, Blocked_id: meal.userId)
+                if let blocker = loginState.user {
+                    FirebaseConnector().setBlock(Blocker_id: blocker.id, Blocked_id: meal.userId)
+                }
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {
