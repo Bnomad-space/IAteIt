@@ -148,6 +148,9 @@ struct MealDetailView: View {
             Button("Block", role: .destructive, action: {
                 if let blocker = loginState.user {
                     FirebaseConnector().setBlock(Blocker_id: blocker.id, Blocked_id: meal.userId)
+                    Task{
+                        try await FirebaseConnector().addBlockedId(user: blocker, BlockedId: meal.userId)
+                    }
                 }
             })
             Button("Cancel", role: .cancel, action: {})

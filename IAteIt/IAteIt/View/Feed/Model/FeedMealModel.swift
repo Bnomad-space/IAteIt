@@ -17,13 +17,13 @@ final class FeedMealModel: ObservableObject {
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
     @Published var blockedUserList: [String] = []
+    @Published var AllBlockList: [Block] = []
     
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
     @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
 
     init() {
-        print("DEBUGG at init:", self.blockedUserList)
         self.refreshMealsAndUsers()
     }
     
@@ -31,7 +31,13 @@ final class FeedMealModel: ObservableObject {
     func getBlockedUserId(user: User) {
         Task {
             self.blockedUserList = try await FirebaseConnector().fetchBlocksByBlockerId(blockerId: user.id)
-            print("DEBUG at getBlockedUserId:", self.blockedUserList)
+        }
+    }
+    
+    @MainActor
+    func getAllBlocks() {
+        Task {
+            self.AllBlockList = try await FirebaseConnector().fetchAllBlocks()
         }
     }
     
@@ -150,7 +156,9 @@ final class FeedMealModel: ObservableObject {
             await MainActor.run {
                 self.allUsers = fetchAllUser
                 self.getMealListIn24Hours()
-                print("DEBUG at regrashfunc:", self.blockedUserList)            }
+                self.getAllBlocks()
+                
+            }
         }
     }
 

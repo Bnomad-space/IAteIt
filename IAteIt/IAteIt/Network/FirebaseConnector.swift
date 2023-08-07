@@ -113,7 +113,8 @@ final class FirebaseConnector {
               let nickname = data["nickname"] as? String
         else { throw URLError(.badServerResponse) }
         let profileImageUrl = data["profileImageUrl"] as? String
-        let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl)
+        let blockedId = data["blockedId"] as? [String]
+        let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl, blockedId: blockedId)
             
         return user
     }

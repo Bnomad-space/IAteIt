@@ -45,11 +45,33 @@ extension FirebaseConnector {
                     blocks.append(blockedId)
                 }
             }
-            
-            print("DEBUG at fetch: ", blocks)
             return blocks
         } catch {
             throw error
         }
     }
+    
+    func fetchAllBlocks() async throws -> [Block] {
+        var blocks: [Block] = []
+        
+        do {
+            let querySnapshot = try await FirebaseConnector.blocks.getDocuments()
+            
+            for document in querySnapshot.documents {
+                let blockData = try document.data(as: Block.self)
+                blocks.append(blockData)
+            }
+            
+            return blocks
+        } catch {
+            throw error
+        }
+    }
+    
+//user 구조에 block 삽입
+    func addBlockedId(user: User, BlockedId: String) async throws {
+        try await FirebaseConnector.users.document(user.id)
+            .updateData(["blockedId": FieldValue.arrayUnion([BlockedId])])
+    }
+    
 }
