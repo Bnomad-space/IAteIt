@@ -106,6 +106,13 @@ final class FirebaseConnector {
         ])
     }
     
+    // user 차단정보 업데이트
+    func addBlockedId(user: User, BlockedId: String) async throws {
+        try await FirebaseConnector.users.document(user.id)
+            .updateData(["blockedId": FieldValue.arrayUnion([BlockedId])])
+    }
+    
+    
     // user 데이터 가져오기
     func fetchUser(id: String) async throws -> User {
         let snapshot = try await FirebaseConnector.users.document(id).getDocument()

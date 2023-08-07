@@ -28,20 +28,6 @@ final class FeedMealModel: ObservableObject {
     }
     
     @MainActor
-    func getBlockedUserId(user: User) {
-        Task {
-            self.blockedUserList = try await FirebaseConnector().fetchBlocksByBlockerId(blockerId: user.id)
-        }
-    }
-    
-    @MainActor
-    func getAllBlocks() {
-        Task {
-            self.AllBlockList = try await FirebaseConnector().fetchAllBlocks()
-        }
-    }
-    
-    @MainActor
     func getMealListIn24Hours() {
         Task {
             self.mealList = try await FirebaseConnector.shared.fetchMealIn24Hours(date: Date())
@@ -156,7 +142,6 @@ final class FeedMealModel: ObservableObject {
             await MainActor.run {
                 self.allUsers = fetchAllUser
                 self.getMealListIn24Hours()
-                self.getAllBlocks()
                 
             }
         }
