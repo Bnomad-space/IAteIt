@@ -149,6 +149,7 @@ struct MealDetailView: View {
                 if let blocker = loginState.user {
                     Task{
                         try await FirebaseConnector().addBlockedId(user: blocker, BlockedId: meal.userId)
+                        loginState.checkLoginUser()
                     }
                 }
             })

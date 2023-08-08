@@ -17,7 +17,6 @@ final class FeedMealModel: ObservableObject {
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
     @Published var blockedUserList: [String] = []
-    @Published var AllBlockList: [Block] = []
     
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
@@ -31,12 +30,6 @@ final class FeedMealModel: ObservableObject {
     func getMealListIn24Hours() {
         Task {
             self.mealList = try await FirebaseConnector.shared.fetchMealIn24Hours(date: Date())
-            for i in stride(from: self.mealList.count - 1, through: 0, by: -1) {
-                let eachMeal = self.mealList[i]
-                if blockedUserList.contains(eachMeal.userId) {
-                    self.mealList.remove(at: i)
-                }
-            }
             for meal in self.mealList {
                 FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { comments in
                     self.commentList[meal.id!] = comments
