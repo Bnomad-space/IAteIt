@@ -20,6 +20,7 @@ struct MealDetailView: View {
     @State private var isShowingMealDeleteAlert = false
     @State private var isShowingPlateDeleteAlert = false
     @State private var isReportPresented = false
+    @State private var isBlockingAlertPresented = false
     
     var meal: Meal
     var user: User
@@ -143,6 +144,19 @@ struct MealDetailView: View {
         }, message: {
             Text("This action is irreversible.")
         })
+        .alert("Blocking this user", isPresented: $isBlockingAlertPresented, actions: {
+            Button("Block", role: .destructive, action: {
+                if let blocker = loginState.user {
+                    Task{
+                        try await FirebaseConnector().addBlockedId(user: blocker, BlockedId: meal.userId)
+                        loginState.checkLoginUser()
+                    }
+                }
+            })
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("Blocked users won't be able to see your posts, and their posts won't appear on your feed..")
+        })
         .sheet(isPresented: $isReportPresented) {
             ReportView(meal: meal, user: user, isReportPresented: $isReportPresented)
                     .environmentObject(loginState)
@@ -161,6 +175,11 @@ struct MealDetailView: View {
                                     isReportPresented = true
                                 }, label: {
                                     Label("Report this meal", systemImage: "exclamationmark.triangle")
+                                })
+                                Button(role: .destructive, action: {
+                                    isBlockingAlertPresented = true
+                                }, label: {
+                                    Label("Block this user", systemImage: "nosign")
                                 })
                         }
                     }, label: {
