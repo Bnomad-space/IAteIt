@@ -50,6 +50,7 @@
 		7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */; };
 		7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */; };
 		7E7385302A77D1800010CA32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E73852F2A77D1800010CA32 /* LaunchScreen.storyboard */; };
+		7E7385502A7B6A920010CA32 /* BlockedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E73854F2A7B6A920010CA32 /* BlockedUsersView.swift */; };
 		7E9198A329CF56B400044815 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9198A229CF56B400044815 /* LoginView.swift */; };
 		7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3129DE9BFA002E7211 /* TextField+Extension.swift */; };
 		7E9FEF3529DEA07A002E7211 /* BottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */; };
@@ -117,6 +118,7 @@
 		7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardView.swift; sourceTree = "<group>"; };
 		7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagOnPhotoView.swift; sourceTree = "<group>"; };
 		7E73852F2A77D1800010CA32 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7E73854F2A7B6A920010CA32 /* BlockedUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersView.swift; sourceTree = "<group>"; };
 		7E9198A229CF56B400044815 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7E9198A429CF591200044815 /* IAteIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IAteIt.entitlements; sourceTree = "<group>"; };
 		7E9FEF3129DE9BFA002E7211 /* TextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+Extension.swift"; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				7E407CDA2A0E6608001CAFBF /* EditProfileView.swift */,
+				7E73854F2A7B6A920010CA32 /* BlockedUsersView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				630BA6C029AF57BE00019F2E /* Camera.swift in Sources */,
 				630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */,
 				46F06E3F2A176357009E3603 /* MealTileView.swift in Sources */,
+				7E7385502A7B6A920010CA32 /* BlockedUsersView.swift in Sources */,
 				7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */,
 				04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */,
 				7E407CD22A0BEBEF001CAFBF /* AddPlateButtonView.swift in Sources */,
