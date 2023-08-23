@@ -174,7 +174,28 @@ class LoginStateModel: ObservableObject {
                 let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: id)
                 userList.append(fetchedUser)
             }
-            self.blockedUsers = userList
+            
+            let tempList = userList
+            await MainActor.run {
+                self.blockedUsers = tempList
+            }
+        }
+    }
+    
+    func deleteBlockedUser(blockedUser: User) {
+        Task {
+            guard let user else { return }
+            try await FirebaseConnector.shared.deleteBlockedId(user: user, blockedId: blockedUser.id)
+            
+            let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: user.id)
+            
+            await MainActor.run {
+                self.user = fetchedUser
+            }
+            
+            if let blockedIds = fetchedUser.blockedId {
+                fetchBlockedUsers(blockedIdList: blockedIds)
+            }
         }
     }
 }

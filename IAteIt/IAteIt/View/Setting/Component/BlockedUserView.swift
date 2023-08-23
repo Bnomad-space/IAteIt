@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BlockedUserView: View {
+    @EnvironmentObject var loginState: LoginStateModel
+    
     let profilePicSize: CGFloat = 36
     var user: User
     
@@ -47,7 +49,7 @@ struct BlockedUserView: View {
             Spacer()
             
             Button(action: {
-                
+                loginState.deleteBlockedUser(blockedUser: user)
             }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(Color(UIColor.systemGray2))

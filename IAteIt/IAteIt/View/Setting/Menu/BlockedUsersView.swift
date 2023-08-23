@@ -11,25 +11,30 @@ struct BlockedUsersView: View {
     @EnvironmentObject var loginState: LoginStateModel
     
     var body: some View {
-        VStack {
-            if let blockedId = loginState.user?.blockedId {
-                ForEach(loginState.blockedUsers, id:\.self) { blockedUser in
-                    BlockedUserView(user: blockedUser)
-                }
-            } else {
-                VStack(alignment: .center){
-                    Text("There are no blocked users.")
-                        .font(.body)
-                        .foregroundColor(.gray)
-                        .padding(.top, 24)
-                    Spacer()
+        ScrollView {
+            VStack {
+                if loginState.blockedUsers.count > 0 {
+                    ForEach(loginState.blockedUsers, id:\.self) { blockedUser in
+                        BlockedUserView(user: blockedUser)
+                            .environmentObject(loginState)
+                    }
+                } else {
+                    VStack(alignment: .center){
+                        Text("There are no blocked users.")
+                            .font(.body)
+                            .foregroundColor(.gray)
+                            .padding(.top, 24)
+                        Spacer()
+                    }
                 }
             }
-        }
-        .navigationTitle("Blocked Users")
-        .onAppear {
-            if let blockedId = loginState.user?.blockedId {
-                loginState.fetchBlockedUsers(blockedIdList: blockedId)
+            .padding(.top, .paddingHorizontal)
+            .padding(.horizontal, .paddingHorizontal)
+            .navigationTitle("Blocked Users")
+            .onAppear {
+                if let blockedId = loginState.user?.blockedId {
+                    loginState.fetchBlockedUsers(blockedIdList: blockedId)
+                }
             }
         }
     }
