@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct MealTileView: View {
     let meal: Meal
@@ -13,18 +14,15 @@ struct MealTileView: View {
     
     var body: some View {
         if let url = URL(string: meal.plates[0].imageUrl) {
-            CacheAsyncImage(url: url) { phase in
-                switch phase {
-                case .success(let image):
+            LazyImage(url: url) { state in
+                if let image = state.image {
                     image
                         .resizable()
                         .scaledToFill()
-                case .failure(_):
+                } else if state.error != nil {
                     PlateImageErrorView(iconSize: iconSize)
-                case .empty:
+                } else {
                     Color(UIColor.systemGray6)
-                @unknown default:
-                    PlateImageErrorView(iconSize: iconSize)
                 }
             }
             .buttonStyle(PlainButtonStyle())

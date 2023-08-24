@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct ReportView: View {
     let photoCorner: CGFloat = 20
@@ -33,22 +34,20 @@ struct ReportView: View {
                         .foregroundColor(.white)
                     
                     if let url = URL(string: meal.plates[0].imageUrl) {
-                        CacheAsyncImage(url: url) { phase in
-                            switch phase {
-                            case .success(let image):
+                        LazyImage(url: url) { state in
+                            if let image = state.image {
                                 image
                                     .resizable()
                                     .scaledToFill()
                                     .layoutPriority(-1)
                                     .cornerRadius(photoCorner)
-                            case .failure(_):
+                            } else if state.error != nil {
                                 PlateImageErrorView(iconSize: iconSize)
-                            case .empty:
+                            } else {
                                 Color(UIColor.systemGray6)
-                            @unknown default:
-                                PlateImageErrorView(iconSize: iconSize)
                             }
                         }
+                        
                     }
                 }
                 .frame(height: 100)

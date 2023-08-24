@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct PhotoCardView: View {
     var plate: Plate
@@ -23,20 +24,17 @@ struct PhotoCardView: View {
                     .innerShadow(cornerRadius: photoCorner, shadowRadius: 10)
                 
                 if let url = URL(string: plate.imageUrl) {
-                    CacheAsyncImage(url: url) { phase in
-                        switch phase {
-                        case .success(let image):
+                    LazyImage(url: url) { state in
+                        if let image = state.image {
                             image
                                 .resizable()
                                 .scaledToFill()
                                 .layoutPriority(-1)
                                 .cornerRadius(photoCorner)
-                        case .failure(_):
+                        } else if state.error != nil {
                             PlateImageErrorView(iconSize: iconSize)
-                        case .empty:
+                        } else {
                             Color(UIColor.systemGray6)
-                        @unknown default:
-                            PlateImageErrorView(iconSize: iconSize)
                         }
                     }
                 }

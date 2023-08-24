@@ -25,7 +25,6 @@
 		7E047E4E2A233C4800B29760 /* EnvironmentValues+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */; };
 		7E1F719229A8FD9C005A7B56 /* AddCommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */; };
 		7E229BCD2A4AC31F009020BB /* PlateCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BCC2A4AC31F009020BB /* PlateCountView.swift */; };
-		7E229BCF2A5D4B8E009020BB /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BCE2A5D4B8E009020BB /* CacheAsyncImage.swift */; };
 		7E229BD12A5DC414009020BB /* InnerShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BD02A5DC414009020BB /* InnerShadowModifier.swift */; };
 		7E229BD32A5DCA45009020BB /* PlateImageErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */; };
 		7E2B2DAD29DE9304009EC0ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2B2DAC29DE9304009EC0ED /* Constants.swift */; };
@@ -49,6 +48,7 @@
 		7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069DF29A7A7B400284CBD /* CommentView.swift */; };
 		7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E129A7A7FE00284CBD /* PhotoCardView.swift */; };
 		7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069E329A7ADE100284CBD /* TagOnPhotoView.swift */; };
+		7E6528AF2A9717E0004F466B /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7E6528AE2A9717E0004F466B /* NukeUI */; };
 		7E7385302A77D1800010CA32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E73852F2A77D1800010CA32 /* LaunchScreen.storyboard */; };
 		7E9198A329CF56B400044815 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9198A229CF56B400044815 /* LoginView.swift */; };
 		7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3129DE9BFA002E7211 /* TextField+Extension.swift */; };
@@ -94,7 +94,6 @@
 		7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Extension.swift"; sourceTree = "<group>"; };
 		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
 		7E229BCC2A4AC31F009020BB /* PlateCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCountView.swift; sourceTree = "<group>"; };
-		7E229BCE2A5D4B8E009020BB /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
 		7E229BD02A5DC414009020BB /* InnerShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerShadowModifier.swift; sourceTree = "<group>"; };
 		7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageErrorView.swift; sourceTree = "<group>"; };
 		7E2B2DAC29DE9304009EC0ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -147,6 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E6528AF2A9717E0004F466B /* NukeUI in Frameworks */,
 				DF22139E29BB293C000134FC /* FirebaseFirestore in Frameworks */,
 				7E48DC2129F810420079E896 /* FirebaseAuth in Frameworks */,
 				DF2213A029BB293C000134FC /* FirebaseStorage in Frameworks */,
@@ -304,7 +304,6 @@
 				7E6069DA29A5CB2800284CBD /* Extension */,
 				7E9FEF3829DF12EF002E7211 /* ImagePicker.swift */,
 				7E2B2DAC29DE9304009EC0ED /* Constants.swift */,
-				7E229BCE2A5D4B8E009020BB /* CacheAsyncImage.swift */,
 				7E229BD02A5DC414009020BB /* InnerShadowModifier.swift */,
 			);
 			path = Utility;
@@ -448,6 +447,7 @@
 				DF22139F29BB293C000134FC /* FirebaseStorage */,
 				7E48DC2029F810420079E896 /* FirebaseAuth */,
 				7E407CCF2A0558A3001CAFBF /* FirebaseFirestoreSwift */,
+				7E6528AE2A9717E0004F466B /* NukeUI */,
 			);
 			productName = IAteIt;
 			productReference = 7EFFE28429A5228D0021B9FE /* IAteIt.app */;
@@ -479,6 +479,7 @@
 			mainGroup = 7EFFE27B29A5228D0021B9FE;
 			packageReferences = (
 				DF22139C29BB293C000134FC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7E6528AD2A9717E0004F466B /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			productRefGroup = 7EFFE28529A5228D0021B9FE /* Products */;
 			projectDirPath = "";
@@ -553,7 +554,6 @@
 				DF2213A229BB2ADC000134FC /* AppDelegate.swift in Sources */,
 				7E48DC1E29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift in Sources */,
 				7E48DC1C29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift in Sources */,
-				7E229BCF2A5D4B8E009020BB /* CacheAsyncImage.swift in Sources */,
 				7E407CDB2A0E6608001CAFBF /* EditProfileView.swift in Sources */,
 				7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
@@ -804,6 +804,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7E6528AD2A9717E0004F466B /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
 		DF22139C29BB293C000134FC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -824,6 +832,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DF22139C29BB293C000134FC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		7E6528AE2A9717E0004F466B /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E6528AD2A9717E0004F466B /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
 		};
 		DF22139D29BB293C000134FC /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;

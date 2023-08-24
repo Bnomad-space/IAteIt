@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct CommentView: View {
     let profilePicSize: CGFloat = 36
@@ -20,21 +21,18 @@ struct CommentView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: profilePicSize, height: profilePicSize)
                         .foregroundColor(.white)
-                    CacheAsyncImage(url: URL(string: userImage)!) { phase in
-                        switch phase {
-                        case .success(let image):
+                    LazyImage(url: URL(string: userImage)!) { state in
+                        if let image = state.image {
                             image
                                 .resizable()
                                 .scaledToFill()
                                 .layoutPriority(-1)
-                        case .failure(_):
+                        } else if state.error != nil {
                             Image(systemName: "exclamationmark.circle")
                                 .resizable()
                                 .frame(width: profilePicSize, height: profilePicSize)
                                 .foregroundColor(Color(UIColor.systemGray3))
-                        case .empty:
-                            Color(UIColor.systemGray6)
-                        @unknown default:
+                        } else {
                             Image(systemName: "person.crop.circle")
                                 .resizable()
                                 .frame(width: profilePicSize, height: profilePicSize)
@@ -42,6 +40,7 @@ struct CommentView: View {
                         }
                     }
                     .frame(width: profilePicSize, height: profilePicSize)
+                    
                 } else {
                     Image(systemName: "person.crop.circle")
                         .resizable()

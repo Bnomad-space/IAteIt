@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -33,23 +34,21 @@ struct EditProfileView: View {
                             .circleImage(imageSize: imgSize)
                     } else {
                         if let oldImageUrl = loginState.user?.profileImageUrl {
-                            CacheAsyncImage(url: URL(string: oldImageUrl)!) { phase in
-                                switch phase {
-                                case .success(let image):
+                            LazyImage(url: URL(string: oldImageUrl)!) { state in
+                                if let image = state.image {
                                     image
                                         .circleImage(imageSize: imgSize)
-                                case .failure(_):
+                                } else if state.error != nil {
                                     Image(systemName: "exclamationmark.circle")
                                         .circleImage(imageSize: imgSize)
                                         .foregroundColor(Color(UIColor.systemGray2))
-                                case .empty:
-                                    Color(UIColor.systemGray6)
-                                @unknown default:
+                                } else {
                                     Image(systemName: "person.crop.circle")
                                         .circleImage(imageSize: imgSize)
                                         .foregroundColor(Color(UIColor.systemGray2))
                                 }
                             }
+                            
                         } else {
                             ZStack {
                                 Rectangle()
