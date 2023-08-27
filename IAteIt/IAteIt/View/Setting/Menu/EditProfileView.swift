@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -14,6 +15,7 @@ struct EditProfileView: View {
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
+    @State private var kferror: KingfisherError?
     @State var username = ""
     @State var isValidFormat: Bool = false
     @State var isUnique: Bool = true
@@ -33,36 +35,17 @@ struct EditProfileView: View {
                             .circleImage(imageSize: imgSize)
                     } else {
                         if let oldImageUrl = loginState.user?.profileImageUrl {
-                            CacheAsyncImage(url: URL(string: oldImageUrl)!) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .circleImage(imageSize: imgSize)
-                                case .failure(_):
-                                    Image(systemName: "exclamationmark.circle")
-                                        .circleImage(imageSize: imgSize)
-                                        .foregroundColor(Color(UIColor.systemGray2))
-                                case .empty:
-                                    Color(UIColor.systemGray6)
-                                @unknown default:
-                                    Image(systemName: "person.crop.circle")
-                                        .circleImage(imageSize: imgSize)
-                                        .foregroundColor(Color(UIColor.systemGray2))
+                            KFImage.url(URL(string: oldImageUrl)!)
+                                .onFailure { error in
+                                    self.kferror = error
                                 }
-                            }
+                                .placeholder {
+                                    ProfileImageErrorView(error: $kferror, size: imgSize)
+                                }
+                                .cancelOnDisappear(true)
+                                .circleImage(imageSize: imgSize)
                         } else {
-                            ZStack {
-                                Rectangle()
-                                    .foregroundColor(.white)
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: imgSize, height: imgSize)
-                                Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: imgSize, height: imgSize)
-                                    .foregroundColor(Color(UIColor.systemGray2))
-                            }
-                            .clipShape(Circle())
+                            ProfileImageDefaultView(size: imgSize)
                         }
                     }
                 })
