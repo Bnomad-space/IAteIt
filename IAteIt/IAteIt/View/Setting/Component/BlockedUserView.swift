@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct BlockedUserView: View {
     @EnvironmentObject var loginState: LoginStateModel
+    @State private var error: KingfisherError?
     
     let profilePicSize: CGFloat = 36
     var user: User
@@ -16,30 +18,17 @@ struct BlockedUserView: View {
     var body: some View {
         HStack(spacing: 12) {
             if let userImage = user.profileImageUrl {
-                CacheAsyncImage(url: URL(string: userImage)!) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .circleImage(imageSize: profilePicSize)
-                    case .failure(_):
-                        Image(systemName: "exclamationmark.circle")
-                            .circleImage(imageSize: profilePicSize)
-                    case .empty:
-                        Color(UIColor.systemGray6)
-                            .frame(width: profilePicSize, height: profilePicSize)
-                            .clipShape(Circle())
-                    @unknown default:
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .circleImage(imageSize: profilePicSize)
-                            .foregroundColor(Color(UIColor.systemGray3))
+                KFImage.url(URL(string: userImage)!)
+                    .onFailure { error in
+                        self.error = error
                     }
-                }
+                    .placeholder {
+                        ProfileImageErrorView(error: $error, size: profilePicSize)
+                    }
+                    .cancelOnDisappear(true)
+                    .circleImage(imageSize: profilePicSize)
             } else {
-                Image(systemName: "person.crop.circle")
-                    .resizable()
-                    .frame(width: profilePicSize, height: profilePicSize)
-                    .foregroundColor(Color(UIColor.systemGray3))
+                ProfileImageDefaultView(size: profilePicSize)
             }
             
             Text(user.nickname)
