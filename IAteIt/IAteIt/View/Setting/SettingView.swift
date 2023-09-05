@@ -16,12 +16,30 @@ struct SettingView: View {
     
     var body: some View {
         List {
-            Section {
+            Section(header: Text("Personal")) {
                 NavigationLink(destination: {
                     EditProfileView()
                         .environmentObject(loginState)
                 }, label: {
                     SettingListTitleView(text: "Edit Profile", symbol: "person", color: .black)
+                })
+                NavigationLink(destination: {
+                    BlockedUsersView()
+                        .environmentObject(loginState)
+                }, label: {
+                    SettingListTitleView(text: "Blocked Users", symbol: "nosign", color: .black)
+                })
+            }
+            Section(header: Text("Information")) {
+                Button(action: {
+                    
+                }, label: {
+                    SettingListTitleView(text: "Terms of Use", symbol: "doc.text", color: .black)
+                })
+                Button(action: {
+                    
+                }, label: {
+                    SettingListTitleView(text: "Privacy Policy", symbol: "lock.doc", color: .black)
                 })
             }
             Section(header: Text("Dangerous Area")) {
