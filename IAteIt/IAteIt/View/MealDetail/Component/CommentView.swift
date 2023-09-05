@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CommentView: View {
+    @State private var error: KingfisherError?
+    
     let profilePicSize: CGFloat = 36
     var user: User
     var comment: Comment
@@ -20,33 +23,20 @@ struct CommentView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: profilePicSize, height: profilePicSize)
                         .foregroundColor(.white)
-                    CacheAsyncImage(url: URL(string: userImage)!) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .layoutPriority(-1)
-                        case .failure(_):
-                            Image(systemName: "exclamationmark.circle")
-                                .resizable()
-                                .frame(width: profilePicSize, height: profilePicSize)
-                                .foregroundColor(Color(UIColor.systemGray3))
-                        case .empty:
-                            Color(UIColor.systemGray6)
-                        @unknown default:
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .frame(width: profilePicSize, height: profilePicSize)
-                                .foregroundColor(Color(UIColor.systemGray3))
-                        }
-                    }
-                    .frame(width: profilePicSize, height: profilePicSize)
-                } else {
-                    Image(systemName: "person.crop.circle")
+                    KFImage.url(URL(string: userImage)!)
                         .resizable()
+                        .onFailure { error in
+                            self.error = error
+                        }
+                        .placeholder {
+                            ProfileImageErrorView(error: $error, size: profilePicSize)
+                        }
+                        .cancelOnDisappear(true)
+                        .scaledToFill()
+                        .layoutPriority(-1)
                         .frame(width: profilePicSize, height: profilePicSize)
-                        .foregroundColor(Color(UIColor.systemGray3))
+                } else {
+                    ProfileImageDefaultView(size: profilePicSize)
                 }
             }
             .clipped()

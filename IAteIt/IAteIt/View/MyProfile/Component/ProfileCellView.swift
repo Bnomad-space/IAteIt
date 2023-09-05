@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProfileCellView: View {
+    @State private var error: KingfisherError?
+    
     let profileImgSize: CGFloat = 120
     var user: User
     
@@ -16,28 +19,18 @@ struct ProfileCellView: View {
             Spacer()
             VStack(spacing: 18) {
                 if let imageUrl = user.profileImageUrl {
-                    CacheAsyncImage(url: URL(string: imageUrl)!) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .circleImage(imageSize: profileImgSize)
-                        case .failure(_):
-                            Image(systemName: "exclamationmark.circle")
-                                .circleImage(imageSize: profileImgSize)
-                                .foregroundColor(Color(UIColor.systemGray2))
-                        case .empty:
-                            Color(UIColor.systemGray6)
-                        @unknown default:
-                            Image(systemName: "person.crop.circle")
-                                .circleImage(imageSize: profileImgSize)
-                                .foregroundColor(Color(UIColor.systemGray2))
+                    KFImage(URL(string: imageUrl)!)
+                        .onFailure { error in
+                            self.error = error
                         }
-                    }
-                    .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
-                } else {
-                    Image(systemName: "person.crop.circle")
+                        .placeholder {
+                            ProfileImageErrorView(error: $error, size: profileImgSize)
+                        }
+                        .cancelOnDisappear(true)
                         .circleImage(imageSize: profileImgSize)
-                        .foregroundColor(Color(UIColor.systemGray2))
+                        .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
+                } else {
+                    ProfileImageDefaultView(size: profileImgSize)
                         .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
                 }
                 

@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PhotoCardView: View {
+    @State private var error: KingfisherError?
+    
     var plate: Plate
     
     let photoCorner: CGFloat = 20
@@ -23,22 +26,18 @@ struct PhotoCardView: View {
                     .innerShadow(cornerRadius: photoCorner, shadowRadius: 10)
                 
                 if let url = URL(string: plate.imageUrl) {
-                    CacheAsyncImage(url: url) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .layoutPriority(-1)
-                                .cornerRadius(photoCorner)
-                        case .failure(_):
-                            PlateImageErrorView(iconSize: iconSize)
-                        case .empty:
-                            Color(UIColor.systemGray6)
-                        @unknown default:
-                            PlateImageErrorView(iconSize: iconSize)
+                    KFImage.url(url)
+                        .resizable()
+                        .onFailure { error in
+                            self.error = error
                         }
-                    }
+                        .placeholder {
+                            PlateImageErrorView(error: $error, iconSize: iconSize)
+                        }
+                        .cancelOnDisappear(true)
+                        .scaledToFill()
+                        .layoutPriority(-1)
+                        .cornerRadius(photoCorner)
                 }
             }
             .clipped()

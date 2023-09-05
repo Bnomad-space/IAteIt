@@ -6,28 +6,27 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MealTileView: View {
     let meal: Meal
     let iconSize: CGFloat = 48
     
+    @State private var error: KingfisherError?
+    
     var body: some View {
         if let url = URL(string: meal.plates[0].imageUrl) {
-            CacheAsyncImage(url: url) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                case .failure(_):
-                    PlateImageErrorView(iconSize: iconSize)
-                case .empty:
-                    Color(UIColor.systemGray6)
-                @unknown default:
-                    PlateImageErrorView(iconSize: iconSize)
+            KFImage.url(url)
+                .resizable()
+                .onFailure { error in
+                    self.error = error
                 }
-            }
-            .buttonStyle(PlainButtonStyle())
+                .placeholder {
+                    PlateImageErrorView(error: $error, iconSize: iconSize)
+                }
+                .cancelOnDisappear(true)
+                .scaledToFill()
+                .buttonStyle(PlainButtonStyle())
         }
     }
 }

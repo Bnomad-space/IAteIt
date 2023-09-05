@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ReportView: View {
     let photoCorner: CGFloat = 20
@@ -17,6 +18,7 @@ struct ReportView: View {
     @Binding var isReportPresented: Bool
     @State private var isAlertPresented: Bool = false
     @State private var text: String = ""
+    @State private var error: KingfisherError?
 
     var body: some View {
         NavigationView{
@@ -33,22 +35,18 @@ struct ReportView: View {
                         .foregroundColor(.white)
                     
                     if let url = URL(string: meal.plates[0].imageUrl) {
-                        CacheAsyncImage(url: url) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .layoutPriority(-1)
-                                    .cornerRadius(photoCorner)
-                            case .failure(_):
-                                PlateImageErrorView(iconSize: iconSize)
-                            case .empty:
-                                Color(UIColor.systemGray6)
-                            @unknown default:
-                                PlateImageErrorView(iconSize: iconSize)
+                        KFImage.url(url)
+                            .resizable()
+                            .onFailure { error in
+                                self.error = error
                             }
-                        }
+                            .placeholder {
+                                PlateImageErrorView(error: $error, iconSize: iconSize)
+                            }
+                            .cancelOnDisappear(true)
+                            .scaledToFill()
+                            .layoutPriority(-1)
+                            .cornerRadius(photoCorner)
                     }
                 }
                 .frame(height: 100)
