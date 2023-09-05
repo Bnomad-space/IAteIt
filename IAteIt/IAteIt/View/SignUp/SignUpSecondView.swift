@@ -49,20 +49,31 @@ struct SignUpSecondView: View {
             .shadow(color: .black.opacity(0.20), radius: 10, x: 4, y: 4)
             .padding(.top, 40)
             
-            Spacer()
             if isLaterTextPresented {
                 Text("You can do this later!")
                     .font(.body)
                     .foregroundColor(Color(UIColor.systemGray))
-                    .padding(.bottom, 20)
+                    .padding(.top, 32)
             }
-            Button(action: {
-                saveAndCompleteSignUp()
-            }, label: {
-                BottomButtonView(label: "Done")
-            })
+            Spacer()
         }
         .navigationBarHidden(true)
+        .overlay {
+            VStack {
+                Spacer()
+                Text("By tapping ‘Done’, you agree to our [Terms of Use](https://riverisrain.notion.site/Terms-of-Use-c64b2e6ce02141adbef48945f8eeb4b6?pvs=4)) and [Privacy Policy](https://riverisrain.notion.site/Privacy-Policy-117649cb425443eba0caae331c4b585a?pvs=4).")
+                    .font(.footnote)
+                    .foregroundColor(Color(UIColor.systemGray))
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 36)
+                
+                Button(action: {
+                    saveAndCompleteSignUp()
+                }, label: {
+                    BottomButtonView(label: "Done")
+                })
+            }
+        }
     }
 }
 
