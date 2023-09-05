@@ -112,6 +112,13 @@ final class FirebaseConnector {
             .updateData(["blockedId": FieldValue.arrayUnion([BlockedId])])
     }
     
+    // 특정 user 차단정보 삭제
+    func deleteBlockedId(user: User, blockedId: String) async throws {
+        try await FirebaseConnector.users.document(user.id)
+            .updateData([
+                "blockedId": FieldValue.arrayRemove([blockedId])
+            ])
+    }
     
     // user 데이터 가져오기
     func fetchUser(id: String) async throws -> User {

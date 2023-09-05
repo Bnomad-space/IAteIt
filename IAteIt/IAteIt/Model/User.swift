@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Identifiable, Codable {
+struct User: Identifiable, Codable, Hashable {
     let id: String
     var nickname: String // Eng only, Must be unique, no blank space
     var profileImageUrl: String? // profileImageUrl nil이라면, systemName으로 Image 넣어주어야 함

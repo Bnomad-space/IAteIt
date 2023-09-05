@@ -20,6 +20,7 @@ class LoginStateModel: ObservableObject {
     @Published var isDeleteAccountCompleteAlertRequired = false
     @Published var isShowingDeleteAccountCompleteAlert = false
     @Published var type = types.createAccount
+    @Published var blockedUsers: [User] = []
     
     enum types {
         case createAccount
@@ -161,6 +162,39 @@ class LoginStateModel: ObservableObject {
                 }
             } catch {
                 print("error deleting user: \(error)")
+            }
+        }
+    }
+    
+    func fetchBlockedUsers(blockedIdList: [String]) {
+        Task {
+            var userList: [User] = []
+            
+            for id in blockedIdList {
+                let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: id)
+                userList.append(fetchedUser)
+            }
+            
+            let tempList = userList
+            await MainActor.run {
+                self.blockedUsers = tempList
+            }
+        }
+    }
+    
+    func deleteBlockedUser(blockedUser: User) {
+        Task {
+            guard let user else { return }
+            try await FirebaseConnector.shared.deleteBlockedId(user: user, blockedId: blockedUser.id)
+            
+            let fetchedUser = try await FirebaseConnector.shared.fetchUser(id: user.id)
+            
+            await MainActor.run {
+                self.user = fetchedUser
+            }
+            
+            if let blockedIds = fetchedUser.blockedId {
+                fetchBlockedUsers(blockedIdList: blockedIds)
             }
         }
     }
