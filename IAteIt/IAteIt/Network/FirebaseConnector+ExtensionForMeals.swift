@@ -108,7 +108,7 @@ extension FirebaseConnector {
     // 24시간 이내 업로드된 모든 meal 데이터 가져오기
     func fetchMealIn24Hours(date: Date) async throws -> [Meal] {
         var meals: [Meal] = []
-
+        
         let toTime = date
         let toTimestamp = Timestamp(date: toTime)
         let fromTime = date-3600*24
