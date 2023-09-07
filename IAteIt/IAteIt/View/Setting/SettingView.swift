@@ -11,6 +11,8 @@ struct SettingView: View {
     @EnvironmentObject var loginState: LoginStateModel
     @EnvironmentObject var feedMeals: FeedMealModel
     @State private var isShowingDeleteAccountAlert = false
+    @State private var isPresentTermsOfUseWebView = false
+    @State private var isPresentPrivacyPolicyWebView = false
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     
@@ -32,15 +34,29 @@ struct SettingView: View {
             }
             Section(header: Text("Information")) {
                 Button(action: {
-                    
+                    isPresentTermsOfUseWebView = true
                 }, label: {
                     SettingListTitleView(text: "Terms of Use", symbol: "doc.text", color: .black)
                 })
+                .sheet(isPresented: $isPresentTermsOfUseWebView) {
+                    NavigationView {
+                        WebView(url: URL(string: Const.URL.termsOfUse.rawValue)!)
+                            .navigationTitle("Terms of Use")
+                            .navigationBarTitleDisplayMode(.inline)
+                    }
+                }
                 Button(action: {
-                    
+                    isPresentPrivacyPolicyWebView = true
                 }, label: {
                     SettingListTitleView(text: "Privacy Policy", symbol: "lock.doc", color: .black)
                 })
+                .sheet(isPresented: $isPresentPrivacyPolicyWebView) {
+                    NavigationView {
+                        WebView(url: URL(string: Const.URL.privacyPolicy.rawValue)!)
+                            .navigationTitle("Privacy Policy")
+                            .navigationBarTitleDisplayMode(.inline)
+                    }
+                }
             }
             Section(header: Text("Dangerous Area")) {
                 Button(action: {
