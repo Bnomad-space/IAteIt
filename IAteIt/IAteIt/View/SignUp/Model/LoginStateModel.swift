@@ -20,6 +20,7 @@ class LoginStateModel: ObservableObject {
     @Published var isDeleteAccountCompleteAlertRequired = false
     @Published var isShowingDeleteAccountCompleteAlert = false
     @Published var type = types.createAccount
+    @Published var blockedIds: [String] = []
     @Published var blockedUsers: [User] = []
     
     enum types {
@@ -60,6 +61,10 @@ class LoginStateModel: ObservableObject {
                     await MainActor.run {
                         self.user = fetchedUser
                         self.isAppleLoginRequired = false
+                        
+                        if let blockedId = user?.blockedId {
+                            self.blockedIds = blockedId
+                        }
                     }
                 } else {
                     await MainActor.run {
@@ -148,13 +153,14 @@ class LoginStateModel: ObservableObject {
                 let returnedUserData = try await signInToFirebase(credential: credential)
                 let userId = returnedUserData.uid
                 print("애플 로그인 결과: \(userId), \(returnedUserData.email)")
-                try await FirebaseConnector.shared.deleteUserFromAuth()
+                
                 if let imageUrl = user?.profileImageUrl {
                     try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
                 }
                 try await FirebaseConnector.shared.deleteUser(userId: userId)
                 try await FirebaseConnector.shared.deleteCommentsByUser(userId: userId)
                 try await FirebaseConnector.shared.deleteMealsByUser(userId: userId)
+                try await FirebaseConnector.shared.deleteUserFromAuth()
                 await MainActor.run {
                     self.user = nil
                     self.isAppleLoginRequired = false
@@ -191,6 +197,7 @@ class LoginStateModel: ObservableObject {
             
             await MainActor.run {
                 self.user = fetchedUser
+                self.blockedIds.removeAll(where: { $0 == blockedUser.id })
             }
             
             if let blockedIds = fetchedUser.blockedId {

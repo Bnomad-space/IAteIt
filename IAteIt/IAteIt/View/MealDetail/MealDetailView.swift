@@ -99,8 +99,6 @@ struct MealDetailView: View {
                                         }
                                     }
                                 }
-                            } else {
-                                Text("Comment Error")
                             }
                         }
                         Rectangle()
