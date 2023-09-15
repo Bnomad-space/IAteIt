@@ -183,6 +183,9 @@ extension CameraView {
                 if let index = feedMeals.mealList.firstIndex(where: {$0.id == meal.id}) {
                     feedMeals.mealList[index].plates.append(plate)
                 }
+                if let index = feedMeals.myMealHistory.firstIndex(where: { $0.id == meal.id }) {
+                    feedMeals.myMealHistory[index].plates.append(plate)
+                }
             }
             try await FirebaseConnector.shared.addPlateToMeal(meal: meal, plate: plate)
         }
