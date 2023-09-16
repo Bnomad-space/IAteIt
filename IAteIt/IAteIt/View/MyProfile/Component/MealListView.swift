@@ -41,7 +41,7 @@ struct MealListView: View {
             
             ZStack {
                 NavigationLink(
-                    destination: MealDetailView(meal: selectedMeal, user: user, commentList: feedMeals.myMealHistoryCommentList)
+                    destination: MealDetailView(user: user, commentList: feedMeals.myMealHistoryCommentList)
                         .environmentObject(cameraViewModel)
                         .environmentObject(loginState)
                         .environmentObject(feedMeals),
@@ -56,7 +56,7 @@ struct MealListView: View {
                         HStack(alignment: .center, spacing: 6) {
                             ForEach(meals, id: \.uploadDate) { meal in
                                 NavigationLink {
-                                    MealDetailView(meal: meal, user: user, commentList: feedMeals.myMealHistoryCommentList)
+                                    MealDetailView(user: user, commentList: feedMeals.myMealHistoryCommentList)
                                         .environmentObject(cameraViewModel)
                                         .environmentObject(loginState)
                                         .environmentObject(feedMeals)
@@ -78,6 +78,10 @@ struct MealListView: View {
                                         }
                                     }
                                 }
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    feedMeals.currentMeal = meal
+                                    print("Hello world!")
+                                })
                             }
                         }
                         .padding(.horizontal, .paddingHorizontal)
@@ -95,6 +99,7 @@ struct MealListView: View {
                                     .frame(height: 128)
                                     .cornerRadius(15)
                                     .onTapGesture {
+                                        feedMeals.currentMeal = meal
                                         selectedMeal = meal
                                         isActive = true
                                     }
