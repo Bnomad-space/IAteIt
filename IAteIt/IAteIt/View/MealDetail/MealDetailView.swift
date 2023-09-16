@@ -95,6 +95,7 @@ struct MealDetailView: View {
                                                 })
                                             }, label: {
                                                 Image(systemName: "ellipsis")
+                                                    .frame(width: .buttonHitRegion, height: .buttonHitRegion)
                                             })
                                         }
                                     }
@@ -103,7 +104,7 @@ struct MealDetailView: View {
                         }
                         Rectangle()
                             .fill(Color.white.opacity(0))
-                            .frame(height: 80)
+                            .frame(height: .commentBottomArea)
                     }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
@@ -124,7 +125,7 @@ struct MealDetailView: View {
                                                endPoint: .top)
                             )
                             .ignoresSafeArea()
-                            .frame(height: 115)
+                            .frame(height: .commentBottomArea)
                     }
                 }
                 AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
