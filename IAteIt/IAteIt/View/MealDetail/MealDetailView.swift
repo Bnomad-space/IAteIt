@@ -190,6 +190,9 @@ struct MealDetailView: View {
                 configMyMealUI()
                 configTodayMealUI()
             }
+            .onDisappear {
+                feedMeals.currentMeal = nil
+            }
         }
     }
 }
