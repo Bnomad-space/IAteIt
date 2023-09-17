@@ -125,7 +125,7 @@ struct MealDetailView: View {
                                                endPoint: .top)
                             )
                             .ignoresSafeArea()
-                            .frame(height: .commentBottomArea)
+                            .frame(height: .commentBottomArea + 16)
                     }
                 }
                 AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
