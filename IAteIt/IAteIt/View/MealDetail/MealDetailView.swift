@@ -47,6 +47,7 @@ struct MealDetailView: View {
                                         })
                                     }
                                 }
+                                .pinchZoom()
                                 .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
                                     Button("Delete", role: .destructive, action: {
                                         feedMeals.deletePlate(meal: meal, plate: plate)
