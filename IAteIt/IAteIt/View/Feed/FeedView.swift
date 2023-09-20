@@ -48,6 +48,7 @@ struct FeedView: View {
                                         TabView {
                                             ForEach(eachMeal.plates, id: \.self) { plate in
                                                 PhotoCardView(plate: plate)
+                                                    .pinchZoom()
                                                     .padding(.horizontal, .paddingHorizontal)
                                             }
                                         }
