@@ -9,11 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 final class FeedMealModel: ObservableObject {
-    @Published var mealList: [Meal] = [] {
-        didSet {
-            self.mealList.sorted { $0.uploadDate > $1.uploadDate }
-        }
-    }
+    @Published var mealList: [Meal] = []
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
     
@@ -46,8 +42,10 @@ final class FeedMealModel: ObservableObject {
             self.mealList = fetchedMealList
             
             for meal in self.mealList {
-                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { comments in
-                    self.commentList[meal.id!] = comments
+                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { [weak self] comments in
+                    DispatchQueue.main.async {
+                        self?.commentList[meal.id!] = comments
+                    }
                 }
             }
         }
@@ -58,8 +56,10 @@ final class FeedMealModel: ObservableObject {
         Task {
             self.myMealHistory = try await FirebaseConnector.shared.fetchUserMealHistory(userId: user.id)
             for meal in self.myMealHistory {
-                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { comments in
-                    self.myMealHistoryCommentList[meal.id!] = comments
+                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { [weak self] comments in
+                    DispatchQueue.main.async {
+                        self?.myMealHistoryCommentList[meal.id!] = comments
+                    }
                 }
             }
             myMealHistorySorted = Dictionary(grouping: myMealHistory) { $0.uploadDate.toDateString() }
