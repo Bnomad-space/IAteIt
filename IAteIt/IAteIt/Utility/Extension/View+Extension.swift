@@ -101,8 +101,7 @@ struct ZoomGesture: UIViewRepresentable {
             
             sender.maximumNumberOfTouches = 2
             
-            if (sender.state == .began || sender.state == .changed) {
-                print(parent.scale)
+            if (sender.state == .began || sender.state == .changed && sender.numberOfTouches == 2) {
                 if let view = sender.view {
                     let translate = sender.translation(in: view)
                     
