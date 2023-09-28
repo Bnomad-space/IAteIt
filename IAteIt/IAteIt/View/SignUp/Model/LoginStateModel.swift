@@ -20,7 +20,6 @@ class LoginStateModel: ObservableObject {
     @Published var isDeleteAccountCompleteAlertRequired = false
     @Published var isShowingDeleteAccountCompleteAlert = false
     @Published var type = types.createAccount
-    @Published var blockedIds: [String] = []
     @Published var blockedUsers: [User] = []
     
     enum types {
@@ -61,10 +60,6 @@ class LoginStateModel: ObservableObject {
                     await MainActor.run {
                         self.user = fetchedUser
                         self.isAppleLoginRequired = false
-                        
-                        if let blockedId = user?.blockedId {
-                            self.blockedIds = blockedId
-                        }
                     }
                 } else {
                     await MainActor.run {
@@ -197,7 +192,6 @@ class LoginStateModel: ObservableObject {
             
             await MainActor.run {
                 self.user = fetchedUser
-                self.blockedIds.removeAll(where: { $0 == blockedUser.id })
             }
             
             if let blockedIds = fetchedUser.blockedId {
