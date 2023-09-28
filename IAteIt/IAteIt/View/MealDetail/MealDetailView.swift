@@ -36,7 +36,7 @@ struct MealDetailView: View {
                     TabView {
                         ForEach(meal.plates, id: \.id) { plate in
                             PhotoCardView(plate: plate)
-                                .padding(.horizontal, .paddingHorizontal)
+                                .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: .photoCorner))
                                 .contextMenu {
                                     if isMyMeal && (meal.plates.count > 1) {
                                         Button(role: .destructive, action: {
@@ -47,7 +47,6 @@ struct MealDetailView: View {
                                         })
                                     }
                                 }
-                                .pinchZoom()
                                 .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
                                     Button("Delete", role: .destructive, action: {
                                         feedMeals.deletePlate(meal: meal, plate: plate)

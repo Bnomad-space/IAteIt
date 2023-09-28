@@ -45,9 +45,8 @@ struct FeedView: View {
                                     .environmentObject(feedMeals)
                                 ) {
                                     TabView {
-                                        ForEach(eachMeal.plates) { plate in
+                                        ForEach(eachMeal.plates, id: \.self) { plate in
                                             PhotoCardView(plate: plate)
-                                                .pinchZoom()
                                                 .padding(.horizontal, .paddingHorizontal)
                                         }
                                     }
@@ -77,10 +76,10 @@ struct FeedView: View {
             }
         }
         .refreshable {
-          do {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-              feedMeals.refreshMealsAndUsers()
-          } catch {print("Error refreshing data: \(error)")}
+            do {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                feedMeals.refreshMealsAndUsers()
+            } catch {print("Error refreshing data: \(error)")}
         }
         .navigationBarItems(leading:
                                 FeedTitleView()
@@ -91,9 +90,9 @@ struct FeedView: View {
                 NavigationLink(
                     destination:
                         MyProfileView()
-                            .environmentObject(loginState)
-                            .environmentObject(feedMeals)
-                            .environmentObject(cameraViewModel),
+                        .environmentObject(loginState)
+                        .environmentObject(feedMeals)
+                        .environmentObject(cameraViewModel),
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )

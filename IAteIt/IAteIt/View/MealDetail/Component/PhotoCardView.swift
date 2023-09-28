@@ -13,36 +13,31 @@ struct PhotoCardView: View {
     
     var plate: Plate
     
-    let photoCorner: CGFloat = 20
     let iconSize: CGFloat = 48
     
     var body: some View {
         ZStack {
-            ZStack {
-                Rectangle()
-                    .aspectRatio(1, contentMode: .fit)
-                    .cornerRadius(photoCorner)
-                    .foregroundColor(.white)
-                    .innerShadow(cornerRadius: photoCorner, shadowRadius: 10)
-                
-                if let url = URL(string: plate.imageUrl) {
-                    KFImage.url(url)
-                        .resizable()
-                        .onFailure { error in
-                            self.error = error
-                        }
-                        .placeholder {
-                            PlateImageErrorView(error: $error, iconSize: iconSize)
-                        }
-                        .cancelOnDisappear(true)
-                        .scaledToFill()
-                        .layoutPriority(-1)
-                        .cornerRadius(photoCorner)
-                }
+            Rectangle()
+                .aspectRatio(1, contentMode: .fit)
+                .foregroundColor(.white)
+                .innerShadow(cornerRadius: .photoCorner, shadowRadius: 10)
+            
+            if let url = URL(string: plate.imageUrl) {
+                KFImage.url(url)
+                    .resizable()
+                    .onFailure { error in
+                        self.error = error
+                    }
+                    .placeholder {
+                        PlateImageErrorView(error: $error, iconSize: iconSize)
+                    }
+                    .cancelOnDisappear(true)
+                    .scaledToFill()
+                    .layoutPriority(-1)
             }
-            .clipped()
-            .cornerRadius(photoCorner)
         }
+        .cornerRadius(.photoCorner)
+        .pinchZoom()
     }
 }
 

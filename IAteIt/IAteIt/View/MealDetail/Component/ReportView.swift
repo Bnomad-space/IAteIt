@@ -9,7 +9,6 @@ import SwiftUI
 import Kingfisher
 
 struct ReportView: View {
-    let photoCorner: CGFloat = 20
     let iconSize: CGFloat = 48
     var meal: Meal
     var user: User
@@ -31,7 +30,7 @@ struct ReportView: View {
                 ZStack {
                     Rectangle()
                         .aspectRatio(1, contentMode: .fit)
-                        .cornerRadius(photoCorner)
+                        .cornerRadius(.photoCorner)
                         .foregroundColor(.white)
                     
                     if let url = URL(string: meal.plates[0].imageUrl) {
@@ -46,12 +45,12 @@ struct ReportView: View {
                             .cancelOnDisappear(true)
                             .scaledToFill()
                             .layoutPriority(-1)
-                            .cornerRadius(photoCorner)
+                            .cornerRadius(.photoCorner)
                     }
                 }
                 .frame(height: 100)
                 .clipped()
-                .cornerRadius(photoCorner)
+                .cornerRadius(.photoCorner)
                 
                 TextField("Please provide the reason for reporting.", text: $text)
                     .frame(height: 100)

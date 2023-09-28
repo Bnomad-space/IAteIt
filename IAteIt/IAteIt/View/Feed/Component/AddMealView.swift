@@ -11,7 +11,7 @@ struct AddMealView: View {
     
     var body: some View {
         ZStack {
-                RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: .photoCorner)
                     .frame(height: 50)
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.10), radius: 10, x: 4, y: 4)

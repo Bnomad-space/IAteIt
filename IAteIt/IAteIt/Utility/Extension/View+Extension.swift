@@ -41,7 +41,6 @@ struct PinchZoom<Content: View>: View {
     }
     
     var body: some View {
-        
         content
             .offset(x: offset.x, y: offset.y)
             .overlay(
@@ -60,7 +59,6 @@ struct ZoomGesture: UIViewRepresentable {
     
     @Binding var scale: CGFloat
     @Binding var offset: CGPoint
-    
     @Binding var scalePosition: CGPoint
     
     func makeCoordinator() -> Coordinator {
@@ -103,7 +101,7 @@ struct ZoomGesture: UIViewRepresentable {
             
             sender.maximumNumberOfTouches = 2
             
-            if (sender.state == .began || sender.state == .changed) && parent.scale > 0{
+            if (sender.state == .began || sender.state == .changed && sender.numberOfTouches == 2) {
                 if let view = sender.view {
                     let translate = sender.translation(in: view)
                     
