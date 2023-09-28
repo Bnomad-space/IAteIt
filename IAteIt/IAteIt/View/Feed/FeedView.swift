@@ -36,20 +36,20 @@ struct FeedView: View {
                 case true:
                     ForEach(feedMeals.mealList) { eachMeal in
                         if let mealOwner = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
-                                VStack(spacing: 8) {
-                                    FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
-                                        .padding(.horizontal, .paddingHorizontal)
-                                    NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
-                                        .environmentObject(cameraViewModel)
-                                        .environmentObject(loginState)
-                                        .environmentObject(feedMeals)
-                                    ) {
-                                        TabView {
-                                            ForEach(eachMeal.plates, id: \.self) { plate in
-                                                PhotoCardView(plate: plate)
-                                                    .padding(.horizontal, .paddingHorizontal)
-                                            }
+                            VStack(spacing: 8) {
+                                FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
+                                    .padding(.horizontal, .paddingHorizontal)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
+                                    TabView {
+                                        ForEach(eachMeal.plates, id: \.self) { plate in
+                                            PhotoCardView(plate: plate)
+                                                .padding(.horizontal, .paddingHorizontal)
                                         }
+                                    }
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .frame(minHeight: 358)
@@ -76,10 +76,10 @@ struct FeedView: View {
             }
         }
         .refreshable {
-          do {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-              feedMeals.refreshMealsAndUsers()
-          } catch {print("Error refreshing data: \(error)")}
+            do {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                feedMeals.refreshMealsAndUsers()
+            } catch {print("Error refreshing data: \(error)")}
         }
         .navigationBarItems(leading:
                                 FeedTitleView()
@@ -90,9 +90,9 @@ struct FeedView: View {
                 NavigationLink(
                     destination:
                         MyProfileView()
-                            .environmentObject(loginState)
-                            .environmentObject(feedMeals)
-                            .environmentObject(cameraViewModel),
+                        .environmentObject(loginState)
+                        .environmentObject(feedMeals)
+                        .environmentObject(cameraViewModel),
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
