@@ -22,86 +22,87 @@ struct MealDetailView: View {
     @State private var isReportPresented = false
     @State private var isBlockingAlertPresented = false
     
-    var meal: Meal
+//    var meal: Meal
     var user: User
     var commentList: [String: [Comment]]
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                VStack {
-                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, isTodayMeal: $isTodayMeal, meal: meal)
-                        .padding(.horizontal, .paddingHorizontal)
-                    
-                    TabView {
-                        ForEach(meal.plates, id: \.id) { plate in
-                            PhotoCardView(plate: plate)
-                                .padding(.horizontal, .paddingHorizontal)
-                                .contextMenu {
-                                    if isMyMeal && (meal.plates.count > 1) {
-                                        Button(role: .destructive, action: {
-                                            isShowingPlateDeleteAlert = true
-                                            print(plate)
-                                        }, label: {
-                                            Label("Delete this plate", systemImage: "trash")
-                                        })
-                                    }
-                                }
-                                .pinchZoom()
-                                .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
-                                    Button("Delete", role: .destructive, action: {
-                                        feedMeals.deletePlate(meal: meal, plate: plate)
-                                    })
-                                    Button("Cancel", role: .cancel, action: {})
-                                }, message: {
-                                    Text("This action is irreversible.")
-                                })
-                        }
-                    }
-                    .frame(minHeight: 358)
-                    .tabViewStyle(.page)
-                    
-                    if isMyMeal && isTodayMeal {
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                cameraViewModel.reset()
-                                cameraViewModel.type = .addPlate
-                                isCameraViewPresented.toggle()
-                            }, label: {
-                                AddPlateButtonView()
-                            })
-                        }
-                        .padding(.horizontal, .paddingHorizontal)
-                        .fullScreenCover(isPresented: $isCameraViewPresented, content: {
-                            CameraView(viewModel: cameraViewModel, mealAddPlateTo: meal)
-                                .environmentObject(loginState)
-                                .environmentObject(feedMeals)
-                        })
-                    }
-                    VStack(alignment: .leading, spacing: 12) {
-                        ForEach(commentList[meal.id!] ?? [], id:\.self) { comment in
-                            if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
-                                let isMyComment = loginState.user?.id == comment.userId
-                                ZStack {
-                                    CommentView(user: user, comment: comment)
-                                    HStack {
-                                        Spacer()
-                                        if isMyComment {
-                                            Menu(content: {
-                                                Button(role: .destructive, action: {
-                                                    feedMeals.deleteComment(meal: meal, comment: comment)
-                                                }, label: {
-                                                    Label("Delete this comment", systemImage: "trash")
-                                                })
+        if let currentMeal = feedMeals.currentMeal {
+            ZStack {
+                ScrollView {
+                    VStack {
+                        MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, isTodayMeal: $isTodayMeal, meal: currentMeal)
+                            .padding(.horizontal, .paddingHorizontal)
+                        
+                        TabView {
+                            ForEach(currentMeal.plates, id: \.id) { plate in
+                                PhotoCardView(plate: plate)
+                                    .padding(.horizontal, .paddingHorizontal)
+                                    .contextMenu {
+                                        if isMyMeal && (currentMeal.plates.count > 1) {
+                                            Button(role: .destructive, action: {
+                                                isShowingPlateDeleteAlert = true
+                                                print(plate)
                                             }, label: {
-                                                Image(systemName: "ellipsis")
-                                                    .frame(width: .buttonHitRegion, height: .buttonHitRegion)
+                                                Label("Delete this plate", systemImage: "trash")
                                             })
                                         }
                                     }
-                                }
+                                    .pinchZoom()
+                                    .alert("Delete this plate", isPresented: $isShowingPlateDeleteAlert, actions: {
+                                        Button("Delete", role: .destructive, action: {
+                                            feedMeals.deletePlate(meal: currentMeal, plate: plate)
+                                        })
+                                        Button("Cancel", role: .cancel, action: {})
+                                    }, message: {
+                                        Text("This action is irreversible.")
+                                    })
                             }
+                        }
+                        .frame(minHeight: 358)
+                        .tabViewStyle(.page)
+                        
+                        if isMyMeal && isTodayMeal {
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    cameraViewModel.reset()
+                                    cameraViewModel.type = .addPlate
+                                    isCameraViewPresented.toggle()
+                                }, label: {
+                                    AddPlateButtonView()
+                                })
+                            }
+                            .padding(.horizontal, .paddingHorizontal)
+                            .fullScreenCover(isPresented: $isCameraViewPresented, content: {
+                                CameraView(viewModel: cameraViewModel, mealAddPlateTo: currentMeal)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                            })
+                        }
+                        VStack(alignment: .leading, spacing: 12) {
+                            ForEach(commentList[currentMeal.id!] ?? [], id:\.self) { comment in
+                                if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
+                                    let isMyComment = loginState.user?.id == comment.userId
+                                    ZStack {
+                                        CommentView(user: user, comment: comment)
+                                        HStack {
+                                            Spacer()
+                                            if isMyComment {
+                                                Menu(content: {
+                                                    Button(role: .destructive, action: {
+                                                        feedMeals.deleteComment(meal: currentMeal, comment: comment)
+                                                    }, label: {
+                                                        Label("Delete this comment", systemImage: "trash")
+                                                    })
+                                                }, label: {
+                                                    Image(systemName: "ellipsis")
+                                                        .frame(width: .buttonHitRegion, height: .buttonHitRegion)
+                                                })
+                                            }
+                                        }
+                                    }
+                                }
                         }
                         Rectangle()
                             .fill(Color.white.opacity(0))
@@ -129,40 +130,40 @@ struct MealDetailView: View {
                             .frame(height: .commentBottomArea + 16)
                     }
                 }
-                AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
+                AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: currentMeal)
                     .padding([.bottom], 10)
                     .padding(.horizontal, .paddingHorizontal)
+                }
             }
-        }
-        .navigationTitle(navTitleText)
-        .navigationBarTitleDisplayMode(.inline)
-        .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
-            Button("Delete", role: .destructive, action: {
-                feedMeals.deleteMeal(meal: meal)
+            .navigationTitle(navTitleText)
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
+                Button("Delete", role: .destructive, action: {
+                    feedMeals.deleteMeal(meal: currentMeal)
+                })
+                Button("Cancel", role: .cancel, action: {})
+            }, message: {
+                Text("This action is irreversible.")
             })
-            Button("Cancel", role: .cancel, action: {})
-        }, message: {
-            Text("This action is irreversible.")
-        })
-        .alert("Blocking this user", isPresented: $isBlockingAlertPresented, actions: {
-            Button("Block", role: .destructive, action: {
-                if let blocker = loginState.user {
-                    Task{
-                        try await FirebaseConnector().addBlockedId(user: blocker, BlockedId: meal.userId)
-                        loginState.checkLoginUser()
+            .alert("Blocking this user", isPresented: $isBlockingAlertPresented, actions: {
+                Button("Block", role: .destructive, action: {
+                    if let blocker = loginState.user {
+                        Task{
+                            try await FirebaseConnector().addBlockedId(user: blocker, BlockedId: currentMeal.userId)
+                            loginState.checkLoginUser()
+                        }
                     }
-                }
+                })
+                Button("Cancel", role: .cancel, action: {})
+            }, message: {
+                Text("Blocked users won't be able to see your posts, and their posts won't appear on your feed..")
             })
-            Button("Cancel", role: .cancel, action: {})
-        }, message: {
-            Text("Blocked users won't be able to see your posts, and their posts won't appear on your feed..")
-        })
-        .sheet(isPresented: $isReportPresented) {
-            ReportView(meal: meal, user: user, isReportPresented: $isReportPresented)
+            .sheet(isPresented: $isReportPresented) {
+                ReportView(meal: currentMeal, user: user, isReportPresented: $isReportPresented)
                     .environmentObject(loginState)
-                }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Menu(content: {
                         if isMyMeal {
                             Button(role: .destructive, action: {
@@ -171,25 +172,29 @@ struct MealDetailView: View {
                                 Label("Delete this meal", systemImage: "trash")
                             })
                         } else {
-                                Button(role: .destructive, action: {
-                                    isReportPresented = true
-                                }, label: {
-                                    Label("Report this meal", systemImage: "exclamationmark.triangle")
-                                })
-                                Button(role: .destructive, action: {
-                                    isBlockingAlertPresented = true
-                                }, label: {
-                                    Label("Block this user", systemImage: "nosign")
-                                })
+                            Button(role: .destructive, action: {
+                                isReportPresented = true
+                            }, label: {
+                                Label("Report this meal", systemImage: "exclamationmark.triangle")
+                            })
+                            Button(role: .destructive, action: {
+                                isBlockingAlertPresented = true
+                            }, label: {
+                                Label("Block this user", systemImage: "nosign")
+                            })
                         }
                     }, label: {
                         Image(systemName: "ellipsis")
                     })
+                }
             }
-        }
-        .onAppear {
-            configMyMealUI()
-            configTodayMealUI()
+            .onAppear {
+                configMyMealUI()
+                configTodayMealUI()
+            }
+            .onDisappear {
+                feedMeals.currentMeal = nil
+            }
         }
     }
 }
@@ -201,7 +206,8 @@ extension MealDetailView {
     }
     
     func configTodayMealUI() {
-        let timeDiff = Int(Date().timeIntervalSince(meal.uploadDate))
+        guard let currentMeal = feedMeals.currentMeal else { return }
+        let timeDiff = Int(Date().timeIntervalSince(currentMeal.uploadDate))
         isTodayMeal = timeDiff < 86400 ? true : false
     }
 }
@@ -209,6 +215,6 @@ extension MealDetailView {
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0], commentList: [:])
+        MealDetailView(commentBar: CommentBar(), user: User.users[0], commentList: [:])
     }
 }

@@ -39,7 +39,7 @@ struct FeedView: View {
                             VStack(spacing: 8) {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
                                     .padding(.horizontal, .paddingHorizontal)
-                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
+                                NavigationLink(destination: MealDetailView(user: mealOwner, commentList: feedMeals.commentList)
                                     .environmentObject(cameraViewModel)
                                     .environmentObject(loginState)
                                     .environmentObject(feedMeals)
@@ -55,7 +55,10 @@ struct FeedView: View {
                                 .buttonStyle(PlainButtonStyle())
                                 .frame(minHeight: 358)
                                 .tabViewStyle(.page)
-                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    feedMeals.currentMeal = eachMeal
+                                })
+                                NavigationLink(destination: MealDetailView(user: mealOwner, commentList: feedMeals.commentList)
                                     .environmentObject(cameraViewModel)
                                     .environmentObject(loginState)
                                     .environmentObject(feedMeals)
@@ -66,7 +69,11 @@ struct FeedView: View {
                                         .environmentObject(feedMeals)
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    feedMeals.currentMeal = eachMeal
+                                })
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 default:

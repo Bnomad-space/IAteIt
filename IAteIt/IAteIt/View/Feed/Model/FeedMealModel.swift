@@ -13,10 +13,18 @@ final class FeedMealModel: ObservableObject {
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
     
-    @Published var myMealHistory: [Meal] = []
+    @Published var myMealHistory: [Meal] = [] {
+        didSet {
+            myMealHistorySorted = Dictionary(grouping: myMealHistory) { $0.uploadDate.toDateString() }.sorted {
+                $0.value[0].uploadDate > $1.value[0].uploadDate
+            }
+        }
+    }
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
     @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
 
+    @Published var currentMeal: Meal?
+    
     init() {
         self.refreshMealsAndUsers()
     }
@@ -62,8 +70,6 @@ final class FeedMealModel: ObservableObject {
                     }
                 }
             }
-            myMealHistorySorted = Dictionary(grouping: myMealHistory) { $0.uploadDate.toDateString() }
-                .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
         }
     }
     
@@ -74,6 +80,7 @@ final class FeedMealModel: ObservableObject {
                 await FirebaseConnector.shared.setNewComment(comment: uploadComment)
                 DispatchQueue.main.async {
                     self.commentList[meal.id!]!.append(uploadComment)
+                    self.myMealHistoryCommentList[meal.id!]?.append(uploadComment)
                 }
             }
         }
@@ -82,10 +89,16 @@ final class FeedMealModel: ObservableObject {
     func saveCaption(meal: Meal, content: String) {
         Task {
             await FirebaseConnector.shared.setMealCaption(meal: meal, caption: content)
-            mealList.indices.forEach { index in
-                if mealList[index].id == meal.id {
-                    DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                self.currentMeal?.caption = content
+                self.mealList.indices.forEach { index in
+                    if self.mealList[index].id == meal.id {
                         self.mealList[index].caption = content
+                    }
+                }
+                self.myMealHistory.indices.forEach { index in
+                    if self.myMealHistory[index].id == meal.id {
+                        self.myMealHistory[index].caption = content
                     }
                 }
             }
@@ -95,10 +108,16 @@ final class FeedMealModel: ObservableObject {
     func saveLocation(meal: Meal, content: String) {
         Task {
             await FirebaseConnector.shared.setMealLocation(meal: meal, location: content)
-            mealList.indices.forEach { index in
-                if mealList[index].id == meal.id {
-                    DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                self.currentMeal?.location = content
+                self.mealList.indices.forEach { index in
+                    if self.mealList[index].id == meal.id {
                         self.mealList[index].location = content
+                    }
+                }
+                self.myMealHistory.indices.forEach { index in
+                    if self.myMealHistory[index].id == meal.id {
+                        self.myMealHistory[index].location = content
                     }
                 }
             }
@@ -111,8 +130,12 @@ final class FeedMealModel: ObservableObject {
             try await FirebaseConnector.shared.deletePlate(meal: meal, plate: plate)
             try await FirebaseConnector.shared.deletePlateImage(plateId: plate.id)
             DispatchQueue.main.async {
+                self.currentMeal?.plates.removeAll(where: { $0.id == plate.id })
                 if let index = self.mealList.firstIndex(where: { $0.id == mealId }) {
                     self.mealList[index].plates.removeAll(where: { $0.id == plate.id })
+                }
+                if let index = self.myMealHistory.firstIndex(where: { $0.id == mealId }) {
+                    self.myMealHistory[index].plates.removeAll(where: { $0.id == plate.id })
                 }
             }
         }
@@ -138,6 +161,7 @@ final class FeedMealModel: ObservableObject {
             }
             DispatchQueue.main.async {
                 self.mealList.removeAll(where: { $0.id == mealId })
+                self.myMealHistory.removeAll(where: { $0.id == mealId })
                 self.commentList[mealId]?.removeAll()
                 self.myMealHistoryCommentList[mealId]?.removeAll()
             }
@@ -161,6 +185,7 @@ final class FeedMealModel: ObservableObject {
             try await FirebaseConnector.shared.deleteComment(commentId: commentId)
             DispatchQueue.main.async {
                 self.commentList[mealId]?.removeAll(where: {$0.id == commentId})
+                self.myMealHistoryCommentList[mealId]?.removeAll(where: {$0.id == commentId})
             }
         }
     }
