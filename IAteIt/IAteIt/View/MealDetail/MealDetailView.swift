@@ -36,6 +36,7 @@ struct MealDetailView: View {
                     TabView {
                         ForEach(meal.plates, id: \.id) { plate in
                             PhotoCardView(plate: plate)
+                                .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: .photoCorner))
                                 .contextMenu {
                                     if isMyMeal && (meal.plates.count > 1) {
                                         Button(role: .destructive, action: {

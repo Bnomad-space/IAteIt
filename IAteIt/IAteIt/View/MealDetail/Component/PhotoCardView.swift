@@ -13,7 +13,6 @@ struct PhotoCardView: View {
     
     var plate: Plate
     
-    let photoCorner: CGFloat = 20
     let iconSize: CGFloat = 48
     
     var body: some View {
@@ -21,7 +20,7 @@ struct PhotoCardView: View {
             Rectangle()
                 .aspectRatio(1, contentMode: .fit)
                 .foregroundColor(.white)
-                .innerShadow(cornerRadius: photoCorner, shadowRadius: 10)
+                .innerShadow(cornerRadius: .photoCorner, shadowRadius: 10)
             
             if let url = URL(string: plate.imageUrl) {
                 KFImage.url(url)
@@ -37,7 +36,7 @@ struct PhotoCardView: View {
                     .layoutPriority(-1)
             }
         }
-        .cornerRadius(20)
+        .cornerRadius(.photoCorner)
         .pinchZoom()
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 extension CGFloat {
     public static let paddingHorizontal: CGFloat = 16
+    public static let photoCorner: CGFloat = 20
 }
 
 enum Const {
