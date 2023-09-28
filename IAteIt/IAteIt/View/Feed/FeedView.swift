@@ -34,7 +34,7 @@ struct FeedView: View {
                 })
                 switch feedMeals.mealList.count != 0 {
                 case true:
-                    ForEach(feedMeals.mealList, id: \.id) { eachMeal in
+                    ForEach(feedMeals.mealList) { eachMeal in
                         if let mealOwner = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
                             if !loginState.blockedIds.contains(mealOwner.id) {
                                 VStack(spacing: 8) {
@@ -46,7 +46,7 @@ struct FeedView: View {
                                         .environmentObject(feedMeals)
                                     ) {
                                         TabView {
-                                            ForEach(eachMeal.plates, id: \.self) { plate in
+                                            ForEach(eachMeal.plates) { plate in
                                                 PhotoCardView(plate: plate)
                                                     .pinchZoom()
                                                     .padding(.horizontal, .paddingHorizontal)
@@ -74,6 +74,7 @@ struct FeedView: View {
                                         feedMeals.currentMeal = eachMeal
                                     })
                                 }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                     }

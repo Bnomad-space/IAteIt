@@ -103,8 +103,8 @@ struct EditProfileView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
-        .onAppear {
-            getAllUsernames()
+        .task {
+            self.usernameList = (try? await FirebaseConnector.shared.fetchAllUsernames()) ?? []
         }
         .navigationTitle("Edit Profile")
         .toolbar {
@@ -148,11 +148,6 @@ extension EditProfileView {
             return false
         } else {
             return true
-        }
-    }
-    func getAllUsernames() {
-        FirebaseConnector.shared.fetchAllUsernames { list in
-            self.usernameList = list
         }
     }
     func saveProfile() {
