@@ -8,8 +8,10 @@
 import Foundation
 
 extension CGFloat {
-    public static let paddingHorizontal: CGFloat = 16
-    public static let photoCorner: CGFloat = 20
+    static let paddingHorizontal: CGFloat = 16
+    static let buttonHitRegion: CGFloat = 44
+    static let commentBottomArea: CGFloat = 80
+    static let photoCorner: CGFloat = 20
 }
 
 enum Const {

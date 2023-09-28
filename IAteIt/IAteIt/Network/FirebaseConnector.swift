@@ -54,19 +54,20 @@ final class FirebaseConnector {
     }
     
     // 가입된 username 모두 가져오기
-    func fetchAllUsernames(completion: @escaping([String]) -> Void) {
-        var usernameList: [String] = []
-        
-        FirebaseConnector.users.getDocuments() { (snapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in snapshot!.documents {
-                    let dict = document.data()
-                    guard let username = dict["nickname"] as? String else { return }
-                    usernameList.append(username.lowercased())
+    func fetchAllUsernames() async throws -> [String] {
+        try await withCheckedThrowingContinuation { continuation in
+            FirebaseConnector.users.getDocuments() { (snapshot, error) in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    var usernameList: [String] = []
+                    for document in snapshot!.documents {
+                        let dict = document.data()
+                        guard let username = dict["nickname"] as? String else { return }
+                        usernameList.append(username.lowercased())
+                    }
+                    continuation.resume(returning: usernameList)
                 }
-                completion(usernameList)
             }
         }
     }

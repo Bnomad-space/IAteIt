@@ -70,8 +70,8 @@ struct SignUpView: View {
                 })
             }
         }
-        .onAppear {
-            getAllUsernames()
+        .task {
+            self.usernameList = (try? await FirebaseConnector.shared.fetchAllUsernames()) ?? []
         }
     }
 }
@@ -87,11 +87,6 @@ extension SignUpView {
             return false
         } else {
             return true
-        }
-    }
-    func getAllUsernames() {
-        FirebaseConnector.shared.fetchAllUsernames { list in
-            self.usernameList = list
         }
     }
 }
