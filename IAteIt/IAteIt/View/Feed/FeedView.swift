@@ -36,46 +36,44 @@ struct FeedView: View {
                 case true:
                     ForEach(feedMeals.mealList) { eachMeal in
                         if let mealOwner = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
-                            if !loginState.blockedIds.contains(mealOwner.id) {
-                                VStack(spacing: 8) {
-                                    FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
-                                        .padding(.horizontal, .paddingHorizontal)
-                                    NavigationLink(destination: MealDetailView(user: mealOwner, commentList: feedMeals.commentList)
-                                        .environmentObject(cameraViewModel)
-                                        .environmentObject(loginState)
-                                        .environmentObject(feedMeals)
-                                    ) {
-                                        TabView {
-                                            ForEach(eachMeal.plates) { plate in
-                                                PhotoCardView(plate: plate)
-                                                    .pinchZoom()
-                                                    .padding(.horizontal, .paddingHorizontal)
-                                            }
+                            VStack(spacing: 8) {
+                                FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
+                                    .padding(.horizontal, .paddingHorizontal)
+                                NavigationLink(destination: MealDetailView(user: mealOwner, commentList: feedMeals.commentList)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
+                                    TabView {
+                                        ForEach(eachMeal.plates) { plate in
+                                            PhotoCardView(plate: plate)
+                                                .pinchZoom()
+                                                .padding(.horizontal, .paddingHorizontal)
                                         }
                                     }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .frame(minHeight: 358)
-                                    .tabViewStyle(.page)
-                                    .simultaneousGesture(TapGesture().onEnded{
-                                        feedMeals.currentMeal = eachMeal
-                                    })
-                                    NavigationLink(destination: MealDetailView(user: mealOwner, commentList: feedMeals.commentList)
-                                        .environmentObject(cameraViewModel)
-                                        .environmentObject(loginState)
-                                        .environmentObject(feedMeals)
-                                    ) {
-                                        FeedFooterView(meal: eachMeal)
-                                            .padding(.horizontal, .paddingHorizontal)
-                                            .padding(.bottom, 24)
-                                            .environmentObject(feedMeals)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .simultaneousGesture(TapGesture().onEnded{
-                                        feedMeals.currentMeal = eachMeal
-                                    })
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .frame(minHeight: 358)
+                                .tabViewStyle(.page)
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    feedMeals.currentMeal = eachMeal
+                                })
+                                NavigationLink(destination: MealDetailView(user: mealOwner, commentList: feedMeals.commentList)
+                                    .environmentObject(cameraViewModel)
+                                    .environmentObject(loginState)
+                                    .environmentObject(feedMeals)
+                                ) {
+                                    FeedFooterView(meal: eachMeal)
+                                        .padding(.horizontal, .paddingHorizontal)
+                                        .padding(.bottom, 24)
+                                        .environmentObject(feedMeals)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    feedMeals.currentMeal = eachMeal
+                                })
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 default:

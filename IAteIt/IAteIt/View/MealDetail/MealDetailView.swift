@@ -98,7 +98,7 @@ struct MealDetailView: View {
                                                 }, label: {
                                                     Image(systemName: "ellipsis")
                                                         .frame(width: .buttonHitRegion, height: .buttonHitRegion)
-                                            }
+                                                })
                                             }
                                         }
                                     }
