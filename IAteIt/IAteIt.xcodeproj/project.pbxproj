@@ -74,6 +74,10 @@
 		DF2213A029BB293C000134FC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DF22139F29BB293C000134FC /* FirebaseStorage */; };
 		DF2213A229BB2ADC000134FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2213A129BB2ADC000134FC /* AppDelegate.swift */; };
 		DF2213A529BB324F000134FC /* FirebaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2213A429BB324F000134FC /* FirebaseConnector.swift */; };
+		DF443F1A2B64FA80009D6B30 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF443F192B64FA80009D6B30 /* Request.swift */; };
+		DF443F1C2B64FA85009D6B30 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF443F1B2B64FA85009D6B30 /* Response.swift */; };
+		DF443F1E2B66AA92009D6B30 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF443F1D2B66AA92009D6B30 /* HttpMethod.swift */; };
+		DF443F202B66AB49009D6B30 /* JwtRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF443F1F2B66AB49009D6B30 /* JwtRequired.swift */; };
 		DF883D4229B58F2C0029DC60 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4129B58F2C0029DC60 /* User.swift */; };
 		DF883D4629B58F3D0029DC60 /* Plate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4529B58F3D0029DC60 /* Plate.swift */; };
 		DF883D4829B58F430029DC60 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4729B58F430029DC60 /* Comment.swift */; };
@@ -145,6 +149,10 @@
 		DF22139A29BB2843000134FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF2213A129BB2ADC000134FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF2213A429BB324F000134FC /* FirebaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConnector.swift; sourceTree = "<group>"; };
+		DF443F192B64FA80009D6B30 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DF443F1B2B64FA85009D6B30 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		DF443F1D2B66AA92009D6B30 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
+		DF443F1F2B66AB49009D6B30 /* JwtRequired.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JwtRequired.swift; sourceTree = "<group>"; };
 		DF883D4129B58F2C0029DC60 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DF883D4529B58F3D0029DC60 /* Plate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plate.swift; sourceTree = "<group>"; };
 		DF883D4729B58F430029DC60 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -433,12 +441,24 @@
 		DF2213A329BB3215000134FC /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				DF443F182B64FA66009D6B30 /* Utils */,
 				DF2213A429BB324F000134FC /* FirebaseConnector.swift */,
 				7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */,
 				7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */,
 				040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		DF443F182B64FA66009D6B30 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DF443F192B64FA80009D6B30 /* Request.swift */,
+				DF443F1B2B64FA85009D6B30 /* Response.swift */,
+				DF443F1D2B66AA92009D6B30 /* HttpMethod.swift */,
+				DF443F1F2B66AB49009D6B30 /* JwtRequired.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -544,6 +564,8 @@
 				DF883D4829B58F430029DC60 /* Comment.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */,
+				DF443F1E2B66AA92009D6B30 /* HttpMethod.swift in Sources */,
+				DF443F1C2B64FA85009D6B30 /* Response.swift in Sources */,
 				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,
 				7E2E84EA2AA77B960056D007 /* WebView.swift in Sources */,
 				7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */,
@@ -578,9 +600,11 @@
 				7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
 				7E229BD32A5DCA45009020BB /* PlateImageErrorView.swift in Sources */,
+				DF443F1A2B64FA80009D6B30 /* Request.swift in Sources */,
 				7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */,
 				7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */,
 				7E229BD12A5DC414009020BB /* InnerShadowModifier.swift in Sources */,
+				DF443F202B66AB49009D6B30 /* JwtRequired.swift in Sources */,
 				7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */,
 				0487509B29B83DBD006836D1 /* FeedFooterView.swift in Sources */,
 				7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */,
