@@ -25,6 +25,10 @@ extension View {
     func innerShadow(cornerRadius: CGFloat, shadowRadius: CGFloat) -> some View {
         modifier(InnerShadowModifier(cornerRadius: cornerRadius, shadowRadius: shadowRadius))
     }
+    
+    func maxCornerRadius() -> some View {
+        modifier(MaxCornerRadius())
+    }
 }
 
 // MARK: - PinchZoom

@@ -18,7 +18,7 @@ struct LoginView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
                 Text(loginState.type.setLoginViewTitle())
                     .font(.title)
                     .fontWeight(.bold)
@@ -42,6 +42,13 @@ struct LoginView: View {
                     RoundedRectangle(cornerRadius: 25)
                         .stroke(.black, lineWidth: 1)
                 )
+                .padding([.bottom], 12)
+                
+                Button {
+                    print("sign in with google tapped")
+                } label: {
+                    signInWithGoogleButton
+                }
                 .padding([.bottom], 32)
                 
 //                if loginState.type == .createAccount {
@@ -60,6 +67,20 @@ struct LoginView: View {
                 ) {}
             }
         }
+    }
+    
+    var signInWithGoogleButton: some View {
+        ZStack {
+            HStack {
+                Image(.googleLogo)
+                
+                Text("Sign in with Google")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(.black)
+            }
+        }
+        .background(.white)
+        .maxCornerRadius()
     }
 }
 
