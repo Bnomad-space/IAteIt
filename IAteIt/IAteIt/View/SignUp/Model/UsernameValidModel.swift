@@ -15,6 +15,10 @@ class UsernameValidModel: ObservableObject {
     @Published var usernameList: [String] = []
     
     init() {
+        getUsernameList()
+    }
+    
+    func getUsernameList() {
         Task {
             self.usernameList = try await FirebaseConnector.shared.fetchAllUsernames()
         }
