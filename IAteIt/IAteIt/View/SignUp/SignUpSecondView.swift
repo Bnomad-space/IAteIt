@@ -87,7 +87,7 @@ extension SignUpSecondView {
         var user = User(id: loginState.appleUid, nickname: loginState.username)
         Task {
             if let image = selectedImage {
-                let imageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: loginState.appleUid, image: image)
+                let imageUrl = try await FirebaseConnector.shared.uploadProfileImage(userId: user.id, image: image)
                 user.profileImageUrl = imageUrl
             }
             try await FirebaseConnector.shared.setNewUser(user: user)

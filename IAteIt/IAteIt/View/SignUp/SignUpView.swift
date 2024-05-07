@@ -10,19 +10,16 @@ import SwiftUI
 struct SignUpView: View {
     @ObservedObject var loginState: LoginStateModel
     @ObservedObject var feedMeals: FeedMealModel
+    @StateObject var usernameValidModel = UsernameValidModel()
     @FocusState private var isFocused: Bool
-    @State var username = ""
-    @State var isValidFormat: Bool = false
-    @State var isUnique: Bool = true
-    @State var usernameList: [String] = []
     
     var body: some View {
         VStack {
             Text("Please create your username.")
                 .font(.headline)
                 .padding(.top, 60)
-            TextField("username", text: $username)
-                .limitTextLength($username, to: 16)
+            TextField("username", text: $usernameValidModel.text)
+                .limitTextLength($usernameValidModel.text, to: 16)
                 .textCase(.lowercase)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
@@ -30,18 +27,16 @@ struct SignUpView: View {
                 .onAppear() {
                     isFocused = true
                 }
-                .onChange(of: username) { _ in
-                    username = username.replacingOccurrences(of: " ", with: "")
-                    isValidFormat = testValidUsername(testString: username)
-                    isUnique = testUnique(testString: username.lowercased())
+                .onChange(of: usernameValidModel.text) { _ in
+                    usernameValidModel.updateConstraints()
                 }
                 .font(Font.title2.weight(.bold))
                 .multilineTextAlignment(.center)
                 .padding(.top, 40)
-            Text("\(username.count) / 16")
+            Text("\(usernameValidModel.textCount()) / 16")
                 .font(.caption2)
-                .foregroundColor(.gray)
-            if !isUnique {
+                .foregroundColor(usernameValidModel.textValidColor())
+            if !usernameValidModel.ifIsUnique() {
                 Text("This username is already taken.")
                     .font(.caption2)
                     .foregroundColor(Color(UIColor.systemRed))
@@ -63,30 +58,12 @@ struct SignUpView: View {
                     BottomButtonView(label: "Next")
                 })
                 .disabled(
-                    !isValidFormat || !isUnique
+                    usernameValidModel.buttonDisable()
                 )
                 .simultaneousGesture(TapGesture().onEnded {
-                    loginState.username = username.lowercased()
+                    loginState.username = usernameValidModel.text.lowercased()
                 })
             }
-        }
-        .task {
-            self.usernameList = (try? await FirebaseConnector.shared.fetchAllUsernames()) ?? []
-        }
-    }
-}
-
-extension SignUpView {
-    func testValidUsername(testString: String?) -> Bool {
-        let regEx = "^[a-zA-Z][a-zA-Z0-9]{3,15}$"
-        let usernameTest = NSPredicate(format:"SELF MATCHES %@", regEx)
-        return usernameTest.evaluate(with: testString)
-    }
-    func testUnique(testString: String) -> Bool {
-        if usernameList.contains(testString) {
-            return false
-        } else {
-            return true
         }
     }
 }

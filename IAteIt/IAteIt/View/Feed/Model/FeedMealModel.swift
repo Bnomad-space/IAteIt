@@ -23,7 +23,7 @@ final class FeedMealModel: ObservableObject {
     
     @MainActor
     func getMealListIn24Hours() {
-        Task { 
+        Task {
             guard let currentUserId = Auth.auth().currentUser?.uid else { return }
             var fetchedMealList = try await FirebaseConnector.shared.fetchMealIn24Hours(date: Date())
             if let currentUser = allUsers.first(where: { $0.id == currentUserId }) {

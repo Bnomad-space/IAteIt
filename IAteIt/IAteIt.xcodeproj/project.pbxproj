@@ -75,6 +75,7 @@
 		DF883D4229B58F2C0029DC60 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4129B58F2C0029DC60 /* User.swift */; };
 		DF883D4629B58F3D0029DC60 /* Plate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4529B58F3D0029DC60 /* Plate.swift */; };
 		DF883D4829B58F430029DC60 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4729B58F430029DC60 /* Comment.swift */; };
+		DF92284C2BEA293C00B16197 /* UsernameValidModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF92284B2BEA293C00B16197 /* UsernameValidModel.swift */; };
 		DFD52CE429CB127D00E86F9F /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD52CE329CB127D00E86F9F /* Meal.swift */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +145,7 @@
 		DF883D4129B58F2C0029DC60 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DF883D4529B58F3D0029DC60 /* Plate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plate.swift; sourceTree = "<group>"; };
 		DF883D4729B58F430029DC60 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		DF92284B2BEA293C00B16197 /* UsernameValidModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameValidModel.swift; sourceTree = "<group>"; };
 		DFD52CE329CB127D00E86F9F /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,6 +228,7 @@
 			children = (
 				7E48DC2429F93E1F0079E896 /* LoginStateModel.swift */,
 				7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */,
+				DF92284B2BEA293C00B16197 /* UsernameValidModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				7E6528CF2A9AE434004F466B /* ProfileImageErrorView.swift in Sources */,
 				7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */,
 				DF883D4829B58F430029DC60 /* Comment.swift in Sources */,
+				DF92284C2BEA293C00B16197 /* UsernameValidModel.swift in Sources */,
 				7E6069D529A5CAFA00284CBD /* MyProfileView.swift in Sources */,
 				045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */,
 				8C73F00329BDD010007D1A1E /* MealListView.swift in Sources */,
