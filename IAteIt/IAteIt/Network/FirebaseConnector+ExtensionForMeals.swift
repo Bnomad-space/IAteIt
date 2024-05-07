@@ -51,7 +51,7 @@ extension FirebaseConnector {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
             throw URLError(.badServerResponse)
         }
-        let returnedMetaData = try await imageRef.putDataAsync(imageData, metadata: nil)
+        let _ = try await imageRef.putDataAsync(imageData, metadata: nil)
         let imageUrl: URL = try await imageRef.downloadURL()
         
         return imageUrl.absoluteString
