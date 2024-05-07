@@ -18,7 +18,7 @@ class UsernameValidModel: ObservableObject {
         getUsernameList()
     }
     
-    func getUsernameList() {
+    private func getUsernameList() {
         Task {
             self.usernameList = try await FirebaseConnector.shared.fetchAllUsernames()
         }
@@ -34,13 +34,13 @@ class UsernameValidModel: ObservableObject {
         self.isUnique = testUnique(testString: text)
     }
     
-    func testValidUsername(testString: String?) -> Bool {
+    private func testValidUsername(testString: String?) -> Bool {
         let regEx = "^[a-zA-Z][a-zA-Z0-9]{3,15}$"
         let usernameTest = NSPredicate(format:"SELF MATCHES %@", regEx)
         return usernameTest.evaluate(with: testString)
     }
     
-    func testUnique(testString: String) -> Bool {
+    private func testUnique(testString: String) -> Bool {
         if usernameList.contains(testString.lowercased()) {
             return false
         } else {
