@@ -13,14 +13,6 @@ import SwiftUI
 
 final class FirebaseConnector {
     
-    /*
-     TODO: - 논의된 모델로 Firebase에는 어떻게 저장할 건지 다시 바꿔주어야 함
-     
-     사용 방법:
-     FirebaseConnector.users.document("testDocument").setData(["id":"randomId", "nickname":"jake", "profileImageUrl":"blah"])
-     
-     */
-    
     static let shared = FirebaseConnector()
     static let users = Firestore.firestore().collection("users")
     
@@ -124,14 +116,9 @@ final class FirebaseConnector {
     // user 데이터 가져오기
     func fetchUser(id: String) async throws -> User {
         let snapshot = try await FirebaseConnector.users.document(id).getDocument()
-        guard let data = snapshot.data(),
-              let nickname = data["nickname"] as? String
-        else { throw URLError(.badServerResponse) }
-        let profileImageUrl = data["profileImageUrl"] as? String
-        let blockedId = data["blockedId"] as? [String]
-        let user = User(id: id, nickname: nickname, profileImageUrl: profileImageUrl, blockedId: blockedId)
-            
-        return user
+        guard let data = snapshot.data() else { throw URLError(.badServerResponse) }
+        
+        return User(id: id, data: data)
     }
     
     // user profile 이미지 업로드
@@ -141,7 +128,7 @@ final class FirebaseConnector {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
             throw URLError(.badServerResponse)
         }
-        let returnedMetaData = try await imageRef.putDataAsync(imageData, metadata: nil)
+        let _ = try await imageRef.putDataAsync(imageData, metadata: nil)
         let imageUrl: URL = try await imageRef.downloadURL()
         
         return imageUrl.absoluteString
