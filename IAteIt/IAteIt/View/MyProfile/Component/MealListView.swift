@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct MealListView: View {
-    @EnvironmentObject var loginState: LoginStateModel
-    @EnvironmentObject var feedMeals: FeedMealModel
-    @EnvironmentObject var cameraViewModel: CameraViewModel
+    @EnvironmentObject var loginState: LoginStateStore
+    @EnvironmentObject var feedMeals: FeedMealStore
+    @EnvironmentObject var cameraStore: CameraStore
     @State private var isActive: Bool = false
     @State private var selectedMeal: Meal = Meal.meal1
     
@@ -41,10 +41,7 @@ struct MealListView: View {
             
             ZStack {
                 NavigationLink(
-                    destination: MealDetailView(meal: selectedMeal, user: user, commentList: feedMeals.myMealHistoryCommentList)
-                        .environmentObject(cameraViewModel)
-                        .environmentObject(loginState)
-                        .environmentObject(feedMeals),
+                    destination: MealDetailView(meal: selectedMeal, user: user, commentList: feedMeals.myMealHistoryCommentList),
                     isActive: $isActive,
                     label: { EmptyView() }
                 )
@@ -57,9 +54,6 @@ struct MealListView: View {
                             ForEach(meals, id: \.uploadDate) { meal in
                                 NavigationLink {
                                     MealDetailView(meal: meal, user: user, commentList: feedMeals.myMealHistoryCommentList)
-                                        .environmentObject(cameraViewModel)
-                                        .environmentObject(loginState)
-                                        .environmentObject(feedMeals)
                                 } label: {
                                     ZStack {
                                         Rectangle()

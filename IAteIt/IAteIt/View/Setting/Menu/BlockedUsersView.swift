@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BlockedUsersView: View {
-    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var loginState: LoginStateStore
     
     var body: some View {
         ScrollView {
@@ -16,7 +16,6 @@ struct BlockedUsersView: View {
                 if loginState.blockedUsers.count > 0 {
                     ForEach(loginState.blockedUsers, id:\.self) { blockedUser in
                         BlockedUserView(user: blockedUser)
-                            .environmentObject(loginState)
                     }
                 } else {
                     VStack(alignment: .center){

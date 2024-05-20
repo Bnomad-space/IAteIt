@@ -10,9 +10,9 @@ import AVFoundation
 
 struct CameraView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var loginState: LoginStateModel
-    @EnvironmentObject var feedMeals: FeedMealModel
-    @ObservedObject var viewModel: CameraViewModel
+    @EnvironmentObject var loginState: LoginStateStore
+    @EnvironmentObject var feedMeals: FeedMealStore
+    @EnvironmentObject var cameraStore: CameraStore
     @ObservedObject var model = Camera()
     
     var mealAddPlateTo: Meal?
@@ -30,7 +30,7 @@ struct CameraView: View {
         VStack {
             HStack {
                 Button(action: {
-                    viewModel.stopCamera()
+                    cameraStore.stopCamera()
                     dismiss()
                 }, label: {
                     Image(systemName: "multiply")
@@ -51,9 +51,9 @@ struct CameraView: View {
             }
             
             ZStack {
-                viewModel.cameraPreview
+                cameraStore.cameraPreview
                     .onAppear {
-                        viewModel.configure()
+                        cameraStore.configure()
                         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) {
                             timer in currentTime = Date()
                         }
@@ -78,11 +78,11 @@ struct CameraView: View {
                     }
                 
                 
-                if viewModel.isTaken {
+                if cameraStore.isTaken {
                     VStack {
                         Spacer()
                         HStack {
-                            Button(action: viewModel.reTake, label: {
+                            Button(action: cameraStore.reTake, label: {
                                 Capsule()
                                     .overlay(
                                         HStack {
@@ -98,9 +98,9 @@ struct CameraView: View {
                             Spacer()
                             
                             Button(action: {
-                                viewModel.upload()
+                                cameraStore.upload()
                                 Task {
-                                    if viewModel.type == .newMeal {
+                                    if cameraStore.type == .newMeal {
                                         saveNewMeal()
                                     } else {
                                         saveAddPlate()
@@ -111,7 +111,7 @@ struct CameraView: View {
                                 Capsule()
                                     .overlay(
                                         HStack {
-                                            Text("\(viewModel.type.setButtonText())  \(Image(systemName: "arrow.right"))")
+                                            Text("\(cameraStore.type.setButtonText())  \(Image(systemName: "arrow.right"))")
                                                 .font(.title3)
                                                 .fontWeight(.semibold)
                                                 .foregroundColor(.white)
@@ -130,7 +130,7 @@ struct CameraView: View {
                         
                         Button(action: {
                             if !isButtonDisabled {
-                                viewModel.capturePhoto()
+                                cameraStore.capturePhoto()
                                 isButtonDisabled = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                     isButtonDisabled = false
@@ -152,7 +152,7 @@ struct CameraView: View {
 extension CameraView {
     func saveNewMeal() {
         guard let userId = loginState.user?.id,
-              let image = viewModel.imageToBeUploaded
+              let image = cameraStore.imageToBeUploaded
         else { return }
         
         var meal = Meal(userId: userId, uploadDate: Date(), plates: [])
@@ -172,7 +172,7 @@ extension CameraView {
     func saveAddPlate() {
         guard let meal = mealAddPlateTo else { return }
         guard let mealId = mealAddPlateTo?.id,
-              let image = viewModel.imageToBeUploaded
+              let image = cameraStore.imageToBeUploaded
         else { return }
         
         var plate = Plate(id: UUID().uuidString, mealId: mealId, imageUrl: "", uploadDate: Date())
@@ -191,6 +191,6 @@ extension CameraView {
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView(viewModel: CameraViewModel())
+        CameraView()
     }
 }

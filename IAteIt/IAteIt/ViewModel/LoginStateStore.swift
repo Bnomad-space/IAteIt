@@ -1,5 +1,5 @@
 //
-//  LoginState.swift
+//  LoginStateStore.swift
 //  IAteIt
 //
 //  Created by Eunbee Kang on 2023/04/26.
@@ -11,7 +11,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
-class LoginStateModel: ObservableObject {
+class LoginStateStore: ObservableObject {
     @Published var appleUid: String = ""
     @Published var username: String = ""
     @Published var user: User?

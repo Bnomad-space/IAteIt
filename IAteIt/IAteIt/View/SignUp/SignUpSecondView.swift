@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SignUpSecondView: View {
-    @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
+    @ObservedObject var loginState: LoginStateStore
+    @ObservedObject var feedMeals: FeedMealStore
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
@@ -103,6 +103,6 @@ extension SignUpSecondView {
 
 struct SignUpSecondView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpSecondView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        SignUpSecondView(loginState: LoginStateStore(), feedMeals: FeedMealStore())
     }
 }

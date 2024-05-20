@@ -13,7 +13,7 @@ struct ReportView: View {
     var meal: Meal
     var user: User
     var reason = ""
-    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var loginState: LoginStateStore
     @Binding var isReportPresented: Bool
     @State private var isAlertPresented: Bool = false
     @State private var text: String = ""

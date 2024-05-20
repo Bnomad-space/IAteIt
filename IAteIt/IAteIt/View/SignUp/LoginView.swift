@@ -12,8 +12,8 @@ import SwiftUI
 
 struct LoginView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var loginState: LoginStateModel
-    @ObservedObject var feedMeals: FeedMealModel
+    @ObservedObject var loginState: LoginStateStore
+    @ObservedObject var feedMeals: FeedMealStore
     @State var currentNonce: String?
     
     var body: some View {
@@ -100,6 +100,6 @@ extension LoginView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginState: LoginStateModel(), feedMeals: FeedMealModel())
+        LoginView(loginState: LoginStateStore(), feedMeals: FeedMealStore())
     }
 }

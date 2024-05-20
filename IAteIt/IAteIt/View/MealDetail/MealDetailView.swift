@@ -10,9 +10,9 @@ import MessageUI
 
 struct MealDetailView: View {
     @StateObject var commentBar = CommentBar()
-    @EnvironmentObject var cameraViewModel: CameraViewModel
-    @EnvironmentObject var loginState: LoginStateModel
-    @EnvironmentObject var feedMeals: FeedMealModel
+    @EnvironmentObject var cameraStore: CameraStore
+    @EnvironmentObject var loginState: LoginStateStore
+    @EnvironmentObject var feedMeals: FeedMealStore
     @State private var navTitleText = ""
     @State private var isMyMeal = false
     @State private var isTodayMeal = false
@@ -64,20 +64,19 @@ struct MealDetailView: View {
                         HStack {
                             Spacer()
                             Button(action: {
-                                cameraViewModel.reset()
-                                cameraViewModel.type = .addPlate
+                                cameraStore.getReadyForCameraView(.addPlate)
                                 isCameraViewPresented.toggle()
                             }, label: {
                                 AddPlateButtonView()
                             })
                         }
                         .padding(.horizontal, .paddingHorizontal)
-                        .fullScreenCover(isPresented: $isCameraViewPresented, content: {
-                            CameraView(viewModel: cameraViewModel, mealAddPlateTo: meal)
-                                .environmentObject(loginState)
-                                .environmentObject(feedMeals)
-                        })
+                        .fullScreenCover(
+                            isPresented: $isCameraViewPresented,
+                            content: { CameraView(mealAddPlateTo: meal) }
+                        )
                     }
+                    
                     VStack(alignment: .leading, spacing: 12) {
                         ForEach(commentList[meal.id!] ?? [], id:\.self) { comment in
                             if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
@@ -158,8 +157,7 @@ struct MealDetailView: View {
         })
         .sheet(isPresented: $isReportPresented) {
             ReportView(meal: meal, user: user, isReportPresented: $isReportPresented)
-                    .environmentObject(loginState)
-                }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                     Menu(content: {

@@ -9,7 +9,7 @@ import SwiftUI
 import AVFoundation
 import Combine
 
-class CameraViewModel: ObservableObject {
+class CameraStore: ObservableObject {
     private let model: Camera
     private let session: AVCaptureSession
     private var isCameraBusy = false
@@ -54,6 +54,11 @@ class CameraViewModel: ObservableObject {
     
     func configure() {
         model.requestAndCheckPermissions()
+    }
+    
+    func getReadyForCameraView(_ type: types) {
+        reset()
+        self.type = type
     }
     
     func capturePhoto() {

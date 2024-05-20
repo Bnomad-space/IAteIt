@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct BlockedUserView: View {
-    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var loginState: LoginStateStore
     @State private var error: KingfisherError?
     
     let profilePicSize: CGFloat = 36

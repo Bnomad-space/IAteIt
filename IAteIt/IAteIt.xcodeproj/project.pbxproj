@@ -29,7 +29,7 @@
 		7E229BD32A5DCA45009020BB /* PlateImageErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */; };
 		7E2B2DAD29DE9304009EC0ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2B2DAC29DE9304009EC0ED /* Constants.swift */; };
 		7E2E84EA2AA77B960056D007 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2E84E92AA77B960056D007 /* WebView.swift */; };
-		7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */; };
+		7E407CCC2A044D1B001CAFBF /* FeedMealStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCB2A044D1B001CAFBF /* FeedMealStore.swift */; };
 		7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */; };
 		7E407CD02A0558A3001CAFBF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E407CCF2A0558A3001CAFBF /* FirebaseFirestoreSwift */; };
 		7E407CD22A0BEBEF001CAFBF /* AddPlateButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E407CD12A0BEBEF001CAFBF /* AddPlateButtonView.swift */; };
@@ -40,7 +40,7 @@
 		7E48DC1C29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */; };
 		7E48DC1E29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */; };
 		7E48DC2129F810420079E896 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7E48DC2029F810420079E896 /* FirebaseAuth */; };
-		7E48DC2529F93E1F0079E896 /* LoginStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC2429F93E1F0079E896 /* LoginStateModel.swift */; };
+		7E48DC2529F93E1F0079E896 /* LoginStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DC2429F93E1F0079E896 /* LoginStateStore.swift */; };
 		7E6069CD29A5CADE00284CBD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CC29A5CADE00284CBD /* SignUpView.swift */; };
 		7E6069D329A5CAF300284CBD /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D229A5CAF300284CBD /* MealDetailView.swift */; };
 		7E6069E029A7A7B400284CBD /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069DF29A7A7B400284CBD /* CommentView.swift */; };
@@ -102,7 +102,7 @@
 		7E229BD22A5DCA45009020BB /* PlateImageErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageErrorView.swift; sourceTree = "<group>"; };
 		7E2B2DAC29DE9304009EC0ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E2E84E92AA77B960056D007 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMealModel.swift; sourceTree = "<group>"; };
+		7E407CCB2A044D1B001CAFBF /* FeedMealStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMealStore.swift; sourceTree = "<group>"; };
 		7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataResultModel.swift; sourceTree = "<group>"; };
 		7E407CD12A0BEBEF001CAFBF /* AddPlateButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlateButtonView.swift; sourceTree = "<group>"; };
 		7E407CD42A0E5DA4001CAFBF /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		7E42C95629DC112B00ABE32D /* MealDetailTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailTopView.swift; sourceTree = "<group>"; };
 		7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForMeals.swift"; sourceTree = "<group>"; };
 		7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseConnector+ExtensionForComments.swift"; sourceTree = "<group>"; };
-		7E48DC2429F93E1F0079E896 /* LoginStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStateModel.swift; sourceTree = "<group>"; };
+		7E48DC2429F93E1F0079E896 /* LoginStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStateStore.swift; sourceTree = "<group>"; };
 		7E6069CC29A5CADE00284CBD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		7E6069CE29A5CAE500284CBD /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		7E6069D229A5CAF300284CBD /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
@@ -180,14 +180,6 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		7E407CCA2A044CBC001CAFBF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				7E407CCB2A044D1B001CAFBF /* FeedMealModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		7E407CD32A0E5D83001CAFBF /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,16 +215,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7E48DC2629F9439B0079E896 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				7E48DC2429F93E1F0079E896 /* LoginStateModel.swift */,
-				7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */,
-				DF92284B2BEA293C00B16197 /* UsernameValidModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		7E6069C629A5CA6900284CBD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,7 +231,6 @@
 		7E6069C729A5CA7400284CBD /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				7E48DC2629F9439B0079E896 /* Model */,
 				7E9FEF3329DEA052002E7211 /* Component */,
 				7E6069CC29A5CADE00284CBD /* SignUpView.swift */,
 				7E9FEF3629DEBAA9002E7211 /* SignUpSecondView.swift */,
@@ -261,7 +242,6 @@
 		7E6069C829A5CA7B00284CBD /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				7E407CCA2A044CBC001CAFBF /* Model */,
 				04C1189129B74D410073EDB7 /* Component */,
 				04C1188F29B74BF40073EDB7 /* FeedView.swift */,
 			);
@@ -271,7 +251,6 @@
 		7E6069C929A5CA9600284CBD /* MealDetail */ = {
 			isa = PBXGroup;
 			children = (
-				7EDF91AC29EE8ECB00FB23A8 /* Model */,
 				7E6069DE29A7995400284CBD /* Component */,
 				7E6069D229A5CAF300284CBD /* MealDetailView.swift */,
 			);
@@ -291,8 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				7E6069CE29A5CAE500284CBD /* CameraView.swift */,
-				630BA6BF29AF57BE00019F2E /* Camera.swift */,
-				630BA6C129AF57F700019F2E /* CameraViewModel.swift */,
 				6366BA1D29B613C1004374BE /* CameraPreviewView.swift */,
 			);
 			path = Upload;
@@ -301,6 +278,7 @@
 		7E6069D629A5CAFF00284CBD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7E407CCD2A04F682001CAFBF /* AuthDataResultModel.swift */,
 				DF883D4129B58F2C0029DC60 /* User.swift */,
 				DF883D4529B58F3D0029DC60 /* Plate.swift */,
 				DF883D4729B58F430029DC60 /* Comment.swift */,
@@ -360,20 +338,25 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		7E78A2E62BF244FE005D2995 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7E48DC2429F93E1F0079E896 /* LoginStateStore.swift */,
+				7E407CCB2A044D1B001CAFBF /* FeedMealStore.swift */,
+				7EDF91A829E97CD800FB23A8 /* CommentBar.swift */,
+				630BA6BF29AF57BE00019F2E /* Camera.swift */,
+				630BA6C129AF57F700019F2E /* CameraViewModel.swift */,
+				DF92284B2BEA293C00B16197 /* UsernameValidModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		7E9FEF3329DEA052002E7211 /* Component */ = {
 			isa = PBXGroup;
 			children = (
 				7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */,
 			);
 			path = Component;
-			sourceTree = "<group>";
-		};
-		7EDF91AC29EE8ECB00FB23A8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				7EDF91A829E97CD800FB23A8 /* CommentBar.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		7EFFE27B29A5228D0021B9FE = {
@@ -400,9 +383,10 @@
 				7E6069DD29A5CB9E00284CBD /* Application */,
 				7E6069D629A5CAFF00284CBD /* Model */,
 				DF2213A329BB3215000134FC /* Network */,
-				7EFFE28D29A5228F0021B9FE /* Preview Content */,
 				7E6069D929A5CB1E00284CBD /* Utility */,
 				7E6069C629A5CA6900284CBD /* View */,
+				7E78A2E62BF244FE005D2995 /* ViewModel */,
+				7EFFE28D29A5228F0021B9FE /* Preview Content */,
 			);
 			path = IAteIt;
 			sourceTree = "<group>";
@@ -545,7 +529,7 @@
 				045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */,
 				7E2E84EA2AA77B960056D007 /* WebView.swift in Sources */,
 				7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */,
-				7E48DC2529F93E1F0079E896 /* LoginStateModel.swift in Sources */,
+				7E48DC2529F93E1F0079E896 /* LoginStateStore.swift in Sources */,
 				7E407CD52A0E5DA4001CAFBF /* SettingView.swift in Sources */,
 				040EB7332A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift in Sources */,
 				7EDF91AB29E989BD00FB23A8 /* View+Extension.swift in Sources */,
@@ -571,7 +555,7 @@
 				7E42C95729DC112B00ABE32D /* MealDetailTopView.swift in Sources */,
 				04E9931929B9E0CB00BE3F91 /* ProfilePhotoButtonView.swift in Sources */,
 				7E229BD32A5DCA45009020BB /* PlateImageErrorView.swift in Sources */,
-				7E407CCC2A044D1B001CAFBF /* FeedMealModel.swift in Sources */,
+				7E407CCC2A044D1B001CAFBF /* FeedMealStore.swift in Sources */,
 				7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */,
 				7E229BD12A5DC414009020BB /* InnerShadowModifier.swift in Sources */,
 				7E407CCE2A04F682001CAFBF /* AuthDataResultModel.swift in Sources */,
@@ -737,7 +721,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Bnomad.IAteIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = IAteItProvisioningProfile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = IAteItDevelopmentProfile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -782,7 +766,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Bnomad.IAteIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = IAteItProvisioningProfile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = IAteItDevelopmentProfile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

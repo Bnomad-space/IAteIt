@@ -10,9 +10,9 @@ import Firebase
 import FirebaseFirestore
 
 struct FeedView: View {
-    @StateObject var cameraViewModel = CameraViewModel()
-    @EnvironmentObject var loginState: LoginStateModel
-    @EnvironmentObject var feedMeals: FeedMealModel
+    @EnvironmentObject var cameraStore: CameraStore
+    @EnvironmentObject var loginState: LoginStateStore
+    @EnvironmentObject var feedMeals: FeedMealStore
     @State private var isCameraViewPresented = false
     @Binding var isActive: Bool
     
@@ -20,8 +20,7 @@ struct FeedView: View {
         ScrollView(showsIndicators: false) {
             VStack {
                 Button(action: {
-                    cameraViewModel.reset()
-                    cameraViewModel.type = .newMeal
+                    cameraStore.getReadyForCameraView(.newMeal)
                     isCameraViewPresented.toggle()
                 }, label: {
                     AddMealView()
@@ -29,9 +28,11 @@ struct FeedView: View {
                         .padding(.horizontal, .paddingHorizontal)
                 })
                 .tint(.black)
-                .fullScreenCover(isPresented: $isCameraViewPresented, content: {
-                    CameraView(viewModel: cameraViewModel)
-                })
+                .fullScreenCover(
+                    isPresented: $isCameraViewPresented,
+                    content: { CameraView() }
+                )
+                
                 switch feedMeals.mealList.count != 0 {
                 case true:
                     ForEach(feedMeals.mealList) { eachMeal in
@@ -40,9 +41,6 @@ struct FeedView: View {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
                                     .padding(.horizontal, .paddingHorizontal)
                                 NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
-                                    .environmentObject(cameraViewModel)
-                                    .environmentObject(loginState)
-                                    .environmentObject(feedMeals)
                                 ) {
                                     TabView {
                                         ForEach(eachMeal.plates, id: \.self) { plate in
@@ -55,14 +53,10 @@ struct FeedView: View {
                                 .frame(minHeight: 358)
                                 .tabViewStyle(.page)
                                 NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
-                                    .environmentObject(cameraViewModel)
-                                    .environmentObject(loginState)
-                                    .environmentObject(feedMeals)
                                 ) {
                                     FeedFooterView(meal: eachMeal)
                                         .padding(.horizontal, .paddingHorizontal)
                                         .padding(.bottom, 24)
-                                        .environmentObject(feedMeals)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
@@ -90,9 +84,7 @@ struct FeedView: View {
                 NavigationLink(
                     destination:
                         MyProfileView()
-                        .environmentObject(loginState)
-                        .environmentObject(feedMeals)
-                        .environmentObject(cameraViewModel),
+                    ,
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
@@ -113,6 +105,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel(), isActive: .constant(false))
+        FeedView(isActive: .constant(false))
     }
 }

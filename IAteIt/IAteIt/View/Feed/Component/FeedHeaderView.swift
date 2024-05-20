@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct FeedHeaderView: View {
-    @ObservedObject var feedMeals: FeedMealModel
+    @ObservedObject var feedMeals: FeedMealStore
     @State private var error: KingfisherError?
     
     let profilePicSize: CGFloat = 36
@@ -67,6 +67,6 @@ struct FeedHeaderView: View {
 
 struct FeedHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(cameraViewModel: CameraViewModel(), isActive: .constant(false))
+        FeedView(isActive: .constant(false))
     }
 }
