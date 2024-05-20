@@ -40,10 +40,11 @@ struct FeedView: View {
                             VStack(spacing: 8) {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
                                     .padding(.horizontal, .paddingHorizontal)
+                                
                                 NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
                                 ) {
                                     TabView {
-                                        ForEach(eachMeal.plates, id: \.self) { plate in
+                                        ForEach(eachMeal.plates, id: \.id) { plate in
                                             PhotoCardView(plate: plate)
                                                 .padding(.horizontal, .paddingHorizontal)
                                         }
@@ -52,6 +53,7 @@ struct FeedView: View {
                                 .buttonStyle(PlainButtonStyle())
                                 .frame(minHeight: 358)
                                 .tabViewStyle(.page)
+                                
                                 NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
                                 ) {
                                     FeedFooterView(meal: eachMeal)
@@ -62,6 +64,7 @@ struct FeedView: View {
                             }
                         }
                     }
+                    
                 default:
                     Spacer()
                     EmptyMealView()
@@ -73,7 +76,9 @@ struct FeedView: View {
             do {
                 try await Task.sleep(nanoseconds: 1_000_000_000)
                 feedMeals.refreshMealsAndUsers()
-            } catch {print("Error refreshing data: \(error)")}
+            } catch {
+                print("Error refreshing data: \(error)")
+            }
         }
         .navigationBarItems(leading:
                                 FeedTitleView()
@@ -82,9 +87,7 @@ struct FeedView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(
-                    destination:
-                        MyProfileView()
-                    ,
+                    destination: MyProfileView(),
                     isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
@@ -97,9 +100,10 @@ struct FeedView: View {
             }
         }
         .navigationTitle("")
-        .fullScreenCover(isPresented: self.$loginState.isAppleLoginRequired, content: {
-            LoginView(loginState: loginState, feedMeals: feedMeals)
-        })
+        .fullScreenCover(
+            isPresented: $loginState.isAppleLoginRequired,
+            content: { LoginView(loginState: loginState, feedMeals: feedMeals) }
+        )
     }
 }
 

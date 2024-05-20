@@ -18,26 +18,20 @@ struct MealListView: View {
     var meals: [Meal]
     var user: User
     
+    var isToday: Bool {
+        date == Date().toDateString() ? true : false
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
-            if date == Date().toDateString() {
-                HStack {
-                    Text("Today")
-                        .font(.footnote)
-                        .fontWeight(.semibold)
-                    Spacer()
-                }
-                .padding(.horizontal, .paddingHorizontal)
-                .padding(.bottom, 10)
-            } else {
-                HStack {
-                    Text(date)
-                        .font(.footnote)
-                    Spacer()
-                }
-                .padding(.horizontal, .paddingHorizontal)
-                .padding(.bottom, 10)
+            HStack {
+                Text(isToday ? "Today" : date)
+                    .font(.footnote)
+                    .fontWeight(isToday ? .semibold : .regular)
+                Spacer()
             }
+            .padding(.horizontal, .paddingHorizontal)
+            .padding(.bottom, 10)
             
             ZStack {
                 NavigationLink(

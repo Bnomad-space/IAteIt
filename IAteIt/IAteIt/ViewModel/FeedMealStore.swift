@@ -16,7 +16,11 @@ final class FeedMealStore: ObservableObject {
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
     @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
-
+    
+    var isFeedEmpty: Bool {
+        mealList.isEmpty ? true : false
+    }
+    
     init() {
         self.refreshMealsAndUsers()
     }

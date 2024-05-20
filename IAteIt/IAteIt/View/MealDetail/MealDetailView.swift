@@ -107,7 +107,6 @@ struct MealDetailView: View {
                     }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
-
                 }
             }
             .onTapGesture {
@@ -119,9 +118,11 @@ struct MealDetailView: View {
                         Spacer()
                         Rectangle()
                             .fill(
-                                LinearGradient(gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
-                                               startPoint: UnitPoint(x: 0.5, y: 1-100/200),
-                                               endPoint: .top)
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
+                                    startPoint: UnitPoint(x: 0.5, y: 1-100/200),
+                                    endPoint: .top
+                                )
                             )
                             .ignoresSafeArea()
                             .frame(height: .commentBottomArea + 16)
@@ -160,28 +161,30 @@ struct MealDetailView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu(content: {
-                        if isMyMeal {
-                            Button(role: .destructive, action: {
-                                isShowingMealDeleteAlert = true
-                            }, label: {
-                                Label("Delete this meal", systemImage: "trash")
-                            })
-                        } else {
-                                Button(role: .destructive, action: {
-                                    isReportPresented = true
-                                }, label: {
-                                    Label("Report this meal", systemImage: "exclamationmark.triangle")
-                                })
-                                Button(role: .destructive, action: {
-                                    isBlockingAlertPresented = true
-                                }, label: {
-                                    Label("Block this user", systemImage: "nosign")
-                                })
-                        }
-                    }, label: {
-                        Image(systemName: "ellipsis")
-                    })
+                Menu(content: {
+                    if isMyMeal {
+                        Button(role: .destructive, action: {
+                            isShowingMealDeleteAlert = true
+                        }, label: {
+                            Label("Delete this meal", systemImage: "trash")
+                        })
+                        
+                    } else {
+                        Button(role: .destructive, action: {
+                            isReportPresented = true
+                        }, label: {
+                            Label("Report this meal", systemImage: "exclamationmark.triangle")
+                        })
+                        Button(role: .destructive, action: {
+                            isBlockingAlertPresented = true
+                        }, label: {
+                            Label("Block this user", systemImage: "nosign")
+                        })
+                    }
+                    
+                }, label: {
+                    Image(systemName: "ellipsis")
+                })
             }
         }
         .onAppear {

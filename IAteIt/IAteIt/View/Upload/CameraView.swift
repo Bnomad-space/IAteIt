@@ -59,7 +59,6 @@ struct CameraView: View {
                         }
                     }
                     .padding(.bottom, 120)
-                // TODO: 기존 meal 포스팅의 캡션, 장소 위치잡기
                     .overlay {
                         VStack(alignment: .center, spacing: 6) {
                             if let caption = mealAddPlateTo?.caption {
@@ -76,7 +75,6 @@ struct CameraView: View {
                         }
                         .offset(y: -290)
                     }
-                
                 
                 if cameraStore.isTaken {
                     VStack {

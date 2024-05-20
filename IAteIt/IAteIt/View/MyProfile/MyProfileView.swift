@@ -43,8 +43,7 @@ struct MyProfileView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(
-                    destination:
-                        SettingView(),
+                    destination: SettingView(),
                     isActive: self.$isActive,
                     label: { Image(systemName: "gearshape") }
                 )
