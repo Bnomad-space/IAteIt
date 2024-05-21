@@ -12,20 +12,22 @@ import Firebase
 struct IAteItApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @StateObject var loginState: LoginStateModel = LoginStateModel()
-    @StateObject var feedMeals: FeedMealModel = FeedMealModel()
+    @StateObject var loginState: LoginStateStore = LoginStateStore()
+    @StateObject var feedMeals: FeedMealStore = FeedMealStore()
+    @StateObject var cameraStore = CameraStore()
     @State private var isActive: Bool = false
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 FeedView(isActive: $isActive)
-                    .environmentObject(loginState)
-                    .environmentObject(feedMeals)
             }
             .accentColor(.black)
             .navigationViewStyle(StackNavigationViewStyle())
             .environment(\.rootPresentationMode, self.$isActive)
+            .environmentObject(loginState)
+            .environmentObject(feedMeals)
+            .environmentObject(cameraStore)
         }
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddCommentBarView: View {
-    @ObservedObject var feedMeals: FeedMealModel
+    @ObservedObject var feedMeals: FeedMealStore
     @ObservedObject var commentBar: CommentBar
     @FocusState var isFocused: Bool
     
@@ -71,6 +71,6 @@ struct AddCommentBarView: View {
 
 struct AddCommentBarView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentBarView(feedMeals: FeedMealModel(), commentBar: CommentBar(), meal: Meal.meals[2])
+        AddCommentBarView(feedMeals: FeedMealStore(), commentBar: CommentBar(), meal: Meal.meals[2])
     }
 }

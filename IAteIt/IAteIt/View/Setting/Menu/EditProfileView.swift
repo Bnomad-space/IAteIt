@@ -10,7 +10,7 @@ import Kingfisher
 
 struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var loginState: LoginStateModel
+    @EnvironmentObject var loginState: LoginStateStore
     @State private var isShowingSaveAlert = false
     @State private var imagePickerPresented = false
     @State private var selectedImage: UIImage?

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FeedFooterView: View {
-    @EnvironmentObject var feedMeals: FeedMealModel
+    @EnvironmentObject var feedMeals: FeedMealStore
     var meal: Meal
     
     var body: some View {

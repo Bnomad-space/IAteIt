@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingView: View {
-    @EnvironmentObject var loginState: LoginStateModel
-    @EnvironmentObject var feedMeals: FeedMealModel
+    @EnvironmentObject var loginState: LoginStateStore
+    @EnvironmentObject var feedMeals: FeedMealStore
     @State private var isShowingDeleteAccountAlert = false
     @State private var isPresentTermsOfUseWebView = false
     @State private var isPresentPrivacyPolicyWebView = false
@@ -21,13 +21,11 @@ struct SettingView: View {
             Section(header: Text("Personal")) {
                 NavigationLink(destination: {
                     EditProfileView()
-                        .environmentObject(loginState)
                 }, label: {
                     SettingListTitleView(text: "Edit Profile", symbol: "person", color: .black)
                 })
                 NavigationLink(destination: {
                     BlockedUsersView()
-                        .environmentObject(loginState)
                 }, label: {
                     SettingListTitleView(text: "Blocked Users", symbol: "nosign", color: .black)
                 })

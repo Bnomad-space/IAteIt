@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct ProfilePhotoButtonView: View {
-    @ObservedObject var loginState: LoginStateModel
+    @ObservedObject var loginState: LoginStateStore
     @State private var error: KingfisherError?
     
     let profilePicSize: CGFloat = 28

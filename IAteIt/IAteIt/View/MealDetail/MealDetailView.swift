@@ -10,9 +10,9 @@ import MessageUI
 
 struct MealDetailView: View {
     @StateObject var commentBar = CommentBar()
-    @EnvironmentObject var cameraViewModel: CameraViewModel
-    @EnvironmentObject var loginState: LoginStateModel
-    @EnvironmentObject var feedMeals: FeedMealModel
+    @EnvironmentObject var cameraStore: CameraStore
+    @EnvironmentObject var loginState: LoginStateStore
+    @EnvironmentObject var feedMeals: FeedMealStore
     @State private var navTitleText = ""
     @State private var isMyMeal = false
     @State private var isTodayMeal = false
@@ -64,20 +64,19 @@ struct MealDetailView: View {
                         HStack {
                             Spacer()
                             Button(action: {
-                                cameraViewModel.reset()
-                                cameraViewModel.type = .addPlate
+                                cameraStore.getReadyForCameraView(.addPlate)
                                 isCameraViewPresented.toggle()
                             }, label: {
                                 AddPlateButtonView()
                             })
                         }
                         .padding(.horizontal, .paddingHorizontal)
-                        .fullScreenCover(isPresented: $isCameraViewPresented, content: {
-                            CameraView(viewModel: cameraViewModel, mealAddPlateTo: meal)
-                                .environmentObject(loginState)
-                                .environmentObject(feedMeals)
-                        })
+                        .fullScreenCover(
+                            isPresented: $isCameraViewPresented,
+                            content: { CameraView(mealAddPlateTo: meal) }
+                        )
                     }
+                    
                     VStack(alignment: .leading, spacing: 12) {
                         ForEach(commentList[meal.id!] ?? [], id:\.self) { comment in
                             if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
@@ -108,7 +107,6 @@ struct MealDetailView: View {
                     }
                     .padding([.top], 24)
                     .padding(.horizontal, .paddingHorizontal)
-
                 }
             }
             .onTapGesture {
@@ -120,9 +118,11 @@ struct MealDetailView: View {
                         Spacer()
                         Rectangle()
                             .fill(
-                                LinearGradient(gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
-                                               startPoint: UnitPoint(x: 0.5, y: 1-100/200),
-                                               endPoint: .top)
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.white, Color.white.opacity(0)]),
+                                    startPoint: UnitPoint(x: 0.5, y: 1-100/200),
+                                    endPoint: .top
+                                )
                             )
                             .ignoresSafeArea()
                             .frame(height: .commentBottomArea + 16)
@@ -158,32 +158,33 @@ struct MealDetailView: View {
         })
         .sheet(isPresented: $isReportPresented) {
             ReportView(meal: meal, user: user, isReportPresented: $isReportPresented)
-                    .environmentObject(loginState)
-                }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu(content: {
-                        if isMyMeal {
-                            Button(role: .destructive, action: {
-                                isShowingMealDeleteAlert = true
-                            }, label: {
-                                Label("Delete this meal", systemImage: "trash")
-                            })
-                        } else {
-                                Button(role: .destructive, action: {
-                                    isReportPresented = true
-                                }, label: {
-                                    Label("Report this meal", systemImage: "exclamationmark.triangle")
-                                })
-                                Button(role: .destructive, action: {
-                                    isBlockingAlertPresented = true
-                                }, label: {
-                                    Label("Block this user", systemImage: "nosign")
-                                })
-                        }
-                    }, label: {
-                        Image(systemName: "ellipsis")
-                    })
+                Menu(content: {
+                    if isMyMeal {
+                        Button(role: .destructive, action: {
+                            isShowingMealDeleteAlert = true
+                        }, label: {
+                            Label("Delete this meal", systemImage: "trash")
+                        })
+                        
+                    } else {
+                        Button(role: .destructive, action: {
+                            isReportPresented = true
+                        }, label: {
+                            Label("Report this meal", systemImage: "exclamationmark.triangle")
+                        })
+                        Button(role: .destructive, action: {
+                            isBlockingAlertPresented = true
+                        }, label: {
+                            Label("Block this user", systemImage: "nosign")
+                        })
+                    }
+                    
+                }, label: {
+                    Image(systemName: "ellipsis")
+                })
             }
         }
         .onAppear {

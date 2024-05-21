@@ -1,5 +1,5 @@
 //
-//  FeedMealModel.swift
+//  FeedMealStore.swift
 //  IAteIt
 //
 //  Created by Eunbee Kang on 2023/05/05.
@@ -8,7 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
-final class FeedMealModel: ObservableObject {
+final class FeedMealStore: ObservableObject {
     @Published var mealList: [Meal] = []
     @Published var allUsers: [User] = []
     @Published var commentList: [String: [Comment]] = [:]
@@ -16,7 +16,11 @@ final class FeedMealModel: ObservableObject {
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
     @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
-
+    
+    var isFeedEmpty: Bool {
+        mealList.isEmpty ? true : false
+    }
+    
     init() {
         self.refreshMealsAndUsers()
     }
