@@ -102,6 +102,9 @@ struct FeedView: View {
         .navigationTitle("")
         .fullScreenCover(
             isPresented: $loginState.isAppleLoginRequired,
+            onDismiss: {
+                feedMeals.refreshMealsAndUsers()
+            },
             content: { LoginView(loginState: loginState) }
         )
     }
