@@ -110,7 +110,7 @@ class LoginStateStore: ObservableObject {
         }
     }
     
-    func signInToFirebase(credential: AuthCredential) async throws -> AuthDataResultModel {
+    private func signInToFirebase(credential: AuthCredential) async throws -> AuthDataResultModel {
         let authDataResult = try await Auth.auth().signIn(with: credential)
         let result = AuthDataResultModel(uid: authDataResult.user.uid, email: authDataResult.user.email ?? "-")
         return result
@@ -149,7 +149,7 @@ class LoginStateStore: ObservableObject {
                 let userId = returnedUserData.uid
                 print("애플 로그인 결과: \(userId), \(returnedUserData.email)")
                 
-                if let imageUrl = user?.profileImageUrl {
+                if let _ = user?.profileImageUrl {
                     try await FirebaseConnector.shared.deleteProfileImage(userId: userId)
                 }
                 try await FirebaseConnector.shared.deleteUser(userId: userId)
@@ -158,8 +158,8 @@ class LoginStateStore: ObservableObject {
                 try await FirebaseConnector.shared.deleteUserFromAuth()
                 await MainActor.run {
                     self.user = nil
-                    self.isAppleLoginRequired = false
                     self.isDeleteAccountCompleteAlertRequired = true
+                    self.checkLoginUser()
                 }
             } catch {
                 print("error deleting user: \(error)")
@@ -197,6 +197,19 @@ class LoginStateStore: ObservableObject {
             if let blockedIds = fetchedUser.blockedId {
                 fetchBlockedUsers(blockedIdList: blockedIds)
             }
+        }
+    }
+    
+    func logout(completion: @escaping(Bool) -> Void) {
+        guard user != nil else { return print(#function + "no user") }
+        do {
+            try Auth.auth().signOut()
+            self.user = nil
+            self.checkLoginUser()
+            completion(true)
+        } catch let error {
+            print(#function + " " + error.localizedDescription)
+            completion(false)
         }
     }
 }

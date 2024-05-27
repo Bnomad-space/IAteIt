@@ -33,7 +33,7 @@ struct FeedView: View {
                     content: { CameraView() }
                 )
                 
-                switch feedMeals.mealList.count != 0 {
+                switch !feedMeals.isFeedEmpty {
                 case true:
                     ForEach(feedMeals.mealList) { eachMeal in
                         if let mealOwner = feedMeals.allUsers.first(where: { $0.id == eachMeal.userId }) {
@@ -102,7 +102,7 @@ struct FeedView: View {
         .navigationTitle("")
         .fullScreenCover(
             isPresented: $loginState.isAppleLoginRequired,
-            content: { LoginView(loginState: loginState, feedMeals: feedMeals) }
+            content: { LoginView(loginState: loginState) }
         )
     }
 }
@@ -110,5 +110,8 @@ struct FeedView: View {
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         FeedView(isActive: .constant(false))
+            .environmentObject(CameraStore())
+            .environmentObject(LoginStateStore())
+            .environmentObject(FeedMealStore())
     }
 }
