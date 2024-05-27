@@ -37,7 +37,6 @@ struct PhotoCardView: View {
             }
         }
         .cornerRadius(.photoCorner)
-        .pinchZoom()
     }
 }
 
