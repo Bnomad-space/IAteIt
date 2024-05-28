@@ -13,6 +13,7 @@ struct SettingView: View {
     @State private var isPresentTermsOfUseWebView = false
     @State private var isPresentPrivacyPolicyWebView = false
     @State private var isDeleted = false
+    @State private var isLogout = false
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     
@@ -31,13 +32,7 @@ struct SettingView: View {
                     SettingListTitleView(text: "Blocked Users", symbol: "nosign", color: .black)
                 })
                 Button(action: {
-                    loginState.logout { success in
-                        if success {
-                            self.rootPresentationMode.wrappedValue.dismiss()
-                        } else {
-                            // TODO: logout 실패 alert
-                        }
-                    }
+                    isLogout.toggle()
                 }, label: {
                     SettingListTitleView(text: "Logout", symbol: "person.badge.minus", color: .black)
                 })
@@ -82,6 +77,17 @@ struct SettingView: View {
         }
         .listStyle(.plain)
         .navigationTitle("Settings")
+        .alert("Logout", isPresented: $isLogout, actions: {
+            Button("Logout", role: .destructive, action: {
+                self.loginState.logout { success in
+                    if success {
+                        self.rootPresentationMode.wrappedValue.dismiss()
+                    } else {
+                        // TODO: logout 실패 alert
+                    }
+                }
+            })
+        }, message: {Text("Are you sure?")})
         .fullScreenCover(
             isPresented: $isDeleted,
             onDismiss: {
