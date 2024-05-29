@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SignUpView: View {
     @ObservedObject var loginState: LoginStateStore
-    @ObservedObject var feedMeals: FeedMealStore
     @StateObject var usernameValidModel = UsernameValidModel()
     @FocusState private var isFocused: Bool
     
@@ -53,7 +52,7 @@ struct SignUpView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(UIColor.systemGray))
                     .padding(.bottom, 20)
-                NavigationLink(destination: SignUpSecondView(loginState: loginState, feedMeals: feedMeals),
+                NavigationLink(destination: SignUpSecondView(loginState: loginState),
                     label: {
                     BottomButtonView(label: "Next")
                 })
@@ -70,6 +69,6 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(loginState: LoginStateStore(), feedMeals: FeedMealStore())
+        SignUpView(loginState: LoginStateStore())
     }
 }

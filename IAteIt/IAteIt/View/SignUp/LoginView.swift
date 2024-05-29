@@ -13,7 +13,6 @@ import SwiftUI
 struct LoginView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var loginState: LoginStateStore
-    @ObservedObject var feedMeals: FeedMealStore
     @State var currentNonce: String?
     
     var body: some View {
@@ -55,7 +54,7 @@ struct LoginView: View {
 //                    })
 //                }
                 NavigationLink(
-                    destination: SignUpView(loginState: loginState, feedMeals: feedMeals),
+                    destination: SignUpView(loginState: loginState),
                     isActive: self.$loginState.isSignUpRequired
                 ) {}
             }
@@ -100,6 +99,6 @@ extension LoginView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginState: LoginStateStore(), feedMeals: FeedMealStore())
+        LoginView(loginState: LoginStateStore())
     }
 }
