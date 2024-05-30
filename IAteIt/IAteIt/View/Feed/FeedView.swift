@@ -88,6 +88,7 @@ struct FeedView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(
                     destination: MyProfileView(),
+                    isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
                 .isDetailLink(false)
