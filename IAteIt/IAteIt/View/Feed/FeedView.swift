@@ -41,7 +41,7 @@ struct FeedView: View {
                                 FeedHeaderView(feedMeals: feedMeals, meal: eachMeal, user: mealOwner)
                                     .padding(.horizontal, .paddingHorizontal)
                                 
-                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner)
                                 ) {
                                     TabView {
                                         ForEach(eachMeal.plates, id: \.id) { plate in
@@ -54,7 +54,7 @@ struct FeedView: View {
                                 .frame(minHeight: 358)
                                 .tabViewStyle(.page)
                                 
-                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner, commentList: feedMeals.commentList)
+                                NavigationLink(destination: MealDetailView(meal: eachMeal, user: mealOwner)
                                 ) {
                                     FeedFooterView(meal: eachMeal)
                                         .padding(.horizontal, .paddingHorizontal)
@@ -88,7 +88,6 @@ struct FeedView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(
                     destination: MyProfileView(),
-                    isActive: $isActive,
                     label: { ProfilePhotoButtonView(loginState: loginState) }
                 )
                 .isDetailLink(false)

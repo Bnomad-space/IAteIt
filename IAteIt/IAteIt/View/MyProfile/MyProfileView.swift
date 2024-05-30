@@ -56,5 +56,8 @@ struct MyProfileView: View {
 struct MyProfileView_Previews: PreviewProvider {
     static var previews: some View {
         MyProfileView()
+            .environmentObject(LoginStateStore())
+            .environmentObject(FeedMealStore())
+            .environmentObject(CameraStore())
     }
 }

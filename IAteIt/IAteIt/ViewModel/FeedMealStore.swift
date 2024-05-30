@@ -59,15 +59,16 @@ final class FeedMealStore: ObservableObject {
     func getUserMealHistory(user: User) {
         Task {
             self.myMealHistory = try await FirebaseConnector.shared.fetchUserMealHistory(userId: user.id)
-            for meal in self.myMealHistory {
-                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { [weak self] comments in
-                    DispatchQueue.main.async {
-                        self?.myMealHistoryCommentList[meal.id!] = comments
-                    }
-                }
-            }
             myMealHistorySorted = Dictionary(grouping: myMealHistory) { $0.uploadDate.toDateString() }
                 .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
+        }
+    }
+    
+    @MainActor
+    func getCommentListWithMeal(meal: Meal) async {
+        guard let mealId = meal.id else { return }
+        FirebaseConnector.shared.fetchMealComments(mealId: mealId) { comments in
+            self.myMealHistoryCommentList[mealId] = comments
         }
     }
     
@@ -134,14 +135,18 @@ final class FeedMealStore: ObservableObject {
                     for comment in commentList {
                         FirebaseConnector.shared.deleteComment(commentId: comment.id)
                     }
-                } else if let commentList = self.myMealHistoryCommentList[mealId] {
-                    for comment in commentList {
-                        FirebaseConnector.shared.deleteComment(commentId: comment.id)
+                } else {
+                    FirebaseConnector.shared.fetchMealComments(mealId: mealId) { comments in
+                        comments.forEach { comment in
+                            FirebaseConnector.shared.deleteComment(commentId: comment.id)
+                        }
                     }
                 }
             }
             DispatchQueue.main.async {
                 self.mealList.removeAll(where: { $0.id == mealId })
+                self.myMealHistory.removeAll(where: { $0.id == mealId})
+                self.myMealHistorySorted.removeAll(where: {$0.key == mealId })
                 self.commentList[mealId]?.removeAll()
                 self.myMealHistoryCommentList[mealId]?.removeAll()
             }

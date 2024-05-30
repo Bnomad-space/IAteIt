@@ -13,6 +13,7 @@ struct MealDetailView: View {
     @EnvironmentObject var cameraStore: CameraStore
     @EnvironmentObject var loginState: LoginStateStore
     @EnvironmentObject var feedMeals: FeedMealStore
+    @Environment(\.dismiss) var dismiss
     @State private var navTitleText = ""
     @State private var isMyMeal = false
     @State private var isTodayMeal = false
@@ -24,7 +25,6 @@ struct MealDetailView: View {
     
     var meal: Meal
     var user: User
-    var commentList: [String: [Comment]]
     
     var body: some View {
         ZStack {
@@ -78,7 +78,9 @@ struct MealDetailView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        ForEach(commentList[meal.id!] ?? [], id:\.self) { comment in
+                        ForEach(feedMeals.commentList[meal.id!] != nil ?
+                                feedMeals.commentList[meal.id!] ?? []
+                                : feedMeals.myMealHistoryCommentList[meal.id!] ?? [], id:\.self) { comment in
                             if let user = feedMeals.allUsers.first(where: { $0.id == comment.userId }) {
                                 let isMyComment = loginState.user?.id == comment.userId
                                 ZStack {
@@ -133,11 +135,17 @@ struct MealDetailView: View {
                     .padding(.horizontal, .paddingHorizontal)
             }
         }
+        .task {
+            if feedMeals.commentList[meal.id!] == nil {
+                await feedMeals.getCommentListWithMeal(meal: meal)
+            }
+        }
         .navigationTitle(navTitleText)
         .navigationBarTitleDisplayMode(.inline)
         .alert("Delete this meal", isPresented: $isShowingMealDeleteAlert, actions: {
             Button("Delete", role: .destructive, action: {
                 feedMeals.deleteMeal(meal: meal)
+                dismiss()
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {
@@ -209,6 +217,6 @@ extension MealDetailView {
 
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0], commentList: [:])
+        MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0])
     }
 }
