@@ -35,7 +35,7 @@ struct MealListView: View {
             
             ZStack {
                 NavigationLink(
-                    destination: MealDetailView(meal: selectedMeal, user: user, commentList: feedMeals.myMealHistoryCommentList),
+                    destination: MealDetailView(meal: selectedMeal, user: user),
                     isActive: $isActive,
                     label: { EmptyView() }
                 )
@@ -47,7 +47,7 @@ struct MealListView: View {
                         HStack(alignment: .center, spacing: 6) {
                             ForEach(meals, id: \.uploadDate) { meal in
                                 NavigationLink {
-                                    MealDetailView(meal: meal, user: user, commentList: feedMeals.myMealHistoryCommentList)
+                                    MealDetailView(meal: meal, user: user)
                                 } label: {
                                     ZStack {
                                         Rectangle()
