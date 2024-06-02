@@ -136,9 +136,7 @@ struct MealDetailView: View {
             }
         }
         .task {
-            if feedMeals.commentList[meal.id!] == nil {
-                await feedMeals.getCommentListWithMeal(meal: meal)
-            }
+            try? await feedMeals.getMyMealComments(meal: meal)
         }
         .navigationTitle(navTitleText)
         .navigationBarTitleDisplayMode(.inline)

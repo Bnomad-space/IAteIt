@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
+@MainActor
 final class FeedMealStore: ObservableObject {
     @Published var mealList: [Meal] = []
     @Published var allUsers: [User] = []
@@ -25,7 +26,6 @@ final class FeedMealStore: ObservableObject {
         self.refreshMealsAndUsers()
     }
     
-    @MainActor
     func getMealListIn24Hours() {
         Task {
             guard let currentUserId = Auth.auth().currentUser?.uid else { return }
@@ -44,18 +44,25 @@ final class FeedMealStore: ObservableObject {
             }
             
             self.mealList = fetchedMealList
-            
-            for meal in self.mealList {
-                FirebaseConnector.shared.fetchMealComments(mealId: meal.id!) { [weak self] comments in
-                    DispatchQueue.main.async {
-                        self?.commentList[meal.id!] = comments
-                    }
+            try await fetchCommentsForFeed(with: self.mealList)
+        }
+    }
+    
+    private func fetchCommentsForFeed(with meals: [Meal]) async throws {
+        try await withThrowingTaskGroup(of: (mealId: String, comments: [Comment]).self) { group in
+            for meal in meals {
+                group.addTask {
+                    let comments = try await FirebaseConnector.shared.fetchMealComments(mealId: meal.id!)
+                    return (meal.id!, comments)
                 }
+            }
+            
+            for try await item in group {
+                self.commentList[item.mealId] = item.comments
             }
         }
     }
     
-    @MainActor
     func getUserMealHistory(user: User) {
         Task {
             self.myMealHistory = try await FirebaseConnector.shared.fetchUserMealHistory(userId: user.id)
@@ -64,11 +71,11 @@ final class FeedMealStore: ObservableObject {
         }
     }
     
-    @MainActor
-    func getCommentListWithMeal(meal: Meal) async {
+    func getMyMealComments(meal: Meal) async throws {
         guard let mealId = meal.id else { return }
-        FirebaseConnector.shared.fetchMealComments(mealId: mealId) { comments in
-            self.myMealHistoryCommentList[mealId] = comments
+        if commentList[mealId] == nil {
+            let comments = try await FirebaseConnector.shared.fetchMealComments(mealId: mealId)
+            myMealHistoryCommentList[mealId] = comments
         }
     }
     
@@ -136,10 +143,9 @@ final class FeedMealStore: ObservableObject {
                         FirebaseConnector.shared.deleteComment(commentId: comment.id)
                     }
                 } else {
-                    FirebaseConnector.shared.fetchMealComments(mealId: mealId) { comments in
-                        comments.forEach { comment in
-                            FirebaseConnector.shared.deleteComment(commentId: comment.id)
-                        }
+                    let comments = try await FirebaseConnector.shared.fetchMealComments(mealId: mealId)
+                    comments.forEach { comment in
+                        FirebaseConnector.shared.deleteComment(commentId: comment.id)
                     }
                 }
             }
