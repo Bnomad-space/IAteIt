@@ -16,7 +16,14 @@ final class FeedMealStore: ObservableObject {
     
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
-    @Published var myMealHistorySorted: [(key: String, value: [Meal])] = []
+    
+    // MARK: Data Type - ["2024-03-04" : [Meal, Meal, Meal], "2024-03-05" : [Meal, Meal, Meal], ..]
+    @Published var myMealHistorySorted: [String: [Meal]] = [:]
+    
+    enum type {
+        case caption
+        case location
+    }
     
     var isFeedEmpty: Bool {
         mealList.isEmpty ? true : false
@@ -67,7 +74,10 @@ final class FeedMealStore: ObservableObject {
         Task {
             self.myMealHistory = try await FirebaseConnector.shared.fetchUserMealHistory(userId: user.id)
             myMealHistorySorted = Dictionary(grouping: myMealHistory) { $0.uploadDate.toDateString() }
-                .sorted { $0.value[0].uploadDate > $1.value[0].uploadDate }
+            myMealHistorySorted.forEach { key, eachMeals in
+                let sortedMeals = eachMeals.sorted { $0.uploadDate > $1.uploadDate }
+                myMealHistorySorted[key] = sortedMeals
+            }
         }
     }
     
@@ -94,26 +104,16 @@ final class FeedMealStore: ObservableObject {
     func saveCaption(meal: Meal, content: String) {
         Task {
             await FirebaseConnector.shared.setMealCaption(meal: meal, caption: content)
-            mealList.indices.forEach { index in
-                if mealList[index].id == meal.id {
-                    DispatchQueue.main.async {
-                        self.mealList[index].caption = content
-                    }
-                }
-            }
+            myMealHistorySortedUpdate(.caption, meal: meal, content: content)
+            mealListUpdate(.caption, meal: meal, content: content)
         }
     }
     
     func saveLocation(meal: Meal, content: String) {
         Task {
             await FirebaseConnector.shared.setMealLocation(meal: meal, location: content)
-            mealList.indices.forEach { index in
-                if mealList[index].id == meal.id {
-                    DispatchQueue.main.async {
-                        self.mealList[index].location = content
-                    }
-                }
-            }
+            myMealHistorySortedUpdate(.location, meal: meal, content: content)
+            mealListUpdate(.location, meal: meal, content: content)
         }
     }
     
@@ -152,7 +152,7 @@ final class FeedMealStore: ObservableObject {
             DispatchQueue.main.async {
                 self.mealList.removeAll(where: { $0.id == mealId })
                 self.myMealHistory.removeAll(where: { $0.id == mealId})
-                self.myMealHistorySorted.removeAll(where: {$0.key == mealId })
+                // TODO: myMealHistorySorted에서 삭제
                 self.commentList[mealId]?.removeAll()
                 self.myMealHistoryCommentList[mealId]?.removeAll()
             }
@@ -176,6 +176,42 @@ final class FeedMealStore: ObservableObject {
             FirebaseConnector.shared.deleteComment(commentId: commentId)
             DispatchQueue.main.async {
                 self.commentList[mealId]?.removeAll(where: {$0.id == commentId})
+            }
+        }
+    }
+}
+
+// MARK: FeedMealStore Extention
+extension FeedMealStore {
+    
+    private func myMealHistorySortedUpdate(_ type: type, meal: Meal, content: String) {
+        if var updatedMeal = myMealHistorySorted[meal.uploadDate.toDateString()]?.first(where: { $0.id == meal.id }) {
+            switch type {
+            case .caption:
+                updatedMeal.caption = content
+            case .location:
+                updatedMeal.location = content
+            }
+            myMealHistorySorted[meal.uploadDate.toDateString()]!.indices.forEach { index in
+                if myMealHistorySorted[meal.uploadDate.toDateString()]![index].id! == updatedMeal.id! {
+                    myMealHistorySorted[meal.uploadDate.toDateString()]![index] = updatedMeal
+                }
+            }
+        }
+    }
+    
+    private func mealListUpdate(_ type: type, meal: Meal, content: String) {
+        mealList.indices.forEach { index in
+            if mealList[index].id == meal.id {
+                DispatchQueue.main.async {
+                    switch type {
+                    case .caption:
+                        self.mealList[index].caption = content
+                    case .location:
+                        self.mealList[index].location = content
+                    }
+                    
+                }
             }
         }
     }

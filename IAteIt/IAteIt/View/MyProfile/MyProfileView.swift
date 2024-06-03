@@ -22,7 +22,8 @@ struct MyProfileView: View {
                     .padding([.top, .bottom], 16)
                     .configSimpleListRow()
                 if feedMeals.myMealHistory.count > 0 {
-                    ForEach(feedMeals.myMealHistorySorted, id:\.key) { (date, meals) in
+                    ForEach(feedMeals.myMealHistorySorted.sorted 
+                            { $0.value[0].uploadDate > $1.value[0].uploadDate }, id:\.key) { date, meals in
                         MealListView(date: date, meals: meals, user: user)
                     }
                     .configSimpleListRow()
