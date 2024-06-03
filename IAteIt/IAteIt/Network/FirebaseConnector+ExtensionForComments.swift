@@ -24,29 +24,21 @@ extension FirebaseConnector {
     }
     
     // 특정 meal의 모든 comment 데이터 가져오기
-    func fetchMealComments(mealId: String, completion: @escaping([Comment]) -> Void) {
+    func fetchMealComments(mealId: String) async throws -> [Comment] {
         var commentList: [Comment] = []
 
-        FirebaseConnector.comments.whereField("mealId", isEqualTo: mealId).getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting document: \(err.localizedDescription)")
-            } else {
-                for commentDocument in querySnapshot!.documents {
-                    let commentDictionary = commentDocument.data()
-                    guard let commentId = commentDictionary["id"] as? String,
-                          let userId = commentDictionary["userId"] as? String,
-                          let content = commentDictionary["comment"] as? String,
-                          let uploadDateTimestamp = commentDictionary["uploadDate"] as? Timestamp
-                    else { return }
-                    let uploadDate = uploadDateTimestamp.dateValue()
-
-                    let comment = Comment(id: commentId, userId: userId, mealId: mealId, comment: content, uploadDate: uploadDate)
-                    commentList.append(comment)
-                }
-                commentList = commentList.sorted { $0.uploadDate < $1.uploadDate }
-                completion(commentList)
-            }
+        let snapshots = try await FirebaseConnector.comments
+            .whereField("mealId", isEqualTo: mealId)
+            .getDocuments()
+        
+        for document in snapshots.documents {
+            let comment = try document.data(as: Comment.self)
+            commentList.append(comment)
         }
+        
+        commentList.sort(by: { $0.uploadDate < $1.uploadDate })
+        
+        return commentList
     }
     
     //특정 comment 삭제
