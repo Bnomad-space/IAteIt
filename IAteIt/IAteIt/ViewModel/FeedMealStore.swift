@@ -52,8 +52,8 @@ final class FeedMealStore: ObservableObject {
         try await withThrowingTaskGroup(of: (mealId: String, comments: [Comment]).self) { group in
             for meal in meals {
                 group.addTask {
-                    let comments = try await FirebaseConnector.shared.fetchMealComments(mealId: meal.id!)
-                    return (meal.id!, comments)
+                    let fetchedComments = try await FirebaseConnector.shared.fetchMealComments(mealId: meal.id!)
+                    return (meal.id!, fetchedComments)
                 }
             }
             
