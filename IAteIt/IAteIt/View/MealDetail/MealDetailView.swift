@@ -23,14 +23,14 @@ struct MealDetailView: View {
     @State private var isReportPresented = false
     @State private var isBlockingAlertPresented = false
     
-    var meal: Meal
+    @State var meal: Meal
     var user: User
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, isTodayMeal: $isTodayMeal, meal: meal)
+                    MealDetailTopView(commentBar: commentBar, isMyMeal: $isMyMeal, isTodayMeal: $isTodayMeal, meal: $meal)
                         .padding(.horizontal, .paddingHorizontal)
                     
                     TabView {
@@ -130,7 +130,7 @@ struct MealDetailView: View {
                             .frame(height: .commentBottomArea + 16)
                     }
                 }
-                AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: meal)
+                AddCommentBarView(feedMeals: feedMeals, commentBar: commentBar, meal: $meal)
                     .padding([.bottom], 10)
                     .padding(.horizontal, .paddingHorizontal)
             }
@@ -216,5 +216,8 @@ extension MealDetailView {
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
         MealDetailView(commentBar: CommentBar(), meal: Meal.meals[2], user: User.users[0])
+            .environmentObject(FeedMealStore())
+            .environmentObject(LoginStateStore())
+            .environmentObject(CameraStore())
     }
 }

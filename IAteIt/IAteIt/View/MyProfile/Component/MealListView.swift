@@ -107,5 +107,8 @@ struct MealListView: View {
 struct DailyMealCellView_Previews: PreviewProvider {
     static var previews: some View {
         MyProfileView()
+            .environmentObject(LoginStateStore())
+            .environmentObject(FeedMealStore())
+            .environmentObject(CameraStore())
     }
 }

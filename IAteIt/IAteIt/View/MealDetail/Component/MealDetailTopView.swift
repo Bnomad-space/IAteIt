@@ -11,8 +11,7 @@ struct MealDetailTopView: View {
     @ObservedObject var commentBar: CommentBar
     @Binding var isMyMeal: Bool
     @Binding var isTodayMeal: Bool
-    
-    var meal: Meal
+    @Binding var meal: Meal
     
     var body: some View {
         VStack(alignment: .center, spacing: 6) {

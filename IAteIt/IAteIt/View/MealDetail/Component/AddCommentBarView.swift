@@ -11,8 +11,7 @@ struct AddCommentBarView: View {
     @ObservedObject var feedMeals: FeedMealStore
     @ObservedObject var commentBar: CommentBar
     @FocusState var isFocused: Bool
-    
-    @State var meal: Meal
+    @Binding var meal: Meal
     
     var body: some View {
         VStack {
@@ -71,6 +70,6 @@ struct AddCommentBarView: View {
 
 struct AddCommentBarView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentBarView(feedMeals: FeedMealStore(), commentBar: CommentBar(), meal: Meal.meals[2])
+        AddCommentBarView(feedMeals: FeedMealStore(), commentBar: CommentBar(), meal: .constant(Meal.meal2))
     }
 }
