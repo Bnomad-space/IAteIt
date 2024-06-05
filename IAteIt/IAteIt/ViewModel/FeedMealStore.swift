@@ -17,7 +17,7 @@ final class FeedMealStore: ObservableObject {
     @Published var myMealHistory: [Meal] = []
     @Published var myMealHistoryCommentList: [String: [Comment]] = [:]
     
-    // MARK: Data Type - ["2024-03-04" : [Meal, Meal, Meal], "2024-03-05" : [Meal, Meal, Meal], ..]
+    // MARK: Data Type - ["Jun 3, 2024" : [Meal, Meal, Meal], "Jun 5, 2024" : [Meal, Meal, Meal], ..], toDateString()
     @Published var myMealHistorySorted: [String: [Meal]] = [:]
     
     enum type {
