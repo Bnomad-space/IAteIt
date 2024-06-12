@@ -21,6 +21,7 @@
 		630BA6C029AF57BE00019F2E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6BF29AF57BE00019F2E /* Camera.swift */; };
 		630BA6C229AF57F700019F2E /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630BA6C129AF57F700019F2E /* CameraViewModel.swift */; };
 		6366BA1E29B613C1004374BE /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6366BA1D29B613C1004374BE /* CameraPreviewView.swift */; };
+		7E036A572C10B7EE008015D9 /* UNUserNotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E036A562C10B7EE008015D9 /* UNUserNotificationCenter+Extension.swift */; };
 		7E047E4C2A232EC700B29760 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E047E4B2A232EC700B29760 /* Image+Extension.swift */; };
 		7E047E4E2A233C4800B29760 /* EnvironmentValues+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */; };
 		7E115B4B2C023CDF00A881CE /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 7E115B4A2C023CDF00A881CE /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -61,6 +62,7 @@
 		7E9FEF3529DEA07A002E7211 /* BottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */; };
 		7E9FEF3729DEBAA9002E7211 /* SignUpSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3629DEBAA9002E7211 /* SignUpSecondView.swift */; };
 		7E9FEF3929DF12EF002E7211 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF3829DF12EF002E7211 /* ImagePicker.swift */; };
+		7ED393552C0F65F800588F9F /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED393542C0F65F800588F9F /* LocalNotification.swift */; };
 		7EDF91A929E97CD800FB23A8 /* CommentBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF91A829E97CD800FB23A8 /* CommentBar.swift */; };
 		7EDF91AB29E989BD00FB23A8 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */; };
 		7EFFE28C29A5228F0021B9FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFE28B29A5228F0021B9FE /* Assets.xcassets */; };
@@ -97,6 +99,7 @@
 		630BA6BF29AF57BE00019F2E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		630BA6C129AF57F700019F2E /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		6366BA1D29B613C1004374BE /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		7E036A562C10B7EE008015D9 /* UNUserNotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		7E047E4B2A232EC700B29760 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
 		7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Extension.swift"; sourceTree = "<group>"; };
 		7E1F719129A8FD9C005A7B56 /* AddCommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentBarView.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		7E9FEF3429DEA07A002E7211 /* BottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButtonView.swift; sourceTree = "<group>"; };
 		7E9FEF3629DEBAA9002E7211 /* SignUpSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondView.swift; sourceTree = "<group>"; };
 		7E9FEF3829DF12EF002E7211 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		7ED393542C0F65F800588F9F /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		7EDF91A829E97CD800FB23A8 /* CommentBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentBar.swift; sourceTree = "<group>"; };
 		7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		7EFFE28429A5228D0021B9FE /* IAteIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IAteIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,6 +294,7 @@
 				DF883D4729B58F430029DC60 /* Comment.swift */,
 				DFD52CE329CB127D00E86F9F /* Meal.swift */,
 				040EB7302A5563B500E20A4D /* Report.swift */,
+				7ED393542C0F65F800588F9F /* LocalNotification.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				7EDF91AA29E989BD00FB23A8 /* View+Extension.swift */,
 				7E047E4B2A232EC700B29760 /* Image+Extension.swift */,
 				7E047E4D2A233C4800B29760 /* EnvironmentValues+Extension.swift */,
+				7E036A562C10B7EE008015D9 /* UNUserNotificationCenter+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -565,6 +571,7 @@
 				DF92284C2BEA293C00B16197 /* UsernameValidModel.swift in Sources */,
 				045339E72A0CAE59007F74F0 /* EmptyMealView.swift in Sources */,
 				7E2E84EA2AA77B960056D007 /* WebView.swift in Sources */,
+				7E036A572C10B7EE008015D9 /* UNUserNotificationCenter+Extension.swift in Sources */,
 				7E9FEF3229DE9BFA002E7211 /* TextField+Extension.swift in Sources */,
 				7E48DC2529F93E1F0079E896 /* LoginStateStore.swift in Sources */,
 				7E407CD52A0E5DA4001CAFBF /* SettingView.swift in Sources */,
@@ -580,6 +587,7 @@
 				7E6069E229A7A7FE00284CBD /* PhotoCardView.swift in Sources */,
 				04C1189029B74BF40073EDB7 /* FeedView.swift in Sources */,
 				7E407CD22A0BEBEF001CAFBF /* AddPlateButtonView.swift in Sources */,
+				7ED393552C0F65F800588F9F /* LocalNotification.swift in Sources */,
 				7E047E4C2A232EC700B29760 /* Image+Extension.swift in Sources */,
 				7E9FEF3529DEA07A002E7211 /* BottomButtonView.swift in Sources */,
 				048750A329B8A2D4006836D1 /* AddMealView.swift in Sources */,
