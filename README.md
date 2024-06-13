@@ -28,4 +28,6 @@ Easily share and connect with others about what you’ve eaten today. When you'r
 |<img src="https://github.com/eunbkang.png" width="150" height="150"/>|<img src="https://github.com/sunshiningsoo.png" width="150" height="150"/>|<img src="https://github.com/heokyeol.png" width="150" height="150"/>|<img src="https://github.com/hardworking-nomad.png" width="150" height="150"/>|<img src="https://github.com/Willowwryu.png" width="150" height="150"/>|
 
 ## History
-- 2022.09.09 v1.0.0 released
+- 2023.09.09 v1.0.0 released
+- 2024.05.30 v1.0.1 Minor bug fixes and performance improvements
+- 2024.06.13 v1.0.2 Minor bug fixes and small improvements
