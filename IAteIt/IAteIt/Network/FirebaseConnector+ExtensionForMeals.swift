@@ -15,22 +15,50 @@ extension FirebaseConnector {
     static let meals2 = Firestore.firestore().collection("meals2")
     
     // 새로운 meal 생성 (첫번째 plate 생성 포함, 캡션, 장소 없는 상태)
-    func setNewMeal(meal: Meal) async throws -> String {
-        let date = Date().toDateString2()
-        let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
-        let document = mealRef.document()
-        let documentId = document.documentID
-        var plate = meal.plates[0]
-        plate.mealId = documentId
-        try await document.setData([
-            "id": documentId,
-            "userId": meal.userId,
-            "uploadDate": meal.uploadDate
-        ])
-        try await document.updateData([
-            "plates": FieldValue.arrayUnion([plate.firebaseData])
-        ])
-        return documentId
+    private func mealTransaction(meal: Meal) async -> Result<String, Error> {
+        return await withCheckedContinuation { continuation in
+                let date = Date().toDateString2()
+                let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
+                
+                Firestore.firestore().runTransaction(with: TransactionOptions()) { transaction, errPointer in
+                    let document = mealRef.document()
+                    let documentId = document.documentID
+                    var plate = meal.plates[0]
+                    plate.mealId = documentId
+                    
+                    do {
+                        let documentTransaction = try transaction.getDocument(document)
+                        transaction.setData([
+                            "id": documentId,
+                            "userId": meal.userId,
+                            "uploadDate": meal.uploadDate,
+                            "plates": [plate.firebaseData]
+                        ], forDocument: document)
+                        return documentId
+                    } catch {
+                        return nil
+                    }
+                } completion: { result, error in
+                    if let error = error {
+                        continuation.resume(returning: .failure(error))
+                    } else if let documentId = result as? String {
+                        continuation.resume(returning: .success(documentId))
+                    } else {
+                        continuation.resume(returning: .failure(NSError(domain: "UnknownError", code: -1, userInfo: nil)))
+                    }
+                }
+            }
+    }
+    
+    func setNewMeal(meal: Meal) async -> String {
+        let result = await mealTransaction(meal: meal)
+        switch result {
+        case .success(let documentId):
+            return documentId
+        case .failure(let reason):
+            print("Transaction Failed : \(reason.localizedDescription)")
+            return ""
+        }
     }
     
     // 특정 meal에 새로운 plate 추가
