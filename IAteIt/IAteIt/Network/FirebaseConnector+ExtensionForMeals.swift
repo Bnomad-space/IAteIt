@@ -11,13 +11,8 @@ import FirebaseStorage
 import SwiftUI
 
 extension FirebaseConnector {
-    #if DEBUG
-    static let meals = Firestore.firestore().collection("meals")
-    #else
-    // PRODUCTION
-    static let meals = Firestore.firestore().collection("meals2")
-    #endif
     
+    static let meals = Firestore.firestore().collection(FirebaseString.meals)
     
     // 새로운 meal 생성 (첫번째 plate 생성 포함, 캡션, 장소 없는 상태)
     private func mealTransaction(meal: Meal) async -> Result<String, Error> {
