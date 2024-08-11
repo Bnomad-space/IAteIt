@@ -11,14 +11,19 @@ import FirebaseStorage
 import SwiftUI
 
 extension FirebaseConnector {
+    #if DEBUG
     static let meals = Firestore.firestore().collection("meals")
-    static let meals2 = Firestore.firestore().collection("meals2")
+    #else
+    // PRODUCTION
+    static let meals = Firestore.firestore().collection("meals2")
+    #endif
+    
     
     // 새로운 meal 생성 (첫번째 plate 생성 포함, 캡션, 장소 없는 상태)
     private func mealTransaction(meal: Meal) async -> Result<String, Error> {
         return await withCheckedContinuation { continuation in
                 let date = Date().toDateString2()
-                let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
+                let mealRef = FirebaseConnector.meals.document(date).collection(FirebaseString.mealByDay)
                 
                 Firestore.firestore().runTransaction(with: TransactionOptions()) { transaction, errPointer in
                     let document = mealRef.document()
@@ -26,18 +31,13 @@ extension FirebaseConnector {
                     var plate = meal.plates[0]
                     plate.mealId = documentId
                     
-                    do {
-                        let documentTransaction = try transaction.getDocument(document)
-                        transaction.setData([
-                            "id": documentId,
-                            "userId": meal.userId,
-                            "uploadDate": meal.uploadDate,
-                            "plates": [plate.firebaseData]
-                        ], forDocument: document)
-                        return documentId
-                    } catch {
-                        return nil
-                    }
+                    transaction.setData([
+                        "id": documentId,
+                        "userId": meal.userId,
+                        "uploadDate": meal.uploadDate,
+                        "plates": [plate.firebaseData]
+                    ], forDocument: document)
+                    return documentId
                 } completion: { result, error in
                     if let error = error {
                         continuation.resume(returning: .failure(error))
@@ -65,7 +65,7 @@ extension FirebaseConnector {
     func addPlateToMeal(meal: Meal, plate: Plate) async throws {
         guard let mealId = meal.id else { return }
         let dateString = meal.uploadDate.toDateString2()
-        let mealRef = FirebaseConnector.meals2.document(dateString).collection("mealsByDay")
+        let mealRef = FirebaseConnector.meals.document(dateString).collection(FirebaseString.mealByDay)
         
         try await mealRef.document(mealId).updateData([
             "plates": FieldValue.arrayUnion([plate.firebaseData])
@@ -89,7 +89,7 @@ extension FirebaseConnector {
     func setMealCaption(meal: Meal, caption: String) async {
         guard let mealId = meal.id else { return }
         let date = meal.uploadDate.toDateString2()
-        let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
+        let mealRef = FirebaseConnector.meals.document(date).collection(FirebaseString.mealByDay)
         
         try? await mealRef.document(mealId).updateData([
             "caption": caption as Any
@@ -100,7 +100,7 @@ extension FirebaseConnector {
     func setMealLocation(meal: Meal, location: String) async {
         guard let mealId = meal.id else { return }
         let date = meal.uploadDate.toDateString2()
-        let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
+        let mealRef = FirebaseConnector.meals.document(date).collection(FirebaseString.mealByDay)
         
         try? await mealRef.document(mealId).updateData([
             "location": location as Any
@@ -111,7 +111,7 @@ extension FirebaseConnector {
     func fetchUserMealHistory(userId: String) async throws -> [Meal] {
         var mealHistory: [Meal] = []
         
-        let snapshots = try await Firestore.firestore().collectionGroup("mealsByDay")
+        let snapshots = try await Firestore.firestore().collectionGroup(FirebaseString.mealByDay)
             .whereField("userId", isEqualTo: userId)
             .order(by: "uploadDate", descending: true)
             .getDocuments()
@@ -142,11 +142,11 @@ extension FirebaseConnector {
         let fromTime = date-3600*24
         let fromTimestamp = Timestamp(date: fromTime)
 
-        let snapshotsToday = try await FirebaseConnector.meals2.document(date.toDateString2()).collection("mealsByDay")
+        let snapshotsToday = try await FirebaseConnector.meals.document(date.toDateString2()).collection(FirebaseString.mealByDay)
             .order(by: "uploadDate", descending: true)
             .getDocuments()
         
-        let snapshotsYesterday = try await FirebaseConnector.meals2.document(fromTime.toDateString2()).collection("mealsByDay")
+        let snapshotsYesterday = try await FirebaseConnector.meals.document(fromTime.toDateString2()).collection(FirebaseString.mealByDay)
             .order(by: "uploadDate", descending: true)
             .whereField("uploadDate", isGreaterThan: fromTimestamp)
             .whereField("uploadDate", isLessThanOrEqualTo: toTimestamp)
@@ -177,7 +177,7 @@ extension FirebaseConnector {
     func deleteMeal(meal: Meal) async throws {
         guard let mealId = meal.id else { return }
         let date = meal.uploadDate.toDateString2()
-        let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
+        let mealRef = FirebaseConnector.meals.document(date).collection(FirebaseString.mealByDay)
         
         try await mealRef.document(mealId).delete()
     }
@@ -186,7 +186,7 @@ extension FirebaseConnector {
     func deletePlate(meal: Meal, plate: Plate) async throws {
         guard let mealId = meal.id else { return }
         let date = meal.uploadDate.toDateString2()
-        let mealRef = FirebaseConnector.meals2.document(date).collection("mealsByDay")
+        let mealRef = FirebaseConnector.meals.document(date).collection(FirebaseString.mealByDay)
         
         try await mealRef.document(mealId).updateData([
             "plates": FieldValue.arrayRemove([plate.firebaseData])

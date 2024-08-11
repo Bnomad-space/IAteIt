@@ -75,6 +75,7 @@
 		DF5C19932BEB4D3F00E786EC /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C73F00229BDD010007D1A1E /* MealListView.swift */; };
 		DF5C19942BEB4D5D00E786EC /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069D429A5CAFA00284CBD /* MyProfileView.swift */; };
 		DF5C19952BEB4D7100E786EC /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6069CE29A5CAE500284CBD /* CameraView.swift */; };
+		DF84B9A22C68C394008DB724 /* FirebaseString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF84B9A12C68C394008DB724 /* FirebaseString.swift */; };
 		DF883D4229B58F2C0029DC60 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4129B58F2C0029DC60 /* User.swift */; };
 		DF883D4629B58F3D0029DC60 /* Plate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4529B58F3D0029DC60 /* Plate.swift */; };
 		DF883D4829B58F430029DC60 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF883D4729B58F430029DC60 /* Comment.swift */; };
@@ -149,6 +150,7 @@
 		DF22139A29BB2843000134FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF2213A129BB2ADC000134FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF2213A429BB324F000134FC /* FirebaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConnector.swift; sourceTree = "<group>"; };
+		DF84B9A12C68C394008DB724 /* FirebaseString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseString.swift; sourceTree = "<group>"; };
 		DF883D4129B58F2C0029DC60 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DF883D4529B58F3D0029DC60 /* Plate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plate.swift; sourceTree = "<group>"; };
 		DF883D4729B58F430029DC60 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				7E48DC1B29F42F3E0079E896 /* FirebaseConnector+ExtensionForMeals.swift */,
 				7E48DC1D29F42FFE0079E896 /* FirebaseConnector+ExtensionForComments.swift */,
 				040EB7322A55660D00E20A4D /* FirebaseConnector+ExtensionForReports.swift */,
+				DF84B9A12C68C394008DB724 /* FirebaseString.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				7E6069D329A5CAF300284CBD /* MealDetailView.swift in Sources */,
 				7E2B2DAD29DE9304009EC0ED /* Constants.swift in Sources */,
 				DF883D4629B58F3D0029DC60 /* Plate.swift in Sources */,
+				DF84B9A22C68C394008DB724 /* FirebaseString.swift in Sources */,
 				7E6069E429A7ADE100284CBD /* TagOnPhotoView.swift in Sources */,
 				6366BA1E29B613C1004374BE /* CameraPreviewView.swift in Sources */,
 				7E407CDE2A0F538C001CAFBF /* SettingListTitleView.swift in Sources */,
